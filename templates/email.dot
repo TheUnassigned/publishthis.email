@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <title>[[=model.subject]] - publishthis.email</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="/css/view.css">
+  <link href="https://fonts.googleapis.com/css?family=Martel:300,400|Open+Sans:300,400,600|Roboto+Slab:300,400" rel="stylesheet">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body>
+  <div class="page-margin page" dir="[[=model.dir]]">
+    <h1>[[=model.subject]]</h1>
+    <div class="email-recipients">
+      <div class="email-to">
+        <div class="email-to-label">To: [[=model.to[0].address]]</div>
+      </div>
+      <div class="email-to">
+        <div class="email-to-label">From: [[=model.from[0].address]]</div>
+      </div>
+      <div class="timestamp">[[=model.timestamp]]</div>
+    </div>
+    <div class="body">[[=model.html]]</div>
+  </div>
+  [[= partial('partials/footer-view.dot') ]]
+  [[= partial('partials/analytics.dot') ]]
+</body>
+</html>

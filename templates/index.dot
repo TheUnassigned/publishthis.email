@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <title>publishthis.email - Publish Online In Seconds</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="/css/home.css">
+  <link href="https://fonts.googleapis.com/css?family=Martel:300,400|Open+Sans:300,400,600|Roboto+Slab:300,400" rel="stylesheet">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-site-verification" content="GMQm9kj6leA_LTzBdFmSyQxCDLNC_yNQERZNhEL7Sjo" />
+  <meta property="og:url" content="http://www.publishthis.email" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="publishthis.email - Create a web page in seconds, by sending an email." />
+  <meta property="og:description" content="The quickest way to create a web page. No account or sign up needed. Send us an email with your content to publish online, and we'll reply instantly with a link to your new web page." />
+  <meta property="og:image" content="http://www.publishthis.email/fb-og.png" />
+
+
+</head>
+<body>
+  <div class="bar">
+    <div class="bar-margin">
+      <div class="bar-logo">publish<span class="logo-red">this</span>.email</div>
+    </div>
+
+  </div>
+  <div class="hero">
+    <div class="hero-table">
+      <div class="hero-cell">
+        <div class="hero-text">The fastest way to publish online.</div>
+        <div class="hero-text-steps">
+          <div class="hero-text-step">1. Write an email with the content you want to publish</div>
+          <div class="hero-text-step">2. Send it to <a class="hero-email-link" href="[[= partial('partials/mailto-href.dot')]]">page@publishthis.email</a></div>
+          <div class="hero-text-step">3. We'll reply with a link to your <a href="http://www.publishthis.email/rJlcKNynl" target="_blank">new page</a></div>
+        </div>
+        <a class="hero-button" href="[[= partial('partials/mailto-href.dot')]]">Try it!</a>
+        <div class="hero-no-account">Free. No account or sign-up required.</div>
+      </div>
+    </div>
+  </div>
+  <!-- testimonial -->
+  <div class="section-rule"></div>
+  <div class="section section-full">
+    <div class="testimonial">
+      <div class="testimonial-text">"Need to create a publicly accessible web page as quickly as possible? Publishthis.email turns the contents of an email into a publicly accessible site as quickly as you can write it."</div>
+      <img class="testimonial-img-lh" src="http://i.imgur.com/eSMtZuW.png"/>
+    </div>
+  </div>
+  <div class="section-rule"></div>
+  <!-- section 1 -->
+  <div class="section group">
+    <div class="section-half section-half-right">
+      <div class="img-stack">
+        <img class="img-stack-1" src="http://i.imgur.com/jciTarh.png"/>
+        <img class="img-stack-2" src="http://i.imgur.com/WGuRll8.png"/>
+      </div>
+    </div>
+    <div class="section-half section-half-left">
+      <div class="section-title">Create a web page in seconds</div>
+      <div class="section-content">
+        <p>Simply send an email to <strong><a href="[[= partial('partials/mailto-href.dot')]]">page@publishthis.email</a></strong> and we'll turn the content of your email into a web page, using the subject of your email as the title.</p>
+        <p>We reply to your email within seconds with a link to your new webpage.</p>
+        <p>Here's a <a href="http://www.publishthis.email/rJlcKNynl" target="_blank">sample page.</a></p>
+      </div>
+    </div>
+  </div>
+  <div class="section-rule"></div>
+  <!-- section 2 -->
+  <div class="section group">
+    <div class="section-half section-half-left">
+      <img class="img-nostack img-noshadow" src="http://i.imgur.com/ASUXz9i.jpg" />
+    </div>
+    <div class="section-half section-half-right">
+      <div class="section-title">Start a blog, without starting a blog</div>
+      <div class="section-content">
+        <p>Use collections to start a blog instantly, by sending an email. No sign-up or setup required.</p>
+        <p>Email your posts to <strong><a href="mailto:page+blog@publishthis.email">page+blog@publishthis.email</a></strong> and we will reply with a link to a list of all of your blog posts on one handy page.</p>
+        <p>Want to start more blogs, or write collections of something else? Email <strong><a href="mailto:page+whatever@publishthis.email">page+[whatever]@publishthis.email</a></strong> and start as many collections as you like.</p>
+      </div>
+    </div>
+  </div>
+  <div class="section-rule"></div>
+  <!-- section 3 -->
+  <div class="section group">
+    <div class="section-archive">
+      <div class="section-title">Archive and share email conversations</div>
+      <div class="section-content">
+        <p>Forward, CC, or BCC an email to <strong><a href="mailto:email@publishthis.email">email@publishthis.email</a></strong> and we'll reply with a link to your email published on a web page.</p>
+        <p>Use <strong><a href="mailto:email@publishthis.email">email@publishthis.email</a></strong> to archive email conversations, to quickly share a thread of correspondence, or publish your emails publicly, or within your organization for email transparency.</p>
+      </div>
+    </div>
+  </div>
+  <div class="section-rule"></div>
+  <!-- section 4 -->
+  <div class="section group">
+    <div class="section-half section-half-left">
+      <img class="img-nostack" src="http://i.imgur.com/lTPk4Nt.jpg" />
+    </div>
+    <div class="section-half section-half-right">
+      <div class="section-title">Use formatting and images</div>
+      <div class="section-content">
+        <p>Use your email editor to add basic formatting to your pages, including <strong>bold and italic text, headings, lists, and links</strong>.</p>
+        <p>You can also <strong>insert images</strong> into your email.</p>
+
+      </div>
+    </div>
+  </div>
+  <div class="section-rule"></div>
+  <!-- Some ideas on how to use it -->
+  <div class="section section-full">
+    <div class="section-title">Some ideas for using publish<span class="logo-red">this</span>.email</div>
+    <div class="idea-list">
+      <div class="idea-item">Create a web page</div><span class="idea-gap"> - </span>
+      <div class="idea-item">Publish a list</div><span class="idea-gap"> - </span>
+      <div class="idea-item">Share email newsletters</div><span class="idea-gap"> - </span>
+      <div class="idea-item">Archive email threads</div><span class="idea-gap"> - </span>
+      <div class="idea-item">Email transparency</div>
+    </div>
+  </div>
+  <div class="section-rule"></div>
+  <!-- feedback -->
+  <div class="section section-full">
+    <div class="feedback">
+      Email us at <a href="mailto:hello@publishthis.email">hello@publishthis.email</a>
+    </div>
+  </div>
+  <div class="section-rule"></div>
+  <!-- built by -->
+  <div class="section section-full">
+    <div class="built-by">
+      Built by <a href="http://www.twitter.com/nickdrewe" target="_blank">@nickdrewe</a> and <a href="http://www.twitter.com/_mattway" target="_blank">@_mattway</a> - Together we're <i><strong>Unassigned</strong></i>
+    </div>
+  </div>
+  [[= partial('partials/analytics.dot') ]]
+</body>
+</html>

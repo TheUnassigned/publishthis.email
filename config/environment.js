@@ -1,0 +1,21 @@
+const env = process.env
+
+const config = {
+  AWS_ID: env.PTE_AWS_ID,
+  AWS_KEY: env.PTE_AWS_KEY,
+  AWS_REGION: env.PTE_AWS_REGION || 'us-east-1',
+  S3_BUCKET: env.PTE_S3_BUCKET,
+  EMAIL_TABLE: env.PTE_EMAIL_TABLE,
+  COLLECTION_TABLE: env.PTE_COLLECTION_TABLE,
+  COLLECTION_ITEM_TABLE: env.PTE_COLLECTION_ITEM_TABLE,
+  CF_KEY: env.PTE_CF_KEY,
+  CF_EMAIL: env.PTE_CF_EMAIL,
+  CF_ZONEID: env.PTE_CF_ZONEID,
+  IMGUR_ID: env.PTE_IMGUR_ID,
+  IMGUR_SECRET: env.PTE_IMGUR_SECRET,
+  PORT: env.PORT || 3000
+}
+
+export {
+  config
+}

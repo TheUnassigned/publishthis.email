@@ -1,0 +1,49 @@
+{
+  "name": "publishthis.email",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "express": "babel-node ./express/server.js",
+    "express:debug": "babel-node --inspect --debug-brk ./express/server.js",
+    "build:serverless": "webpack --colors --progress --config ./config/webpack.serverless.config.babel.js",
+    "build:express": "webpack --colors --progress --config ./config/webpack.express.config.babel.js",
+    "deploy": "npm run build:serverless && cd serverless && sls deploy --stage dev",
+    "deploy:production": "npm run build:serverless && npm run final:deploy:production",
+    "final:deploy:production": "cd serverless && sls deploy --stage production",
+    "logs": "cd serverless && sls logs --stage dev -f receive --startTime 2h",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.18.0",
+    "cloudflare": "^1.1.1",
+    "dot": "^1.1.1",
+    "express": "^4.14.1",
+    "express-dot-engine": "^1.0.7",
+    "imgur": "^0.2.0",
+    "mailparser": "^0.6.2",
+    "moment": "^2.17.1",
+    "node-noop": "^1.0.0",
+    "sanitize-html": "^1.14.1",
+    "serve-favicon": "^2.4.1",
+    "shortid": "^2.2.6"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.23.0",
+    "babel-core": "^6.23.1",
+    "babel-loader": "^6.3.2",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-preset-latest": "^6.22.0",
+    "babel-root-slash-import": "^1.1.0",
+    "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
+    "local-dynamo": "^0.4.1",
+    "mocha": "^3.2.0",
+    "nyc": "^10.1.2",
+    "raw-loader": "^0.5.1",
+    "webpack": "^2.2.1",
+    "webpack-node-externals": "^1.5.4"
+  }
+}

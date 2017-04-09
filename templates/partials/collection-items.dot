@@ -1,0 +1,12 @@
+[[~model.Items :item]]
+<div class="collection-item">
+  <div class="collection-item-title"><a href="/[[=item.messageId]]">[[=item.subject]]</a></div>
+  <div class="collection-item-time">[[=item.timeSince]]</div>
+</div>
+[[~]]
+[[? model.LastEvaluatedKey]]
+<div class="load-more-container">
+  <span class="load-more" onClick="loadMore('[[=model.LastEvaluatedKey.timeAdded]]','[[=model.LastEvaluatedKey.collectionId]]')">Load more</span>
+  <img class="load-more-loader" src="/img/puff.svg" />
+</div>
+[[?]]

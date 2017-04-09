@@ -1,0 +1,142 @@
+// Run everything in the same region - most permissions auto-set.c
+
+//  Some IAM policies
+{
+  "Version" : "2012-10-17",
+  "Statement" : [
+    {
+      "Effect" : "Allow",
+      "Action" : [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource" : "arn:aws:logs:*:*:*"
+    },
+    {
+      "Effect" : "Allow",
+      "Action" : [
+        "cloudwatch:PutMetricData"
+      ],
+      "Resource" : "*"
+    },
+    {
+      "Effect" : "Allow",
+      "Action" : [
+        "ses:SendEmail"
+      ],
+      "Resource" : "*"
+    },
+    {
+      "Effect" : "Allow",
+      "Action" : [
+        "s3:GetObject"
+      ],
+      "Resource" : "*"
+    }
+  ]
+}
+
+// Retreive email from S3
+var AWS = require('aws-sdk');
+var s3 = new AWS.S3();
+
+var bucketName = '<YOUR BUCKET GOES HERE>';
+
+exports.handler = function(event, context, callback) {
+  console.log('Process email');
+
+  var sesNotification = event.Records[0].ses;
+  console.log("SES Notification:\n", JSON.stringify(sesNotification, null, 2));
+
+  // Retrieve the email from your bucket
+  s3.getObject({
+    Bucket: bucketName,
+    Key: sesNotification.mail.messageId
+  }, function(err, data) {
+    if (err) {
+      console.log(err, err.stack);
+      callback(err);
+    } else {
+      console.log("Raw email:\n" + data.Body);
+      // Custom email processing goes here
+      callback(null, null);
+    }
+  });
+};
+
+// Sending an email
+var aws = require('aws-sdk');
+var ses = new aws.SES();
+
+var params = {
+  Destination: {
+    ToAddresses: [
+      config.targetAddress
+    ]
+  },
+  Message: {
+    Subject: {
+      Data: subject,
+      Charset: 'UTF-8'
+    },
+    Body: {
+      Html: {
+        Data: message,
+        Charset: 'UTF-8'
+      }
+    }
+  },
+  Source: config.fromAddress,
+  ReplyToAddresses: [
+    event.name + '<' + event.email + '>'
+  ]
+};
+
+ses.sendEmail(params, function (err, data) {
+  if (err) {
+    console.log(err, err.stack);
+    context.fail('Internal Error: The email could not be sent.');
+  } else {
+    console.log(data);           // successful response
+    context.succeed('The email was successfully sent to ' + event.email);
+  }
+});
+
+// dynamodb
+
+AWS.config.update({endpoint: "https://dynamodb.us-east-1.amazonaws.com"});
+
+var docClient = new AWS.DynamoDB.DocumentClient();
+
+var params = {
+    TableName: 'emails',
+    Item: {
+        'EmailId': '',
+        'Slug':  '',
+        'Body':  '',
+        'From': [],
+        'To': [],
+        'PageType': '',
+        'Timestamp': ''
+    }
+};
+
+docClient.put(params, function(err, data) {
+   if (err) {
+       console.error("Unable to add movie", movie.title, ". Error JSON:", JSON.stringify(err, null, 2));
+   } else {
+       console.log("PutItem succeeded:", movie.title);
+   }
+});
+
+
+
+// ID
+// Slug
+// Timestamp - unix
+// Page type - string
+// From string
+// Markdown
+
+// Shortid looks like a good option for URL ID.

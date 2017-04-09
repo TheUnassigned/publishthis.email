@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Page not found - publishthis.email</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="/css/view.css">
+  <link href="https://fonts.googleapis.com/css?family=Martel:300,400|Open+Sans:300,400,600|Roboto+Slab:300,400" rel="stylesheet">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body>
+  <div class="page-margin page">
+    <h1>These aren't the pages you're looking for</h1>
+    An error occurred, or we couldn't find that email :O
+  </div>
+  [[= partial('partials/footer-view.dot') ]]
+  [[= partial('partials/analytics.dot') ]]
+</body>
+</html>
