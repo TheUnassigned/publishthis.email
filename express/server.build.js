@@ -585,7 +585,7 @@ var sanitizeOptions = {
   // allowedTags: [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
   // 'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
   // 'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre', 'img' ],
-  allowedTags: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol', 'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div', 'thead', 'caption', 'pre', 'img', 'dir'],
+  allowedTags: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol', 'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div', 'thead', 'caption', 'pre', 'img', 'dir', 'marquee'],
   allowedAttributes: {
     a: ['href', 'name', 'target', 'rel'],
     // We don't currently allow img itself by default, but this
@@ -658,6 +658,7 @@ var processImages = function processImages(email) {
 
 var sanitize = function sanitize(email) {
   email.html = (0, _sanitizeHtml2.default)(email.html, sanitizeOptions).replace(/<p> <\/p>/g, '');
+  email.subject = (0, _sanitizeHtml2.default)(email.subject, { allowedTags: ['marquee'] });
   return email;
 };
 
@@ -1132,6 +1133,7 @@ app.get('/:messageId', function (req, res) {
     }
   }).catch(function (e) {
     // console.log(e)
+    res.status(404);
     res.render('404');
   });
 });
@@ -1146,6 +1148,10 @@ app.get('/c/:collectionId/more/:timeAdded', function (req, res) {
 
   (0, _actions.getCollection)(collectionParams).then(function (collection) {
     res.render('partials/collection-items', collection);
+  }).catch(function (e) {
+    // console.log(e)
+    res.status(404);
+    res.render('404');
   });
 });
 
