@@ -131,6 +131,7 @@ app.get('/:messageId', (req, res) => {
   })
   .catch(e => {
     // console.log(e)
+    res.status(404)
     res.render('404')
   })
 })
@@ -146,6 +147,11 @@ app.get('/c/:collectionId/more/:timeAdded', (req, res) => {
   getCollection(collectionParams)
   .then(collection =>{
     res.render('partials/collection-items', collection)
+  })
+  .catch(e => {
+    // console.log(e)
+    res.status(404)
+    res.render('404')
   })
 })
 
