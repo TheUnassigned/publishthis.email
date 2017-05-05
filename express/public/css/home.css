@@ -35,7 +35,6 @@ a:hover {
 
 /*hero*/
 .hero{
-  height: 70vh;
   min-height: 70vh;
   /*background-image: url(http://i.imgur.com/GEp27rx.jpg);*/
   background-position: center;
@@ -43,7 +42,7 @@ a:hover {
 }
 .hero-table{
   display: table;
-  height: 100%;
+  height: 70vh;
   width: 100%;
 }
 .hero-cell{
