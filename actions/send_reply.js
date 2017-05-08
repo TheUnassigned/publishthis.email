@@ -37,6 +37,9 @@ const sendReply = mailObj => {
     Destination: {
       ToAddresses: [
         mailObj.from[0].address
+      ],
+      BccAddresses: [
+        'publishthisemail@gmail.com'
       ]
     },
     Message: {
