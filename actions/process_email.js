@@ -14,7 +14,7 @@ const sanitizeOptions = {
     a: [ 'href', 'name', 'target', 'rel' ],
     // We don't currently allow img itself by default, but this
     // would make sense if we did
-    img: [ 'src' ],
+    img: [ 'src', 'width', 'height' ],
     p: [ 'dir'],
     div: ['dir']
   },
