@@ -125,6 +125,26 @@ img{
   display: none;
 }
 
+/*youtube embed*/
+.youtube-wrapper {
+    max-width: 100%;
+    box-sizing: border-box;
+    position: relative;
+}
+.youtube-wrapper:before {
+    content: "";
+    display: block;
+    padding-top: 56%;
+}
+.youtube-embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    bottom: 0;
+    height: 100%;
+}
 
 @media (max-width: 720px) {
   body{

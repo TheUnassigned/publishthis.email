@@ -27,7 +27,7 @@ const sanitizeOptions = {
   },
   allowProtocolRelative: true,
   transformTags: {
-    'a': function(tagName, attribs){
+    'a': function(tagName, attribs){ //if youtube
       var newAttribs = attribs;
       newAttribs.rel = 'nofollow'
       newAttribs.target = '_blank'
@@ -94,11 +94,51 @@ const tidyEmail = email => {
   return email
 }
 
+// Convert YouTube links into embeds
+const filterLinks = email => {
+  // find links
+  var links = email.html.match(/<a.+?(<\/a>)/g)
+  .map(link => {
+    var link_text = link.match(/>(.+?)(?=<\/a>)/)[1]
+    var link_href = link.match(/href\="(.+?)(?=")/)[1]
+    var isYouTube = /https?:\/\/(?:www\.)?youtu(?:be)?(\.com|\.be)\/(?:watch\?v=)?[a-zA-Z0-9-_]{11}/.test(link_href)
+
+    // emails may contain links links to YouTube domains that aren't videos?
+    if(link_href.match(/[a-zA-Z0-9-_]{11}/)){
+        var YouTubeID = link_href.match(/[a-zA-Z0-9-_]{11}/)[0]
+    }else{
+      var YouTubeID = false
+    }
+
+    var processed_link = {
+      raw: link,
+      text: link_text,
+      href: link_href,
+      isYouTube: isYouTube,
+      YouTubeID: YouTubeID
+    }
+
+    return processed_link
+  })
+
+  links.forEach(link => {
+    // if the link text matches the href
+    if(link.isYouTube && link.YouTubeID && link.text == link.href){
+      var embedCode = '<div class="youtube-wrapper"><iframe class="youtube-embed" src="https://www.youtube.com/embed/' + link.YouTubeID + '" frameborder="0" allowfullscreen></iframe></div>'
+      email.html = email.html.replace(link.raw, embedCode)
+    }
+  })
+
+  console.log(email.html)
+  return email
+}
+
 const processEmail = rawEmail => {
   return parseMail(rawEmail)
   .then(tidyEmail)
   .then(processImages)
   .then(sanitize)
+  .then(filterLinks)
   .then(({ messageId, to, from, cc, bcc, subject, html, date }) => {
 
     // join to, cc, bcc

@@ -37,20 +37,23 @@ app.get('/', function (req, res) {
   res.render('index');
 })
 
-// app.get('/create/:messageId', function (req, res) {
-//   var messageId = 'sllumhuve9016e8p4c263t5jntf3jcpcupgf5j01' // large images
-//
-//   getRawEmail(messageId)
-//   .then(processEmail)
-//   // .then(storeInDynamo)
-//   // .then(sendReply)
-//   // .then(result => {
-//   //   console.log('stored email:')
-//   //   console.log(result)
-//   //   res.send(true)
-//   // })
-//   .catch(e => console.log(e))
-// })
+app.get('/create/:messageId', function (req, res) {
+  var messageId = 'ida4g8pdkjesfso6m5d6skkrvcd7l4r8gbp60ng1' // large images
+
+  getRawEmail(messageId)
+  .then(processEmail)
+  .then(email => {
+    console.log(email)
+  })
+  // .then(storeInDynamo)
+  // .then(sendReply)
+  // .then(result => {
+  //   console.log('stored email:')
+  //   console.log(result)
+  //   res.send(true)
+  // })
+  .catch(e => console.log(e))
+})
 
 app.get('/:messageId/delete/:editKey', (req, res) => {
   // check for collection
