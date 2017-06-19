@@ -2,7 +2,7 @@
 <html>
 <head>
 
-  <title>publishthis.email - Publish Online In Seconds</title>
+  <title>publishthis.email - Create a Web Page in Seconds</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="stylesheet" type="text/css" href="/css/home.css">
   <link href="https://fonts.googleapis.com/css?family=Martel:300,400|Open+Sans:300,400,600|Roboto+Slab:300,400" rel="stylesheet">
@@ -27,9 +27,9 @@
   <div class="hero group">
     <div class="hero-table">
       <div class="hero-cell">
-        <div class="hero-text">The fastest way to publish online.</div>
+        <div class="hero-text">Create a web page in seconds.</div>
         <div class="hero-text-steps">
-          <div class="hero-text-step">1. Write an email with the content you want to publish</div>
+          <div class="hero-text-step">1. Write an email with the content for your page</div>
           <div class="hero-text-step">2. Send it to <a class="hero-email-link" href="[[= partial('partials/mailto-href.dot')]]">page@publishthis.email</a></div>
           <div class="hero-text-step">3. We'll reply with a link to your <a href="http://www.publishthis.email/rJlcKNynl" target="_blank">new page</a></div>
         </div>
