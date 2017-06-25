@@ -7,6 +7,7 @@ import { getCollection } from './get_collection'
 import { deleteEmailFromDynamo, deleteCollectionItemFromDynamo } from './delete_from_dynamo'
 import { collectionsProcess } from './collections_process'
 import { clearCache } from './clear_cache'
+import { useLanguage, acceptLanguages } from './localise'
 
 export {
   getRawEmail,
@@ -20,5 +21,7 @@ export {
   addTimeSince,
   getCollection,
   collectionsProcess,
-  clearCache
+  clearCache,
+  useLanguage,
+  acceptLanguages
 }

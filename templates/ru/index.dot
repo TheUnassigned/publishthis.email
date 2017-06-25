@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <title>publishthis.email - Как создать веб-страницу за несколько секунд</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="/css/home.css">
+  <link href="https://fonts.googleapis.com/css?family=Martel:300,400|Open+Sans:300,400,600|Roboto+Slab:300,400" rel="stylesheet">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-site-verification" content="GMQm9kj6leA_LTzBdFmSyQxCDLNC_yNQERZNhEL7Sjo" />
+  <meta property="og:url" content="http://www.publishthis.email" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="publishthis.email - Как создать веб-страницу за несколько секунд." />
+  <meta property="og:description" content="1. Напишите электронное письмо с содержимым для вашей веб-страницы. 2. Отправьте его на адрес page@publishthis.email. 3. Вы получите ответное письмо, в котором содержится ссылка на опубликованную страницу." />
+  <meta property="og:image" content="http://www.publishthis.email/fb-og.png" />
+
+[[= partial('../partials/head-hreflang.dot')]]
+
+</head>
+<body>
+  <div class="bar">
+    <div class="bar-margin">
+      <div class="bar-logo">publish<span class="logo-red">this</span>.email</div>
+    </div>
+
+  </div>
+  <div class="hero group">
+    <div class="hero-table">
+      <div class="hero-cell">
+        <div class="hero-text">Как создать веб-страницу за несколько секунд</div>
+        <div class="hero-text-steps">
+          <div class="hero-text-step">1. Напишите электронное письмо с содержимым вашей веб-страницы</div>
+          <div class="hero-text-step">2. Отправьте его на адрес <a class="hero-email-link" href="mailto:page@publishthis.email">page@publishthis.email</a></div>
+          <div class="hero-text-step">3. Вы получите ответное письмо, в котором содержится ссылка на опубликованную страницу</div>
+        </div>
+        <a class="hero-button" href="mailto:page@publishthis.email">Попробуйте!</a>
+        <div class="hero-no-account">Бесплатно. Без регистрации.</div>
+      </div>
+    </div>
+  </div>
+  <!-- testimonial -->
+  <div class="section-rule"></div>
+  <div class="section section-full">
+    <div class="testimonial">
+      <div class="testimonial-text">"Сервис Publishthis.email пригодится вам в том случае, если вы вдруг захотите быстро опубликовать содержимое какого-либо письма. Раньше для этого пришлось бы делать скриншоты или копировать содержимое, потом искать какой-то сайт или блог, где это можно разместить. Словом, сплошная головная боль.
+Publishthis.email сокращает все эти действия до двух кликов."</div>
+      <img class="testimonial-img-lh" src="http://i.imgur.com/SQ0y3eE.png"/>
+    </div>
+  </div>
+  <div class="section-rule"></div>
+  <!-- section 1 -->
+  <div class="section group">
+    <div class="section-half section-half-right">
+      <div class="img-stack">
+        <img class="img-stack-1" src="http://i.imgur.com/jciTarh.png"/>
+        <img class="img-stack-2" src="http://i.imgur.com/WGuRll8.png"/>
+      </div>
+    </div>
+    <div class="section-half section-half-left">
+      <div class="section-title">Как создать веб-страницу за несколько секунд</div>
+      <div class="section-content">
+        <p>Просто отправьте письмо на адрес <strong><a href="mailto:page@publishthis.email">page@publishthis.email</a></strong> и мы мгновенно превратим содержимое вашего письма в веб-страницу, используя тему письма в качестве заголовка.</p>
+        <p>Буквально через несколько секунд вы получите ответное письмо, в котором содержится ссылка на вашу публикацию.</p>
+        <p><a href="http://www.publishthis.email/rJlcKNynl" target="_blank">Вот пример созданной веб-страницы.</a></p>
+      </div>
+    </div>
+  </div>
+  <div class="section-rule"></div>
+  <!-- section 2 -->
+  <div class="section group">
+    <div class="section-half section-half-left">
+      <img class="img-nostack img-noshadow" src="http://i.imgur.com/ASUXz9i.jpg" />
+    </div>
+    <div class="section-half section-half-right">
+      <div class="section-title">Начните вести свой блог, просто отправив e-mail.</div>
+      <div class="section-content">
+        <p>Вы можете мгновенно создать свой блог, просто отправив нам письмо, без необходимости регистрироваться на специализированных сервисах.</p>
+        <p>Отправляйте свои публикации на эл.почту <strong><a href="mailto:page+blog@publishthis.email">page+blog@publishthis.email</a></strong> и вы получите ответное письмо с ссылкой на список всех ваших публикаций на одной странице.</p>
+        <p>Хотите начать еще один блог? Отправьте письмо на эл. почту <strong><a href="mailto:page+___@publishthis.email">page+[___]@publishthis.email</a></strong> чтобы начать новый блог или еще одну коллекцию веб-страниц.</p>
+      </div>
+    </div>
+  </div>
+  <div class="section-rule"></div>
+  <!-- section 3 -->
+  <div class="section group">
+    <div class="section-archive">
+      <div class="section-title">Мгновенная публикация электронной переписки.</div>
+      <div class="section-content">
+        <p>Отправьте копию письма на адрес <strong><a href="mailto:email@publishthis.email">email@publishthis.email</a></strong> и вы получите ответное письмо, в котором содержится ссылка на публикацию.</p>
+        <p></p>
+        <p>Воспользуйтесь сервисом Publishthis.email чтобы создать архив электронной переписки, быстро опубликовать корреспонденцию, или публично поделиться своим письмом.</p>
+      </div>
+    </div>
+  </div>
+  <div class="section-rule"></div>
+  <!-- section 4 -->
+  <div class="section group">
+    <div class="section-half section-half-left">
+      <img class="img-nostack" src="http://i.imgur.com/lTPk4Nt.jpg" />
+    </div>
+    <div class="section-half section-half-right">
+      <div class="section-title">Форматируйте текст письма и добавляйте изображения</div>
+      <div class="section-content">
+        <p>Publishthis.email поддерживает базовое форматирование текста, включая жирный и наклонный текст, заголовки, списки, цитаты и ссылки.</p>
+        <p>Вы также можете добавить изображения в ваше письмо.</p>
+
+      </div>
+    </div>
+  </div>
+  <div class="section-rule"></div>
+  <!-- feedback -->
+  <div class="section section-full">
+    <div class="feedback">
+    Напишите нам <a href="mailto:hello@publishthis.email">hello@publishthis.email</a>
+    </div>
+  </div>
+  <div class="section-rule"></div>
+  [[= partial('../partials/analytics.dot') ]]
+</body>
+</html>

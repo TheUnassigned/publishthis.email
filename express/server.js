@@ -17,12 +17,13 @@ import {
   preRender,
   addTimeSince,
   getCollection,
-  clearCache
+  clearCache,
+  useLanguage,
+  acceptLanguages
 } from '/actions'
 
 const app = express()
 const path = require('path');
-
 
 updateConfig()
 
@@ -34,8 +35,35 @@ app.use(express.static(path.resolve(__dirname, 'public')))
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 
 app.get('/', function (req, res) {
-  res.render('index');
+  // console.log('browser language: ', req.headers['accept-language'])
+  // console.log('accepted language: ', req.acceptsLanguages(acceptLanguages))
+  // if(req.query.lang && acceptLanguages.includes(req.query.lang)){
+  //   var langCode = req.query.lang.substring(0,2)
+  //
+  //   if(['zh-hk', 'zh-sg', 'zh-tw'].includes(req.query.lang)){
+  //     langCode = req.query.lang // traditional chinese
+  //   }
+  //   res.render(langCode + '/index');
+  // }else{
+  //   res.render(useLanguage(req) + '/index');
+  // }
+  var lang = useLanguage(req)
+  if(lang == 'en'){
+    res.render('en' + '/index');
+  }else{
+    res.redirect(301, '/' + lang + '/')
+  }
+
 })
+
+app.get('/ar/', function (req, res) { res.render('ar' + '/index') })
+app.get('/en/', function (req, res) { res.render('en' + '/index') })
+app.get('/es/', function (req, res) { res.render('es' + '/index') })
+app.get('/ru/', function (req, res) { res.render('ru' + '/index') })
+app.get('/zh/', function (req, res) { res.render('zh' + '/index') })
+app.get('/zh-sg/', function (req, res) { res.render('zh-t' + '/index') })
+app.get('/zh-hk/', function (req, res) { res.render('zh-t' + '/index') })
+app.get('/zh-tw/', function (req, res) { res.render('zh-t' + '/index') })
 
 app.get('/create/:messageId', function (req, res) {
   var messageId = 'ida4g8pdkjesfso6m5d6skkrvcd7l4r8gbp60ng1' // large images
