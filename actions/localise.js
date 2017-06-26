@@ -13,7 +13,6 @@ const acceptLanguages = [
 // falls-back to english
 const useLanguage = req => {
   const acceptedLanguage = req.acceptsLanguages(acceptLanguages)
-  console.log('browser language: ', acceptedLanguage)
   if(acceptedLanguage){
     var lang = acceptedLanguage.substring(0,2) // take the first two characters only
 
@@ -61,7 +60,6 @@ const langCode3to2 = code3 => {
 const detectLanguage = email => {
   const sample = email.subject + " - " + email.text
   const detectedLanguage = franc(sample)
-  console.log(franc.all(sample))
 
   if(detectWhitelist.indexOf(detectedLanguage > -1)){
     return detectedLanguage

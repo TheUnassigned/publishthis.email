@@ -99,7 +99,6 @@ const tidyEmail = email => {
 const setLanguage = email => {
   var lang3 = detectLanguage(email)
   email.language = langCode3to2(lang3)
-  console.log(email)
   return email
 }
 
@@ -140,7 +139,6 @@ const filterLinks = email => {
     })
   }
 
-  // console.log(email.html)
   return email
 }
 
