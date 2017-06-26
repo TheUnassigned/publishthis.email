@@ -23,7 +23,7 @@ var replyEmails = {
        <p>We’ve received your email <strong>{{=it.subject}}</strong>, converted it into a tidy little web page, and published it online here:</p>
        <p><a href="{{=it.pteDomain}}/{{=it.messageId}}">{{=it.pteDomain}}/{{=it.messageId}}</a></p>
        <p>For a brief moment there, you were the creator of the newest page on the internet. Congratulations.</p>
-       <p>Sadly, that moment has passed, but you can be the creator of the newest page on the internet at any time. Simply send another email to <a href="mailto:page@publishthis.email">page@publishthis.email</a> to publish a page, or <a href="mailto:email@publishthis.email">email@publishthis.email</a> to publish any email online instantly - we’ll reply with a link to your new page almost instantly.</p>
+       <p>Sadly, that moment has passed, but you can be the creator of the newest page on the internet at any time. Simply send another email to <a href="mailto:page@publishthis.email">page@publishthis.email</a> to publish a page, or <a href="mailto:email@publishthis.email">email@publishthis.email</a> to publish any email online - we’ll reply with a link to your new page in seconds.</p>
        <p>Until then,</p>
        <p><strong>Thanks from <a href="https://www.publishthis.email">publishthis.email</a></strong></p>
        <p>Delete your page: <a href="{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}">{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}</a></p>

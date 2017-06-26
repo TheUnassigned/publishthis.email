@@ -33,8 +33,8 @@ const detectWhitelist = [
   'spa', // Spanish
   'eng', // English
   'rus', // Russian
-  'arb', // Standard Arabic
-  'ukr' // Ukrainian
+  'arb' // Standard Arabic
+  // 'ukr' // Ukrainian
 ]
 
 // to convert from 3 to 2 character language codes
@@ -43,8 +43,8 @@ const languageCodes = [
   ['spa', 'es'],
   ['eng', 'en'],
   ['rus', 'ru'],
-  ['arb', 'ar'],
-  ['urk', 'uk']
+  ['arb', 'ar']
+  // ['urk', 'uk']
 ]
 
 // convert a 3 character language code to 2 characters
@@ -59,9 +59,9 @@ const langCode3to2 = code3 => {
 // detect content language
 const detectLanguage = email => {
   const sample = email.subject + " - " + email.text
-  const detectedLanguage = franc(sample)
+  const detectedLanguage = franc(sample, { whitelist: detectWhitelist })
 
-  if(detectWhitelist.indexOf(detectedLanguage > -1)){
+  if(detectWhitelist.indexOf(detectedLanguage) > -1){
     return detectedLanguage
   }else{
     return 'eng' // fall back to english

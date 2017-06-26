@@ -56,18 +56,19 @@ app.get('/zh-tw/', function (req, res) { res.render('zh-t' + '/index') })
 
 app.get('/create/:messageId', function (req, res) {
   // var messageId = 'ucfq0pevg0cmkhs86b30p4u87vfbtkov3etii5o1' // arabic
-  var messageId = 'rdki1plbl1bv7snds28k66rpbuvdtcrcf11d1rg1' // chinese
+  // var messageId = 'rdki1plbl1bv7snds28k66rpbuvdtcrcf11d1rg1' // chinese
   // var messageId = 'pvom20688e6s4utam0r2uiukld52khsqci21ca01' // russian
   // var messageId = 'j6pc17lq9unlq12va42jf749vcd7k5u47plfhhg1' // French
   // var messageId = '7kt4cpfjbepjkl8ldgku1ggmp8lkm9ii3dasfu81' // English + collection
+  var messageId = 'pnr1fhvvacb0mcrrk0nk50jabiutrcbdncaofe81' //testing
 
   getRawEmail(messageId)
   .then(processEmail)
   // .then(email => {
   //   console.log(email)
   // })
-  // .then(collectionsProcess)
-  // .then(storeInDynamo)
+  .then(collectionsProcess)
+  .then(storeInDynamo)
   .then(sendReply)
   // .then(result => {
   //   console.log('stored email:')

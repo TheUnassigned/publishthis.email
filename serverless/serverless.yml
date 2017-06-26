@@ -31,7 +31,7 @@ provider:
     PTE_S3_BUCKET: ${file(./serverless.env.yml):${opt:stage}.PTE_S3_BUCKET}
     PTE_COLLECTION_TABLE: ${file(./serverless.env.yml):${opt:stage}.PTE_COLLECTION_TABLE}
     PTE_COLLECTION_ITEM_TABLE: ${file(./serverless.env.yml):${opt:stage}.PTE_COLLECTION_ITEM_TABLE}
-  memorySize: 128
+  memorySize: 256
   timeout: 20
   profile: pte
   iamRoleStatements:
