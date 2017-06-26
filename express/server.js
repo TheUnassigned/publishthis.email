@@ -3,7 +3,7 @@
 import AWS, { updateConfig } from '/config/aws'
 import { config } from '/config/environment'
 import express from 'express'
-import dot from 'express-dot-engine'
+import doTexpress from 'express-dot-engine'
 import favicon from 'serve-favicon'
 import sanitizeHtml from 'sanitize-html'
 import {
@@ -14,6 +14,7 @@ import {
   getStoredEmail,
   deleteEmailFromDynamo,
   deleteCollectionItemFromDynamo,
+  collectionsProcess,
   preRender,
   addTimeSince,
   getCollection,
@@ -27,7 +28,7 @@ const path = require('path');
 
 updateConfig()
 
-app.engine('dot', dot.__express)
+app.engine('dot', doTexpress.__express)
 app.set('views', './templates')
 app.set('view engine', 'dot')
 
@@ -35,23 +36,11 @@ app.use(express.static(path.resolve(__dirname, 'public')))
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 
 app.get('/', function (req, res) {
-  // console.log('browser language: ', req.headers['accept-language'])
-  // console.log('accepted language: ', req.acceptsLanguages(acceptLanguages))
-  // if(req.query.lang && acceptLanguages.includes(req.query.lang)){
-  //   var langCode = req.query.lang.substring(0,2)
-  //
-  //   if(['zh-hk', 'zh-sg', 'zh-tw'].includes(req.query.lang)){
-  //     langCode = req.query.lang // traditional chinese
-  //   }
-  //   res.render(langCode + '/index');
-  // }else{
-  //   res.render(useLanguage(req) + '/index');
-  // }
-  var lang = useLanguage(req)
+  var lang = useLanguage(req) // get browser language
   if(lang == 'en'){
-    res.render('en' + '/index');
+    res.render('en' + '/index')
   }else{
-    res.redirect(301, '/' + lang + '/')
+    res.redirect(301, '/' + lang + '/') // redirect to other languages
   }
 
 })
@@ -66,15 +55,20 @@ app.get('/zh-hk/', function (req, res) { res.render('zh-t' + '/index') })
 app.get('/zh-tw/', function (req, res) { res.render('zh-t' + '/index') })
 
 app.get('/create/:messageId', function (req, res) {
-  var messageId = 'ida4g8pdkjesfso6m5d6skkrvcd7l4r8gbp60ng1' // large images
+  var messageId = 'ucfq0pevg0cmkhs86b30p4u87vfbtkov3etii5o1' // arabic
+  // var messageId = 'rdki1plbl1bv7snds28k66rpbuvdtcrcf11d1rg1' // chinese
+  // var messageId = 'pvom20688e6s4utam0r2uiukld52khsqci21ca01' // russian
+  // var messageId = 'j6pc17lq9unlq12va42jf749vcd7k5u47plfhhg1' // French
+  // var messageId = '7kt4cpfjbepjkl8ldgku1ggmp8lkm9ii3dasfu81' // English + collection
 
   getRawEmail(messageId)
   .then(processEmail)
-  .then(email => {
-    console.log(email)
-  })
-  // .then(storeInDynamo)
-  // .then(sendReply)
+  // .then(email => {
+  //   console.log(email)
+  // })
+  .then(collectionsProcess)
+  .then(storeInDynamo)
+  .then(sendReply)
   // .then(result => {
   //   console.log('stored email:')
   //   console.log(result)

@@ -99,18 +99,6 @@
     </div>
   </div>
   <div class="section-rule"></div>
-  <!-- Some ideas on how to use it -->
-  <!-- <div class="section section-full">
-    <div class="section-title">Some ideas for using publish<span class="logo-red">this</span>.email</div>
-    <div class="idea-list">
-      <div class="idea-item">Create a web page</div><span class="idea-gap"> - </span>
-      <div class="idea-item">Publish a list</div><span class="idea-gap"> - </span>
-      <div class="idea-item">Share email newsletters</div><span class="idea-gap"> - </span>
-      <div class="idea-item">Archive email threads</div><span class="idea-gap"> - </span>
-      <div class="idea-item">Email transparency</div>
-    </div>
-  </div>
-  <div class="section-rule"></div> -->
   <!-- feedback -->
   <div class="section section-full">
     <div class="feedback" dir="rtl">
@@ -118,12 +106,6 @@
     </div>
   </div>
   <div class="section-rule"></div>
-  <!-- built by -->
-  <!-- <div class="section section-full">
-    <div class="built-by">
-      Built by <a href="http://www.twitter.com/nickdrewe" target="_blank">@nickdrewe</a> and <a href="http://www.twitter.com/_mattway" target="_blank">@_mattway</a> - Together we're <i><strong>Unassigned</strong></i>
-    </div>
-  </div> -->
   [[= partial('../partials/analytics.dot') ]]
 </body>
 </html>

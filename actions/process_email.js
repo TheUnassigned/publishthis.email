@@ -2,6 +2,7 @@ import MP from 'mailparser'
 import sanitizeHtml from 'sanitize-html'
 import shortid from 'shortid'
 import imgur from '/imgur/imgur'
+import { detectWhitelist, detectLanguage, langCode3to2 } from '/actions/localise'
 
 const sanitizeOptions = {
   // allowedTags: [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
@@ -94,6 +95,14 @@ const tidyEmail = email => {
   return email
 }
 
+// detect email content language and set a language code on the email object
+const setLanguage = email => {
+  var lang3 = detectLanguage(email)
+  email.language = langCode3to2(lang3)
+  console.log(email)
+  return email
+}
+
 // Convert YouTube links into embeds
 const filterLinks = email => {
   // find links
@@ -138,10 +147,11 @@ const filterLinks = email => {
 const processEmail = rawEmail => {
   return parseMail(rawEmail)
   .then(tidyEmail)
+  .then(setLanguage)
   .then(processImages)
   .then(sanitize)
   .then(filterLinks)
-  .then(({ messageId, to, from, cc, bcc, subject, html, date }) => {
+  .then(({ messageId, to, from, cc, bcc, subject, html, date, language }) => {
 
     // join to, cc, bcc
     // match for staging/page/email and label
@@ -162,6 +172,7 @@ const processEmail = rawEmail => {
       messageId: shortid.generate(),
       headerMessageId: messageId,
       timeAdded: new Date().getTime(),
+      language,
       editKey: shortid.generate() + shortid.generate()
     }
     if(cc) { output.cc = cc }

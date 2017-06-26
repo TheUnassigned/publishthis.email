@@ -1,4 +1,6 @@
 import SES from '/aws/ses'
+import doT from 'dot'
+import {replyEmails} from '/templates/reply-email'
 
 const sendReply = mailObj => {
 
@@ -12,26 +14,23 @@ const sendReply = mailObj => {
   .join(',')
   var stagingTest = /staging(\+[\w\-]+)?@publishthis\.email/
 
-  const pteDomain = stagingTest.test(emailStr) ?
+  mailObj.pteDomain = stagingTest.test(emailStr) ?
     'http://staging.publishthis.email' :
     'http://www.publishthis.email'
 
-  // var emailWarning = ''
-  // if(mailObj.oversizeAttachments){
-  //   emailWarning = `<p><strong>Your images were too large, so we haven't included them this time.</strong> <i>publishthis.email supports image attachments up to a total of 350kb per email. To include images in your email, please use smaller attachments.</i></p>`
+    // console.log(replyEmails)
+
+    var replyTemplate = doT.template(replyEmails[mailObj.language])
+    var emailBody = replyTemplate(mailObj)
+
+  // var replyTemplates = require("dot").process({ path: "./templates/reply"});
+  // var emailBody = replyTemplates.reply(mailObj)
+  console.log(mailObj)
+  console.log(emailBody)
+
+  // if(mailObj.collectionId){
+  //   emailBody = emailBody + '<p>This page is part of a collection: <a href="' + pteDomain + '/c/' + mailObj.collectionId + '">' + pteDomain + '/c/' + mailObj.collectionId+ '</a></p>'
   // }
-  var emailBody =  `<p>Good news!</p>
-                      <p>We’ve received your email <strong>${mailObj.subject}</strong>, converted it into a tidy little web page, and published it online here:</p>
-                      <p><a href="${pteDomain}/${mailObj.messageId}">${pteDomain}/${mailObj.messageId}</a></p>
-                      <p>For a brief moment there, you were the creator of the newest page on the internet. Congratulations.</p>
-                      <p>Sadly, that moment has passed, but you can be the creator of the newest page on the internet at any time. Simply send another email to <a href="mailto:page@publishthis.email">page@publishthis.email</a> to publish a page, or <a href="mailto:email@publishthis.email">email@publishthis.email</a> to publish any email online instantly - we’ll reply with a link to your new page almost instantly.</p>
-                      <p>Until then,</p>
-                      <p><strong>Thanks from <a href="https://www.publishthis.email">publishthis.email</a></strong></p>
-                      <p>Delete your page: <a href="${pteDomain}/${mailObj.messageId}/delete/${mailObj.editKey}">${pteDomain}/${mailObj.messageId}/delete/${mailObj.editKey}</a></p>
-                      `
-  if(mailObj.collectionId){
-    emailBody = emailBody + '<p>This page is part of a collection: <a href="' + pteDomain + '/c/' + mailObj.collectionId + '">' + pteDomain + '/c/' + mailObj.collectionId+ '</a></p>'
-  }
 
   const params = {
     Destination: {
@@ -44,7 +43,7 @@ const sendReply = mailObj => {
     },
     Message: {
       Subject: {
-        Data: mailObj.subject + ' - published on publishthis.email',
+        Data: mailObj.subject + ' - publishthis.email',
         Charset: 'UTF-8'
       },
       Body: {
