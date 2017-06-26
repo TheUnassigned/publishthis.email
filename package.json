@@ -22,6 +22,7 @@
     "dot": "^1.1.1",
     "express": "^4.14.1",
     "express-dot-engine": "^1.0.7",
+    "franc-min": "^3.1.0",
     "imgur": "^0.2.0",
     "mailparser": "^0.6.2",
     "moment": "^2.17.1",

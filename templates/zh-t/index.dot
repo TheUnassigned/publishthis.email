@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <title>publishthis.email - 在幾秒鐘內創建一個網頁。</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="/css/home.css">
+  <link href="https://fonts.googleapis.com/css?family=Martel:300,400|Open+Sans:300,400,600|Roboto+Slab:300,400" rel="stylesheet">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-site-verification" content="GMQm9kj6leA_LTzBdFmSyQxCDLNC_yNQERZNhEL7Sjo" />
+  <meta property="og:url" content="http://www.publishthis.email" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="publishthis.email - 在幾秒鐘內創建一個網頁。" />
+  <meta property="og:description" content="1. 寫一封電子郵件，其中包含您頁面的內容。2. 發送至page@publishthis.email。3. 我們將回復一個您新頁面的鏈接。" />
+  <meta property="og:image" content="http://www.publishthis.email/fb-og.png" />
+
+[[= partial('../partials/head-hreflang.dot')]]
+
+</head>
+<body>
+  <div class="bar">
+    <div class="bar-margin">
+      <div class="bar-logo">publish<span class="logo-red">this</span>.email</div>
+    </div>
+
+  </div>
+  <div class="hero group">
+    <div class="hero-table">
+      <div class="hero-cell">
+        <div class="hero-text">在幾秒鐘內創建一個網頁。</div>
+        <div class="hero-text-steps">
+          <div class="hero-text-step">1. 寫一封電子郵件，其中包含您頁面的內容</div>
+          <div class="hero-text-step">2. 發送至<a class="hero-email-link" href="mailto:page@publishthis.email">page@publishthis.email</a></div>
+          <div class="hero-text-step">3. 我們將回復一個您新頁面的鏈接</div>
+        </div>
+        <a class="hero-button" href="mailto:page@publishthis.email">試試看！</a>
+        <div class="hero-no-account">免費，無需帳戶或註冊。</div>
+      </div>
+    </div>
+  </div>
+  <!-- section 1 -->
+  <div class="section group">
+    <div class="section-half section-half-right">
+      <div class="img-stack">
+        <img class="img-stack-1" src="http://i.imgur.com/jciTarh.png"/>
+        <img class="img-stack-2" src="http://i.imgur.com/WGuRll8.png"/>
+      </div>
+    </div>
+    <div class="section-half section-half-left">
+      <div class="section-title">在幾秒鐘內創建一個網頁。</div>
+      <div class="section-content">
+        <p>只需發送電子郵件至<strong><a href="mailto:page@publishthis.email">page@publishthis.email</a></strong>，我們會將您電子郵件的內容轉換成網頁，使用您電子郵件的主題作為標題。</p>
+        <p>我們將在幾秒鐘內回覆您的電子郵件，裡面包含鏈接至您的新網頁。</p>
+        <p><a href="http://www.publishthis.email/rJlcKNynl" target="_blank">以下是一個示例頁面。</a></p>
+      </div>
+    </div>
+  </div>
+  <div class="section-rule"></div>
+  <!-- section 2 -->
+  <div class="section group">
+    <div class="section-half section-half-left">
+      <img class="img-nostack img-noshadow" src="http://i.imgur.com/ASUXz9i.jpg" />
+    </div>
+    <div class="section-half section-half-right">
+      <div class="section-title">S通過發送一封電子郵件，開始新的部落格</div>
+      <div class="section-content">
+        <p>通過發送一封電子郵件，立即使用匯集來開始部落格。無需註冊或設置。</p>
+        <p>將您的發帖發送至<strong><a href="mailto:page+blog@publishthis.email">page+blog@publishthis.email</a></strong>，我們將回复一個鏈接，連接至一個方便的頁面上，裡面有您所有發帖的列表。</p>
+        <p>想要開始更多的部落格，還是寫其他主題的匯集？發電子郵件至<strong><a href="mailto:page+___@publishthis.email">page+[___]@publishthis.email</a></strong>，並隨您喜歡，開始盡可能多的匯集。</p>
+      </div>
+    </div>
+  </div>
+  <div class="section-rule"></div>
+  <!-- section 3 -->
+  <div class="section group">
+    <div class="section-archive">
+      <div class="section-title">歸檔和共享電子郵件對話</div>
+      <div class="section-content">
+        <p>轉發，CC或BCC電子郵件至<strong><a href="mailto:email@publishthis.email">email@publishthis.email</a></strong>，我們將回复一條鏈接，裡面有您電子郵件的內容，發布在一個網頁上。</p>
+        <p>使用<strong><a href="mailto:email@publishthis.email">email@publishthis.email</a></strong>歸檔電子郵件對話，以快速分享一個通信線程，或公開發布您的電子郵件。</p>
+      </div>
+    </div>
+  </div>
+  <div class="section-rule"></div>
+  <!-- section 4 -->
+  <div class="section group">
+    <div class="section-half section-half-left">
+      <img class="img-nostack" src="http://i.imgur.com/lTPk4Nt.jpg" />
+    </div>
+    <div class="section-half section-half-right">
+      <div class="section-title">使用格式和圖像</div>
+      <div class="section-content">
+        <p>使用您的電子郵件編輯器，為您的頁面添加基本格式，包括粗體和斜體文本，標題，列表和鏈接。</p>
+        <p>您也可以將圖像置入您的電子郵件中。</p>
+
+      </div>
+    </div>
+  </div>
+  <div class="section-rule"></div>
+  <!-- feedback -->
+  <div class="section section-full">
+    <div class="feedback">
+      發送電子郵件至<a href="mailto:hello@publishthis.email">hello@publishthis.email</a>
+    </div>
+  </div>
+  <div class="section-rule"></div>
+  [[= partial('../partials/analytics.dot') ]]
+</body>
+</html>

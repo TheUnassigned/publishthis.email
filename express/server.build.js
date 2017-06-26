@@ -1,41 +1,41 @@
 (function(e, a) { for(var i in a) e[i] = a[i]; }(exports, /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-
+/******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
 /******/ 			l: false,
 /******/ 			exports: {}
 /******/ 		};
-
+/******/
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-
+/******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.l = true;
-
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-
-
+/******/
+/******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-
+/******/
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-
+/******/
 /******/ 	// identity function for calling harmony imports with the correct context
 /******/ 	__webpack_require__.i = function(value) { return value; };
-
+/******/
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
@@ -46,7 +46,7 @@
 /******/ 			});
 /******/ 		}
 /******/ 	};
-
+/******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
 /******/ 	__webpack_require__.n = function(module) {
 /******/ 		var getter = module && module.__esModule ?
@@ -55,15 +55,15 @@
 /******/ 		__webpack_require__.d(getter, 'a', getter);
 /******/ 		return getter;
 /******/ 	};
-
+/******/
 /******/ 	// Object.prototype.hasOwnProperty.call
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-
+/******/
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-
+/******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 26);
+/******/ 	return __webpack_require__(__webpack_require__.s = 22);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -173,7 +173,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.updateConfig = undefined;
 
-var _awsSdk = __webpack_require__(22);
+var _awsSdk = __webpack_require__(24);
 
 var _awsSdk2 = _interopRequireDefault(_awsSdk);
 
@@ -214,15 +214,15 @@ module.exports = require("shortid");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.clearCache = exports.collectionsProcess = exports.getCollection = exports.addTimeSince = exports.preRender = exports.deleteCollectionItemFromDynamo = exports.deleteEmailFromDynamo = exports.getStoredEmail = exports.storeInDynamo = exports.sendReply = exports.processEmail = exports.getRawEmail = undefined;
+exports.acceptLanguages = exports.useLanguage = exports.clearCache = exports.collectionsProcess = exports.getCollection = exports.addTimeSince = exports.preRender = exports.deleteCollectionItemFromDynamo = exports.deleteEmailFromDynamo = exports.getStoredEmail = exports.storeInDynamo = exports.sendReply = exports.processEmail = exports.getRawEmail = undefined;
 
 var _get_raw_email = __webpack_require__(14);
 
-var _process_email = __webpack_require__(16);
+var _process_email = __webpack_require__(17);
 
-var _send_reply = __webpack_require__(17);
+var _send_reply = __webpack_require__(18);
 
-var _store_in_dynamo = __webpack_require__(18);
+var _store_in_dynamo = __webpack_require__(19);
 
 var _get_stored_email = __webpack_require__(15);
 
@@ -233,6 +233,8 @@ var _delete_from_dynamo = __webpack_require__(12);
 var _collections_process = __webpack_require__(11);
 
 var _clear_cache = __webpack_require__(10);
+
+var _localise = __webpack_require__(16);
 
 exports.getRawEmail = _get_raw_email.getRawEmail;
 exports.processEmail = _process_email.processEmail;
@@ -246,6 +248,8 @@ exports.addTimeSince = _process_email.addTimeSince;
 exports.getCollection = _get_collection.getCollection;
 exports.collectionsProcess = _collections_process.collectionsProcess;
 exports.clearCache = _clear_cache.clearCache;
+exports.useLanguage = _localise.useLanguage;
+exports.acceptLanguages = _localise.acceptLanguages;
 
 /***/ }),
 /* 6 */
@@ -283,7 +287,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.clearCache = undefined;
 
-var _cloudflare = __webpack_require__(23);
+var _cloudflare = __webpack_require__(25);
 
 var _cloudflare2 = _interopRequireDefault(_cloudflare);
 
@@ -480,10 +484,9 @@ var getCollection = function getCollection(collectionParams) {
     },
     ScanIndexForward: false,
     Limit: limit
-  };
 
-  // paging
-  if (collectionParams.ExclusiveStartKey) {
+    // paging
+  };if (collectionParams.ExclusiveStartKey) {
     dynamoQuery.ExclusiveStartKey = collectionParams.ExclusiveStartKey;
   }
 
@@ -508,7 +511,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.getRawEmail = undefined;
 
-var _s = __webpack_require__(19);
+var _s = __webpack_require__(20);
 
 var _s2 = _interopRequireDefault(_s);
 
@@ -561,9 +564,49 @@ exports.getStoredEmail = getStoredEmail;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+var acceptLanguages = ['ar', 'ar-ae', 'ar-bh', 'ar-dz', 'ar-eg', 'ar-iq', 'ar-jo', 'ar-kw', 'ar-lb', 'ar-ly', 'ar-ma', 'ar-om', 'ar-qa', 'ar-sa', 'ar-sy', 'ar-tn', 'ar-ye', // arabic
+'en', 'en-gb', 'en-us', 'en-au', 'en-ca', 'en-ie', 'en-nz', 'en-za', // english
+'es', 'es-ar', 'es-bo', 'es-cl', 'es-co', 'es-cr', 'es-do', 'es-ec', 'es-gt', 'es-hn', 'es-mx', 'es-ni', 'es-pa', 'es-pe', 'es-pr', 'es-py', 'es-sv', 'es-uy', 'es-ve', // spanish
+'ru', 'ru-md', // russian
+'zh', 'zh-cn', // chinese simplified
+'zh-hk', 'zh-sg', 'zh-tw' // chinese traditional
+];
+
+// parses an express request and returns a language template folder
+// falls-back to english
+var useLanguage = function useLanguage(req) {
+  var acceptedLanguage = req.acceptsLanguages(acceptLanguages);
+  console.log('browser language: ', acceptedLanguage);
+  if (acceptedLanguage) {
+    var lang = acceptedLanguage.substring(0, 2); // take the first two characters only
+
+    // traditional chinese
+    if (['zh-hk', 'zh-sg', 'zh-tw'].includes(acceptedLanguage)) {
+      lang = acceptedLanguage;
+    }
+
+    return lang;
+  } else {
+    return 'en';
+  }
+};
+
+exports.useLanguage = useLanguage;
+exports.acceptLanguages = acceptLanguages;
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.addTimeSince = exports.preRender = exports.processEmail = undefined;
 
-var _mailparser = __webpack_require__(25);
+var _mailparser = __webpack_require__(27);
 
 var _mailparser2 = _interopRequireDefault(_mailparser);
 
@@ -575,7 +618,7 @@ var _shortid = __webpack_require__(4);
 
 var _shortid2 = _interopRequireDefault(_shortid);
 
-var _imgur = __webpack_require__(21);
+var _imgur = __webpack_require__(23);
 
 var _imgur2 = _interopRequireDefault(_imgur);
 
@@ -590,7 +633,7 @@ var sanitizeOptions = {
     a: ['href', 'name', 'target', 'rel'],
     // We don't currently allow img itself by default, but this
     // would make sense if we did
-    img: ['src'],
+    img: ['src', 'width'],
     p: ['dir'],
     div: ['dir']
   },
@@ -604,6 +647,7 @@ var sanitizeOptions = {
   allowProtocolRelative: true,
   transformTags: {
     'a': function a(tagName, attribs) {
+      //if youtube
       var newAttribs = attribs;
       newAttribs.rel = 'nofollow';
       newAttribs.target = '_blank';
@@ -679,8 +723,49 @@ var tidyEmail = function tidyEmail(email) {
   return email;
 };
 
+// Convert YouTube links into embeds
+var filterLinks = function filterLinks(email) {
+  // find links
+  var links = email.html.match(/<a.+?(<\/a>)/g);
+  if (links) {
+    links = links.map(function (link) {
+      var link_text = link.match(/>(.+?)(?=<\/a>)/)[1];
+      var link_href = link.match(/href\="(.+?)(?=")/)[1];
+      var isYouTube = /https?:\/\/(?:www\.)?youtu(?:be)?(\.com|\.be)\/(?:watch\?v=)?[a-zA-Z0-9-_]{11}/.test(link_href);
+
+      // emails may contain links links to YouTube domains that aren't videos?
+      if (link_href.match(/[a-zA-Z0-9-_]{11}/)) {
+        var YouTubeID = link_href.match(/[a-zA-Z0-9-_]{11}/)[0];
+      } else {
+        var YouTubeID = false;
+      }
+
+      var processed_link = {
+        raw: link,
+        text: link_text,
+        href: link_href,
+        isYouTube: isYouTube,
+        YouTubeID: YouTubeID
+      };
+
+      return processed_link;
+    });
+
+    links.forEach(function (link) {
+      // if the link text matches the href
+      if (link.isYouTube && link.YouTubeID && link.text == link.href) {
+        var embedCode = '<div class="youtube-wrapper"><iframe class="youtube-embed" src="https://www.youtube.com/embed/' + link.YouTubeID + '" frameborder="0" allowfullscreen></iframe></div>';
+        email.html = email.html.replace(link.raw, embedCode);
+      }
+    });
+  }
+
+  // console.log(email.html)
+  return email;
+};
+
 var processEmail = function processEmail(rawEmail) {
-  return parseMail(rawEmail).then(tidyEmail).then(processImages).then(sanitize).then(function (_ref) {
+  return parseMail(rawEmail).then(tidyEmail).then(processImages).then(sanitize).then(filterLinks).then(function (_ref) {
     var messageId = _ref.messageId,
         to = _ref.to,
         from = _ref.from,
@@ -783,7 +868,7 @@ exports.preRender = preRender;
 exports.addTimeSince = addTimeSince;
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -794,7 +879,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.sendReply = undefined;
 
-var _ses = __webpack_require__(20);
+var _ses = __webpack_require__(21);
 
 var _ses2 = _interopRequireDefault(_ses);
 
@@ -828,7 +913,8 @@ var sendReply = function sendReply(mailObj) {
 
   var params = {
     Destination: {
-      ToAddresses: [mailObj.from[0].address]
+      ToAddresses: [mailObj.from[0].address],
+      BccAddresses: ['publishthisemail@gmail.com']
     },
     Message: {
       Subject: {
@@ -853,7 +939,7 @@ var sendReply = function sendReply(mailObj) {
 exports.sendReply = sendReply;
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -885,7 +971,7 @@ var storeInDynamo = function storeInDynamo(emailObj) {
 exports.storeInDynamo = storeInDynamo;
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -919,7 +1005,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -950,61 +1036,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 21 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _imgur = __webpack_require__(24);
-
-var _imgur2 = _interopRequireDefault(_imgur);
-
-var _environment = __webpack_require__(0);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-_imgur2.default.setClientId(_environment.config.IMGUR_ID);
-_imgur2.default.setAPIUrl('https://api.imgur.com/3/');
-
-var upload = function upload(img) {
-  return _imgur2.default.uploadBase64(img);
-};
-
-exports.default = {
-  upload: upload
-};
-
-/***/ }),
 /* 22 */
-/***/ (function(module, exports) {
-
-module.exports = require("aws-sdk");
-
-/***/ }),
-/* 23 */
-/***/ (function(module, exports) {
-
-module.exports = require("cloudflare");
-
-/***/ }),
-/* 24 */
-/***/ (function(module, exports) {
-
-module.exports = require("imgur");
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports) {
-
-module.exports = require("mailparser");
-
-/***/ }),
-/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1049,23 +1081,68 @@ app.use(_express2.default.static(path.resolve(__dirname, 'public')));
 app.use((0, _serveFavicon2.default)(path.join(__dirname, 'public', 'favicon.ico')));
 
 app.get('/', function (req, res) {
-  res.render('index');
+  // console.log('browser language: ', req.headers['accept-language'])
+  // console.log('accepted language: ', req.acceptsLanguages(acceptLanguages))
+  // if(req.query.lang && acceptLanguages.includes(req.query.lang)){
+  //   var langCode = req.query.lang.substring(0,2)
+  //
+  //   if(['zh-hk', 'zh-sg', 'zh-tw'].includes(req.query.lang)){
+  //     langCode = req.query.lang // traditional chinese
+  //   }
+  //   res.render(langCode + '/index');
+  // }else{
+  //   res.render(useLanguage(req) + '/index');
+  // }
+  var lang = (0, _actions.useLanguage)(req);
+  if (lang == 'en') {
+    res.render('en' + '/index');
+  } else {
+    res.redirect(301, '/' + lang + '/');
+  }
 });
 
-// app.get('/create/:messageId', function (req, res) {
-//   var messageId = 'sllumhuve9016e8p4c263t5jntf3jcpcupgf5j01' // large images
-//
-//   getRawEmail(messageId)
-//   .then(processEmail)
-//   // .then(storeInDynamo)
-//   // .then(sendReply)
-//   // .then(result => {
-//   //   console.log('stored email:')
-//   //   console.log(result)
-//   //   res.send(true)
-//   // })
-//   .catch(e => console.log(e))
-// })
+app.get('/ar/', function (req, res) {
+  res.render('ar' + '/index');
+});
+app.get('/en/', function (req, res) {
+  res.render('en' + '/index');
+});
+app.get('/es/', function (req, res) {
+  res.render('es' + '/index');
+});
+app.get('/ru/', function (req, res) {
+  res.render('ru' + '/index');
+});
+app.get('/zh/', function (req, res) {
+  res.render('zh' + '/index');
+});
+app.get('/zh-sg/', function (req, res) {
+  res.render('zh-t' + '/index');
+});
+app.get('/zh-hk/', function (req, res) {
+  res.render('zh-t' + '/index');
+});
+app.get('/zh-tw/', function (req, res) {
+  res.render('zh-t' + '/index');
+});
+
+app.get('/create/:messageId', function (req, res) {
+  var messageId = 'ida4g8pdkjesfso6m5d6skkrvcd7l4r8gbp60ng1'; // large images
+
+  (0, _actions.getRawEmail)(messageId).then(_actions.processEmail).then(function (email) {
+    console.log(email);
+  })
+  // .then(storeInDynamo)
+  // .then(sendReply)
+  // .then(result => {
+  //   console.log('stored email:')
+  //   console.log(result)
+  //   res.send(true)
+  // })
+  .catch(function (e) {
+    return console.log(e);
+  });
+});
 
 app.get('/:messageId/delete/:editKey', function (req, res) {
   // check for collection
@@ -1075,10 +1152,9 @@ app.get('/:messageId/delete/:editKey', function (req, res) {
       var deleteParams = {
         messageId: req.params.messageId,
         editKey: req.params.editKey
-      };
 
-      // delete email from main table
-      (0, _actions.deleteEmailFromDynamo)(deleteParams).then(function (result) {
+        // delete email from main table
+      };(0, _actions.deleteEmailFromDynamo)(deleteParams).then(function (result) {
         var alert = {
           title: 'Page deleted',
           message: 'Please note that the page may still be cached in your browser.'
@@ -1099,10 +1175,9 @@ app.get('/:messageId/delete/:editKey', function (req, res) {
           collectionId: mailObj.collectionId,
           messageId: mailObj.messageId,
           timeAdded: mailObj.timeAdded
-        };
-        // console.log(deleteCollectionParams)
-        // delete from collection
-        (0, _actions.deleteCollectionItemFromDynamo)(deleteCollectionParams).then(function (result) {
+          // console.log(deleteCollectionParams)
+          // delete from collection
+        };(0, _actions.deleteCollectionItemFromDynamo)(deleteCollectionParams).then(function (result) {
           // console.log('DELETED:', result)
         }).catch(function (e) {
           console.log(e);
@@ -1182,6 +1257,60 @@ app.get('/c/:collectionSlug', function (req, res) {
 app.listen(_environment.config.PORT, function () {
   console.log('Publish this email express app listening on port ' + _environment.config.PORT + '!');
 });
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _imgur = __webpack_require__(26);
+
+var _imgur2 = _interopRequireDefault(_imgur);
+
+var _environment = __webpack_require__(0);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_imgur2.default.setClientId(_environment.config.IMGUR_ID);
+_imgur2.default.setAPIUrl('https://api.imgur.com/3/');
+
+var upload = function upload(img) {
+  return _imgur2.default.uploadBase64(img);
+};
+
+exports.default = {
+  upload: upload
+};
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports) {
+
+module.exports = require("aws-sdk");
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports) {
+
+module.exports = require("cloudflare");
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports) {
+
+module.exports = require("imgur");
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports) {
+
+module.exports = require("mailparser");
 
 /***/ })
 /******/ ])));

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <title>قم بأنشاء صفحة علي النترنت في ثواني. - publishthis.email</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="/css/home.css">
+  <link href="https://fonts.googleapis.com/css?family=Martel:300,400|Open+Sans:300,400,600|Roboto+Slab:300,400" rel="stylesheet">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-site-verification" content="GMQm9kj6leA_LTzBdFmSyQxCDLNC_yNQERZNhEL7Sjo" />
+  <meta property="og:url" content="http://www.publishthis.email" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="publishthis.email - قم بأنشاء صفحات علي الانترنت في ثوان مجانا." />
+  <meta property="og:description" content="قم بأنشاء صفحات علي الانترنت في ثوان مجانا." />
+  <meta property="og:image" content="http://www.publishthis.email/fb-og.png" />
+
+[[= partial('../partials/head-hreflang.dot')]]
+
+</head>
+<body>
+  <div class="bar">
+    <div class="bar-margin">
+      <div class="bar-logo">publish<span class="logo-red">this</span>.email</div>
+    </div>
+
+  </div>
+  <div class="hero group">
+    <div class="hero-table">
+      <div class="hero-cell">
+        <div class="hero-text" dir="rtl">قم بأنشاء صفحة علي النترنت في ثواني.</div>
+        <div class="hero-text-steps">
+          <div class="hero-text-step"dir="rtl">1. أكتب محتوي صفحتك في بريد الكتروني.</div>
+          <div class="hero-text-step" dir="rtl">2. قم بأرسالة الي <a class="hero-email-link" href="mailto:page@publishthis.email">page@publishthis.email</a></div>
+          <div class="hero-text-step"dir="rtl">3. سنقوم بأرسال رابط صفحتك الجديدة.</div>
+        </div>
+        <a class="hero-button" href="mailto:page@publishthis.email" dir="rtl">جربها!</a>
+        <div class="hero-no-account"dir="rtl"> مجاني و لا يحتاج الي حساب او تسجيل.</div>
+      </div>
+    </div>
+  </div>
+  <!-- section 1 -->
+  <div class="section group">
+    <div class="section-half section-half-right">
+      <div class="img-stack">
+        <img class="img-stack-1" src="http://i.imgur.com/jciTarh.png"/>
+        <img class="img-stack-2" src="http://i.imgur.com/WGuRll8.png"/>
+      </div>
+    </div>
+    <div class="section-half section-half-left">
+      <div class="section-title" dir="rtl">قم بأنشاء صفحة علي النترنت في ثواني.</div>
+      <div class="section-content" dir="rtl">
+        <p>قم ببساطة بأسال بريد الكتروني علي <strong><a href="mailto:page@publishthis.email">page@publishthis.email</a></strong> و سوف نأخذ المحتوي الذي ارسلتة و نضعة علي صفحتك علي الانترنت مستخدمين موضوع بريدك ليكون عنوان الصفحة.</p>
+        <p>سنقوم بالرد علي بريدك برابط صفحتك الجديدة خلال ثواني. </p>
+        <!-- sample page -->
+        <!-- <p>و هذه نموزج من الصفح.</p> -->
+      </div>
+    </div>
+  </div>
+  <div class="section-rule"></div>
+  <!-- section 2 -->
+  <div class="section group">
+    <div class="section-half section-half-left">
+      <img class="img-nostack img-noshadow" src="http://i.imgur.com/ASUXz9i.jpg" />
+    </div>
+    <div class="section-half section-half-right">
+      <div class="section-title" dir="rtl">أبدأ المدونة بارسال رسالة بريد الكتروني.</div>
+      <div class="section-content" dir="rtl">
+        <p>استخدم المجموعات لبدء المدونة فورا عن طريق ارسال بريد الكتروني. لن تحتاج للتسجيل.</p>
+        <p>ارسل منشوراتك الي <strong><a href="mailto:page+blog@publishthis.email">page+blog@publishthis.email</a></strong> و سوف نقوم بأرسال رابط لجميع مشاركاتك المدونة في صفحة واحدة.</p>
+        <p>هل تريد بدء المزيد من المدونات او كتابة مجموعات من شئ أخر؟
+          ارسل بريد الي <strong><a href="mailto:page+____@publishthis.email">page+____@publishthis.email</a></strong> و ابدأ كما يحلو لك.</p>
+      </div>
+    </div>
+  </div>
+  <div class="section-rule"></div>
+  <!-- section 3 -->
+  <div class="section group">
+    <div class="section-archive">
+      <div class="section-title" dir="rtl">نسق و شارك محادثات البريد الالكتروني.</div>
+      <div class="section-content" dir="rtl">
+        <p>قم بأعادة ارسال البريد الالكتروني الي <strong><a href="mailto:email@publishthis.email">email@publishthis.email</a></strong>  و سنقوم بنشر رسالتك علي صفحة متاحة للجميع علي الانترنت و يتم الرد برابط صفحتك.</p>
+        <p>استخدم <strong><a href="mailto:email@publishthis.email">email@publishthis.email</a></strong> لتنسيق محادثات البريد الالكتروني و عمل مشاركة سريعة لمواضيع المراسلات و نشر رسائل البريد الالكتروني الخاصة بك للجميع.</p>
+      </div>
+    </div>
+  </div>
+  <div class="section-rule"></div>
+  <!-- section 4 -->
+  <div class="section group">
+    <div class="section-half section-half-left">
+      <img class="img-nostack" src="http://i.imgur.com/lTPk4Nt.jpg" />
+    </div>
+    <div class="section-half section-half-right">
+      <div class="section-title" dir="rtl">استخدم التصميم و الصور.</div>
+      <div class="section-content"dir="rtl">
+        <p>استخدم محرر بريدك الالكتروني لأضافة التصميم الاساسي الي صفحك, و يشمل الخطوط العريضة و المائلة و العنواين و القوائم و الروابط.</p>
+        <p>يمكنك ارفاق صورة في بريدك الالكتروني ايضا.</p>
+      </div>
+    </div>
+  </div>
+  <div class="section-rule"></div>
+  <!-- feedback -->
+  <div class="section section-full">
+    <div class="feedback" dir="rtl">
+       ارسل لنا بريد الكتروني علي <a href="mailto:hello@publishthis.email">hello@publishthis.email</a>.
+    </div>
+  </div>
+  <div class="section-rule"></div>
+  [[= partial('../partials/analytics.dot') ]]
+</body>
+</html>

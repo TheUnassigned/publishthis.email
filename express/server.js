@@ -3,7 +3,7 @@
 import AWS, { updateConfig } from '/config/aws'
 import { config } from '/config/environment'
 import express from 'express'
-import dot from 'express-dot-engine'
+import doTexpress from 'express-dot-engine'
 import favicon from 'serve-favicon'
 import sanitizeHtml from 'sanitize-html'
 import {
@@ -14,19 +14,21 @@ import {
   getStoredEmail,
   deleteEmailFromDynamo,
   deleteCollectionItemFromDynamo,
+  collectionsProcess,
   preRender,
   addTimeSince,
   getCollection,
-  clearCache
+  clearCache,
+  useLanguage,
+  acceptLanguages
 } from '/actions'
 
 const app = express()
 const path = require('path');
 
-
 updateConfig()
 
-app.engine('dot', dot.__express)
+app.engine('dot', doTexpress.__express)
 app.set('views', './templates')
 app.set('view engine', 'dot')
 
@@ -34,19 +36,40 @@ app.use(express.static(path.resolve(__dirname, 'public')))
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 
 app.get('/', function (req, res) {
-  res.render('index');
+  var lang = useLanguage(req) // get browser language
+  if(lang == 'en'){
+    res.render('en' + '/index')
+  }else{
+    res.redirect(301, '/' + lang + '/') // redirect to other languages
+  }
+
 })
 
+app.get('/ar/', function (req, res) { res.render('ar' + '/index') })
+app.get('/en/', function (req, res) { res.render('en' + '/index') })
+app.get('/es/', function (req, res) { res.render('es' + '/index') })
+app.get('/ru/', function (req, res) { res.render('ru' + '/index') })
+app.get('/zh/', function (req, res) { res.render('zh' + '/index') })
+app.get('/zh-sg/', function (req, res) { res.render('zh-t' + '/index') })
+app.get('/zh-hk/', function (req, res) { res.render('zh-t' + '/index') })
+app.get('/zh-tw/', function (req, res) { res.render('zh-t' + '/index') })
+
 app.get('/create/:messageId', function (req, res) {
-  var messageId = 'ida4g8pdkjesfso6m5d6skkrvcd7l4r8gbp60ng1' // large images
+  // var messageId = 'ucfq0pevg0cmkhs86b30p4u87vfbtkov3etii5o1' // arabic
+  // var messageId = 'rdki1plbl1bv7snds28k66rpbuvdtcrcf11d1rg1' // chinese
+  // var messageId = 'pvom20688e6s4utam0r2uiukld52khsqci21ca01' // russian
+  // var messageId = 'j6pc17lq9unlq12va42jf749vcd7k5u47plfhhg1' // French
+  // var messageId = '7kt4cpfjbepjkl8ldgku1ggmp8lkm9ii3dasfu81' // English + collection
+  var messageId = 'pnr1fhvvacb0mcrrk0nk50jabiutrcbdncaofe81' //testing
 
   getRawEmail(messageId)
   .then(processEmail)
-  .then(email => {
-    console.log(email)
-  })
-  // .then(storeInDynamo)
-  // .then(sendReply)
+  // .then(email => {
+  //   console.log(email)
+  // })
+  .then(collectionsProcess)
+  .then(storeInDynamo)
+  .then(sendReply)
   // .then(result => {
   //   console.log('stored email:')
   //   console.log(result)
