@@ -61,8 +61,9 @@ const langCode3to2 = code3 => {
 const detectLanguage = email => {
   const sample = email.subject + " - " + email.text
   const detectedLanguage = franc(sample)
+  console.log(franc.all(sample))
 
-  if(detectWhitelist.includes(detectedLanguage)){
+  if(detectWhitelist.indexOf(detectedLanguage > -1)){
     return detectedLanguage
   }else{
     return 'eng' // fall back to english

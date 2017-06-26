@@ -18,19 +18,9 @@ const sendReply = mailObj => {
     'http://staging.publishthis.email' :
     'http://www.publishthis.email'
 
-    // console.log(replyEmails)
-
-    var replyTemplate = doT.template(replyEmails[mailObj.language])
-    var emailBody = replyTemplate(mailObj)
-
-  // var replyTemplates = require("dot").process({ path: "./templates/reply"});
-  // var emailBody = replyTemplates.reply(mailObj)
-  console.log(mailObj)
-  console.log(emailBody)
-
-  // if(mailObj.collectionId){
-  //   emailBody = emailBody + '<p>This page is part of a collection: <a href="' + pteDomain + '/c/' + mailObj.collectionId + '">' + pteDomain + '/c/' + mailObj.collectionId+ '</a></p>'
-  // }
+  // set reply template for the appropriate language
+  var replyTemplate = doT.template(replyEmails[mailObj.language])
+  var emailBody = replyTemplate(mailObj)
 
   const params = {
     Destination: {
