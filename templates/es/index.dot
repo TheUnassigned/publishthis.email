@@ -12,8 +12,7 @@
   <meta property="og:url" content="http://www.publishthis.email" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="publishthis.email - Crea una página web en segundos" />
-  <meta property="og:description" content="Crea una página web en segundos. Es gratis. No se requieren registro ni cuenta.
-" />
+  <meta property="og:description" content="Crea una página web en segundos. Es gratis. No se requieren registro ni cuenta." />
   <meta property="og:image" content="http://www.publishthis.email/fb-og.png" />
 
 [[= partial('../partials/head-hreflang.dot')]]
@@ -31,7 +30,7 @@
       <div class="hero-cell">
         <div class="hero-text">Crea una página web en segundos</div>
         <div class="hero-text-steps">
-          <div class="hero-text-step">1. Escribe un email con el contenido de tu página</div>
+          <div class="hero-text-step">1. Escribe un email con lo que quieres que tu página tenga</div>
           <div class="hero-text-step">2. Envíalo a <a class="hero-email-link" href="mailto:page@publishthis.email">page@publishthis.email</a></div>
           <div class="hero-text-step">3. Nosotros te responderemos con un enlace que va a tu <a href="http://www.publishthis.email/rJlcKNynl" target="_blank">nueva página</a></div>
         </div>
@@ -60,8 +59,8 @@
     <div class="section-half section-half-left">
       <div class="section-title">Crea una página web en segundos</div>
       <div class="section-content">
-        <p>Simplemente envía un email a <strong><a href="mailto:page@publishthis.email">page@publishthis.email</a></strong> que nosotros convertiremos el contenido de tu email en una página web, usando el asunto de tu email como el título.</p>
-        <p>We reply to your email within seconds with a link to your new webpage.</p>
+        <p>Simplemente envía un email a <strong><a href="mailto:page@publishthis.email">page@publishthis.email</a></strong> que nosotros convertiremos tu email a una página web, usando el asunto de tu email como el título.</p>
+        <p>Respondemos a su correo electrónico en segundos con un enlace a su nueva página web.</p>
         <p>Aquí puedes ver una <a href="http://www.publishthis.email/rJlcKNynl" target="_blank">página de ejemplo.</a></p>
       </div>
     </div>
@@ -73,9 +72,9 @@
       <img class="img-nostack img-noshadow" src="http://i.imgur.com/ASUXz9i.jpg" />
     </div>
     <div class="section-half section-half-right">
-      <div class="section-title">Comienza un blog con un email</div>
+      <div class="section-title">Crea un blog con un email</div>
       <div class="section-content">
-        <p>Utiliza colecciones para enviar un blog instantáneamente, solo enviando un email. No se requieren ni registro ni una cuenta.</p>
+        <p>Utiliza colecciones para enviar un blog instantáneamente, solo enviando un email. No se requieren ni registro, ni una cuenta.</p>
         <p>Envía por email tus posts a <strong><a href="mailto:page+blog@publishthis.email">page+blog@publishthis.email</a></strong> que nosotros responderemos con un enlace que va a una lista que incluye todos los posts de tu blog en una página.</p>
         <p>Quieres iniciar más blogs o escribir colecciones de otra cosa? Envía un email a <strong><a href="mailto:page+aglo@publishthis.email">page+[aglo]@publishthis.email</a> y comienza tantas colecciones como desees.</p>
       </div>
