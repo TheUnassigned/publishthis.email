@@ -108,12 +108,19 @@ const filterLinks = email => {
   var links = email.html.match(/<a.+?(<\/a>)/g)
   if (links){
     links = links.map(link => {
-      var link_text = link.match(/>(.+?)(?=<\/a>)/)[1]
-      var link_href = link.match(/href\="(.+?)(?=")/)[1]
+
+      if(link.match(/>(.+?)(?=<\/a>)/) && link.match(/>(.+?)(?=<\/a>)/)[1]){
+        var link_text = link.match(/>(.+?)(?=<\/a>)/)[1]
+      }else{ var link_text = null }
+
+      if(link.match(/href\="(.+?)(?=")/) && link.match(/href\="(.+?)(?=")/)[1]){
+        var link_href = link.match(/href\="(.+?)(?=")/)[1]
+      }else{ var link_href = null }
+
       var isYouTube = /https?:\/\/(?:www\.)?youtu(?:be)?(\.com|\.be)\/(?:watch\?v=)?[a-zA-Z0-9-_]{11}/.test(link_href)
 
       // emails may contain links links to YouTube domains that aren't videos?
-      if(link_href.match(/[a-zA-Z0-9-_]{11}/)){
+      if(link_href && link_href.match(/[a-zA-Z0-9-_]{11}/)){
           var YouTubeID = link_href.match(/[a-zA-Z0-9-_]{11}/)[0]
       }else{
         var YouTubeID = false
