@@ -18,7 +18,7 @@ const sanitizeOptions = {
     img: [ 'src', 'width' ],
     p: [ 'dir'],
     div: ['dir'],
-    font: ['size', 'color']
+    font: ['size', 'color', 'face']
   },
   // Lots of these won't come up by default because we don't allow them
   selfClosing: [ 'img', 'br', 'hr', 'area', 'base', 'basefont', 'input', 'link', 'meta' ],
