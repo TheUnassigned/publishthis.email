@@ -10,14 +10,15 @@ const sanitizeOptions = {
   // 'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre', 'img' ],
   allowedTags: [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
   'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
-  'thead', 'caption', 'pre', 'img', 'dir', 'marquee' ],
+  'thead', 'caption', 'pre', 'img', 'dir', 'marquee', 'font' ],
   allowedAttributes: {
     a: [ 'href', 'name', 'target', 'rel' ],
     // We don't currently allow img itself by default, but this
     // would make sense if we did
     img: [ 'src', 'width' ],
     p: [ 'dir'],
-    div: ['dir']
+    div: ['dir'],
+    font: ['size', 'color']
   },
   // Lots of these won't come up by default because we don't allow them
   selfClosing: [ 'img', 'br', 'hr', 'area', 'base', 'basefont', 'input', 'link', 'meta' ],
