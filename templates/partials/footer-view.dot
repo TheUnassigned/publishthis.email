@@ -1,8 +1,30 @@
-<div class="footer">
+<!-- <div class="footer">
   <div class="footer-margin">
     <div class="footer-content">
       <a href="https://www.publishthis.email">publishthis.email</a> - Publish online in seconds by sending an email to <a href="mailto:page@publishthis.email">page@publishthis.email</a>
       <div class="footer-line">Built by <a class="footer-twitter" href="http://www.twitter.com/nickdrewe" target="_blank">@nickdrewe</a> and <a class="footer-twitter" href="http://www.twitter.com/_mattway" target="_blank">@_mattway</a></div>
     </div>
   </div>
+</div> -->
+
+<div class="footer-container">
+  <div class="footer-tab-container">
+    <div class="footer-tab">
+      <div class="footer-tab-created">Created with</div>
+      <div class="footer-tab-logo">publish<span class="logo-red">this</span>.email</div>
+    </div>
+  </div>
+
+  <div id="footer-expander" class="footer-content">
+    <div class="footer-margin">
+    <div class="footer-heading"><a href="/">Create simple web pages in seconds for free.</a></div>
+    <div class="footer-message">This page was created in seconds, by sending an email to <a class="footer-email-link" href="mailto:page@publishthis.email">page@publishthis.email</a>.</div>
+    <div>
+      <a href="/">
+        <div class="footer-button">Try it!</div>
+      </a>
+      <span>Free. No account or sign-up required.</span>
+    </div>
+  </div>
 </div>
+<script src="/js/footer.js"></script>
