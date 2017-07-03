@@ -9,7 +9,7 @@
 
 <div class="footer-container">
   <div class="footer-tab-container">
-    <div class="footer-tab">
+    <div class="footer-tab" onclick="expand()">
       <div class="footer-tab-created">Created with</div>
       <div class="footer-tab-logo">publish<span class="logo-red">this</span>.email</div>
     </div>

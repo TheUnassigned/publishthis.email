@@ -287,6 +287,17 @@ img{
 }
 
 @media (max-width: 500px) {
+  .footer-tab{
+
+  }
+  .footer-tab-created{
+    font-size: 13px;
+    line-height: 16px;
+  }
+  .footer-tab-logo{
+    font-size: 16px;
+    line-height: 16px;
+  }
   .footer-content{
     font-size: 13px;
     line-height: 22px;

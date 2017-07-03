@@ -1,3 +1,13 @@
+var expanded = false;
+
+function expand(){
+  document.getElementById('footer-expander').setAttribute('class', 'footer-content footer-content-expanded');
+}
+
+function collapse(){
+  document.getElementById('footer-expander').setAttribute('class', 'footer-content');
+}
+
 // listen for scroll event
 window.addEventListener("scroll", scroll);
 // on scroll
@@ -5,9 +15,9 @@ function scroll(){
   // check for bottom
   var footerOffset = 0;
   if((window.innerHeight + window.scrollY + footerOffset) >= getDocHeight()){
-    document.getElementById('footer-expander').setAttribute('class', 'footer-content footer-content-expanded');
+    expand()
   }else{
-    document.getElementById('footer-expander').setAttribute('class', 'footer-content');
+    collapse()
   }
 }
 
