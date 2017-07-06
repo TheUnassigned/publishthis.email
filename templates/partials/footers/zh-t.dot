@@ -1,0 +1,22 @@
+<div class="footer-container">
+  <div class="footer-tab-container">
+    <div class="footer-tab" onclick="expand()">
+      <!-- <div class="footer-tab-created">Created with</div> -->
+      <div class="footer-tab-logo">publish<span class="logo-red">this</span>.email</div>
+    </div>
+  </div>
+
+  <div id="footer-expander" class="footer-content">
+    <img class="footer-close-img" src="http://i.imgur.com/pUIYq8P.png" onclick="removeFooter()"/>
+    <div class="footer-margin">
+    <div class="footer-heading"><a href="/" onclick="trackLink('/')">在幾秒鐘內免費創建簡單的網頁。</a></div>
+    <div class="footer-message">此頁面是通過發送電子郵件至<a class="footer-email-link" href="mailto:page@publishthis.email" onclick="trackLink('mailto:page@publishthis.email')">page@publishthis.email</a>，在幾秒內創建的</div>
+    <div>
+      <a href="/" onclick="trackLink('/')">
+        <div class="footer-button">試試看！</div>
+      </a>
+      <span>免費，無需帳戶或註冊。</span>
+    </div>
+  </div>
+</div>
+<script src="/js/footer.js"></script>

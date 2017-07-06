@@ -33,6 +33,20 @@ const detectWhitelist = [
   'spa', // Spanish
   'eng', // English
   'rus', // Russian
+  'arb', // Standard Arabic
+  'por',
+  'fra',
+  'ita',
+  'deu',
+  'pol'
+  // 'ukr' // Ukrainian
+]
+
+const allowedLanguages = [
+  'cmn', // Chinese Mandarin
+  'spa', // Spanish
+  'eng', // English
+  'rus', // Russian
   'arb' // Standard Arabic
   // 'ukr' // Ukrainian
 ]
@@ -61,7 +75,7 @@ const detectLanguage = email => {
   const sample = email.subject + " - " + email.text
   const detectedLanguage = franc(sample, { whitelist: detectWhitelist })
 
-  if(detectWhitelist.indexOf(detectedLanguage) > -1){
+  if(allowedLanguages.indexOf(detectedLanguage) > -1){
     return detectedLanguage
   }else{
     return 'eng' // fall back to english

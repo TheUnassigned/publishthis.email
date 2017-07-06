@@ -1,0 +1,22 @@
+<div class="footer-container">
+  <div class="footer-tab-container">
+    <div class="footer-tab" onclick="expand()">
+      <!-- <div class="footer-tab-created">Created with</div> -->
+      <div class="footer-tab-logo">publish<span class="logo-red">this</span>.email</div>
+    </div>
+  </div>
+
+  <div id="footer-expander" class="footer-content">
+    <img class="footer-close-img" src="http://i.imgur.com/pUIYq8P.png" onclick="removeFooter()"/>
+    <div class="footer-margin">
+    <div class="footer-heading"><a href="/" onclick="trackLink('/')">Бесплатное создание простых веб-страниц за несколько секунд.</a></div>
+    <div class="footer-message">Эта веб-страница было создана мгновенно с помощью сервиса <a class="footer-email-link" href="mailto:page@publishthis.email" onclick="trackLink('mailto:page@publishthis.email')">page@publishthis.email</a>.</div>
+    <div>
+      <a href="/" onclick="trackLink('/')">
+        <div class="footer-button">Попробуйте!</div>
+      </a>
+      <span>Бесплатно. Без регистрации.</span>
+    </div>
+  </div>
+</div>
+<script src="/js/footer.js"></script>

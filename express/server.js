@@ -60,7 +60,7 @@ app.get('/create/:messageId', function (req, res) {
   // var messageId = 'pvom20688e6s4utam0r2uiukld52khsqci21ca01' // russian
   // var messageId = 'j6pc17lq9unlq12va42jf749vcd7k5u47plfhhg1' // French
   // var messageId = '7kt4cpfjbepjkl8ldgku1ggmp8lkm9ii3dasfu81' // English + collection
-  var messageId = 'vlohpno05p3ifdi9b2kjd4t22vr9dvj5u7tmilo1' //testing
+  var messageId = '235ms787oko9iibmpukok2gmrku5rh3sdckrn181' //testing
 
   getRawEmail(messageId)
   .then(processEmail)
@@ -146,7 +146,14 @@ app.get('/:messageId', (req, res) => {
   getStoredEmail(req.params.messageId)
   .then(preRender)
   .then(mailObj => {
-    mailObj.html = mailObj.html.replace(/<p><br \/>\n<\/p>/g, '')
+    mailObj.html = mailObj.html.replace(/<p><br \/>\n<\/p>/g, '') //attempting to tidy breaks
+
+    // set footer language
+    if(!mailObj.language){
+      mailObj.language = 'en'
+    }
+
+    // page or email
     if(mailObj.to[0].address.startsWith('page')){
 
       res.render('page', mailObj)

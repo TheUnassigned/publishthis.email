@@ -10,7 +10,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 </head>
-<body>
+<body onscroll="scroll()">
   <div class="page-margin page" dir="[[=model.dir]]">
     <h1>[[=model.subject]]</h1>
     <!-- <div class="email-recipients">
@@ -18,7 +18,8 @@
     </div> -->
     <div class="body">[[=model.html]]</div>
   </div>
-  [[= partial('partials/footer-view.dot') ]]
+  [[= model.language]]
+  [[= partial('partials/footers/' + model.language + '.dot') ]]
   [[= partial('partials/analytics.dot') ]]
 </body>
 </html>

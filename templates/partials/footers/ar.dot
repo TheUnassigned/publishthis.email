@@ -1,0 +1,24 @@
+<div class="footer-container">
+  <div class="footer-tab-container">
+    <div class="footer-tab" onclick="expand()">
+      <!-- <div class="footer-tab-created">Created with</div> -->
+      <div class="footer-tab-logo">publish<span class="logo-red">this</span>.email</div>
+    </div>
+  </div>
+
+  <div id="footer-expander" class="footer-content" dir="rtl">
+    <div class="footer-content-rtl">
+      <img class="footer-close-img" src="http://i.imgur.com/pUIYq8P.png" onclick="removeFooter()"/>
+      <div class="footer-margin">
+      <div class="footer-heading"><a href="/" onclick="trackLink('/')">قم بأنشاء صفحات علي الانترنت في ثوان مجانا.</a></div>
+      <div class="footer-message">تم انشاء هذه الصفحة في ثوان عن طريق اسال بريد الكتروني الي <a class="footer-email-link" href="mailto:page@publishthis.email" onclick="trackLink('mailto:page@publishthis.email')">page@publishthis.email</a></div>
+      <div>
+        <a href="/" onclick="trackLink('/')">
+          <div class="footer-button">جربها!</div>
+        </a>
+        <span>مجاني و لا يحتاج الي حساب او تسجيل.</span>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/js/footer.js"></script>
