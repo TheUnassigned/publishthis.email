@@ -10,6 +10,8 @@ function removeFooter(){
 function expand(){
   if(!removed){
       document.getElementById('footer-expander').setAttribute('class', 'footer-content footer-content-expanded');
+  }else{
+    window.location = 'http://www.publishthis.email';
   }
 }
 

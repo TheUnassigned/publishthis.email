@@ -146,7 +146,15 @@ app.get('/:messageId', (req, res) => {
   getStoredEmail(req.params.messageId)
   .then(preRender)
   .then(mailObj => {
-    mailObj.html = mailObj.html.replace(/<p><br \/>\n<\/p>/g, '')
+    mailObj.html = mailObj.html.replace(/<p><br \/>\n<\/p>/g, '') //attempting to tidy breaks
+
+    // set footer language
+    console.log(mailObj.language)
+    if(!mailObj.language){
+      mailObj.language = 'en'
+    }
+
+    // page or email
     if(mailObj.to[0].address.startsWith('page')){
 
       res.render('page', mailObj)

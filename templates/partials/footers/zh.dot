@@ -1,8 +1,7 @@
-
 <div class="footer-container">
   <div class="footer-tab-container">
     <div class="footer-tab" onclick="expand()">
-      <div class="footer-tab-created">Created with</div>
+      <!-- <div class="footer-tab-created">Created with</div> -->
       <div class="footer-tab-logo">publish<span class="logo-red">this</span>.email</div>
     </div>
   </div>
@@ -10,13 +9,13 @@
   <div id="footer-expander" class="footer-content">
     <img class="footer-close-img" src="http://i.imgur.com/pUIYq8P.png" onclick="removeFooter()"/>
     <div class="footer-margin">
-    <div class="footer-heading"><a href="/">Create simple web pages in seconds for free.</a></div>
-    <div class="footer-message">This page was created in seconds, by sending an email to <a class="footer-email-link" href="mailto:page@publishthis.email">page@publishthis.email</a>.</div>
+    <div class="footer-heading"><a href="/">在几秒钟内免费创建简单的网页。</a></div>
+    <div class="footer-message">此页面是通过发送电子邮件至<a class="footer-email-link" href="mailto:page@publishthis.email">page@publishthis.email</a>，在几秒内创建的。</div>
     <div>
       <a href="/">
-        <div class="footer-button">Try it!</div>
+        <div class="footer-button">试试看！</div>
       </a>
-      <span>Free. No account or sign-up required.</span>
+      <span>免费。无需帐户或注册。</span>
     </div>
   </div>
 </div>
