@@ -18,7 +18,6 @@
     </div> -->
     <div class="body">[[=model.html]]</div>
   </div>
-  [[= model.language]]
   [[= partial('partials/footers/' + model.language + '.dot') ]]
   [[= partial('partials/analytics.dot') ]]
 </body>
