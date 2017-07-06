@@ -1,10 +1,17 @@
 var removed = false;
 
+var trackLink = function(url) {
+   ga('send', 'event', 'footer', 'click', url, {
+     'transport': 'beacon',
+     'hitCallback': function(){document.location = url;}
+   });
+}
+
 function removeFooter(){
   removed = true;
   var footer = document.getElementById('footer-expander');
   footer.parentNode.removeChild(footer);
-
+  ga('send', 'event', 'footer', 'removed')
 }
 
 function expand(){
@@ -13,10 +20,12 @@ function expand(){
   }else{
     window.location = 'http://www.publishthis.email';
   }
+  ga('send', 'event', 'footer', 'expanded')
 }
 
 function collapse(){
   document.getElementById('footer-expander').setAttribute('class', 'footer-content');
+  ga('send', 'event', 'footer', 'collapsed')
 }
 
 // listen for scroll event

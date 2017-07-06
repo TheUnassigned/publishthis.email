@@ -9,10 +9,10 @@
   <div id="footer-expander" class="footer-content">
     <img class="footer-close-img" src="http://i.imgur.com/pUIYq8P.png" onclick="removeFooter()"/>
     <div class="footer-margin">
-    <div class="footer-heading"><a href="/">Create simple web pages in seconds for free.</a></div>
-    <div class="footer-message">This page was created in seconds, by sending an email to <a class="footer-email-link" href="mailto:page@publishthis.email">page@publishthis.email</a>.</div>
+    <div class="footer-heading"><a href="/" onclick="trackLink('/')">Create simple web pages in seconds for free.</a></div>
+    <div class="footer-message">This page was created in seconds, by sending an email to <a class="footer-email-link" href="mailto:page@publishthis.email" onclick="trackLink('mailto:page@publishthis.email')">page@publishthis.email</a>.</div>
     <div>
-      <a href="/">
+      <a href="/" onclick="trackLink('/')">
         <div class="footer-button">Try it!</div>
       </a>
       <span>Free. No account or sign-up required.</span>
