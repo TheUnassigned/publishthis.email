@@ -173,7 +173,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.updateConfig = undefined;
 
-var _awsSdk = __webpack_require__(24);
+var _awsSdk = __webpack_require__(25);
 
 var _awsSdk2 = _interopRequireDefault(_awsSdk);
 
@@ -200,12 +200,106 @@ module.exports = require("sanitize-html");
 
 /***/ }),
 /* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.langCode3to2 = exports.detectLanguage = exports.detectWhitelist = exports.acceptLanguages = exports.useLanguage = undefined;
+
+var _francMin = __webpack_require__(28);
+
+var _francMin2 = _interopRequireDefault(_francMin);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var acceptLanguages = ['ar', 'ar-ae', 'ar-bh', 'ar-dz', 'ar-eg', 'ar-iq', 'ar-jo', 'ar-kw', 'ar-lb', 'ar-ly', 'ar-ma', 'ar-om', 'ar-qa', 'ar-sa', 'ar-sy', 'ar-tn', 'ar-ye', // arabic
+'en', 'en-gb', 'en-us', 'en-au', 'en-ca', 'en-ie', 'en-nz', 'en-za', // english
+'es', 'es-ar', 'es-bo', 'es-cl', 'es-co', 'es-cr', 'es-do', 'es-ec', 'es-gt', 'es-hn', 'es-mx', 'es-ni', 'es-pa', 'es-pe', 'es-pr', 'es-py', 'es-sv', 'es-uy', 'es-ve', // spanish
+'ru', 'ru-md', // russian
+'zh', 'zh-cn', // chinese simplified
+'zh-hk', 'zh-sg', 'zh-tw' // chinese traditional
+];
+
+// parses an express request and returns a language template folder
+// falls-back to english
+var useLanguage = function useLanguage(req) {
+  var acceptedLanguage = req.acceptsLanguages(acceptLanguages);
+  if (acceptedLanguage) {
+    var lang = acceptedLanguage.substring(0, 2); // take the first two characters only
+
+    // traditional chinese
+    if (['zh-hk', 'zh-sg', 'zh-tw'].includes(acceptedLanguage)) {
+      lang = acceptedLanguage;
+    }
+
+    return lang;
+  } else {
+    return 'en';
+  }
+};
+
+// language detection whitelist
+var detectWhitelist = ['cmn', // Chinese Mandarin
+'spa', // Spanish
+'eng', // English
+'rus', // Russian
+'arb', // Standard Arabic
+'por', 'fra', 'ita', 'deu', 'pol'
+// 'ukr' // Ukrainian
+];
+
+var allowedLanguages = ['cmn', // Chinese Mandarin
+'spa', // Spanish
+'eng', // English
+'rus', // Russian
+'arb' // Standard Arabic
+// 'ukr' // Ukrainian
+];
+
+// to convert from 3 to 2 character language codes
+var languageCodes = [['cmn', 'zh'], ['spa', 'es'], ['eng', 'en'], ['rus', 'ru'], ['arb', 'ar']
+// ['urk', 'uk']
+];
+
+// convert a 3 character language code to 2 characters
+var langCode3to2 = function langCode3to2(code3) {
+  for (var i = 0; i < languageCodes.length; i++) {
+    if (languageCodes[i][0] == code3) {
+      return languageCodes[i][1];
+    }
+  }
+};
+
+// detect content language
+var detectLanguage = function detectLanguage(email) {
+  var sample = email.subject + " - " + email.text;
+  var detectedLanguage = (0, _francMin2.default)(sample, { whitelist: detectWhitelist });
+
+  if (allowedLanguages.indexOf(detectedLanguage) > -1) {
+    return detectedLanguage;
+  } else {
+    return 'eng'; // fall back to english
+  }
+};
+
+exports.useLanguage = useLanguage;
+exports.acceptLanguages = acceptLanguages;
+exports.detectWhitelist = detectWhitelist;
+exports.detectLanguage = detectLanguage;
+exports.langCode3to2 = langCode3to2;
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports) {
 
 module.exports = require("shortid");
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -216,7 +310,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.acceptLanguages = exports.useLanguage = exports.clearCache = exports.collectionsProcess = exports.getCollection = exports.addTimeSince = exports.preRender = exports.deleteCollectionItemFromDynamo = exports.deleteEmailFromDynamo = exports.getStoredEmail = exports.storeInDynamo = exports.sendReply = exports.processEmail = exports.getRawEmail = undefined;
 
-var _get_raw_email = __webpack_require__(14);
+var _get_raw_email = __webpack_require__(15);
 
 var _process_email = __webpack_require__(17);
 
@@ -224,17 +318,17 @@ var _send_reply = __webpack_require__(18);
 
 var _store_in_dynamo = __webpack_require__(19);
 
-var _get_stored_email = __webpack_require__(15);
+var _get_stored_email = __webpack_require__(16);
 
-var _get_collection = __webpack_require__(13);
+var _get_collection = __webpack_require__(14);
 
-var _delete_from_dynamo = __webpack_require__(12);
+var _delete_from_dynamo = __webpack_require__(13);
 
-var _collections_process = __webpack_require__(11);
+var _collections_process = __webpack_require__(12);
 
-var _clear_cache = __webpack_require__(10);
+var _clear_cache = __webpack_require__(11);
 
-var _localise = __webpack_require__(16);
+var _localise = __webpack_require__(4);
 
 exports.getRawEmail = _get_raw_email.getRawEmail;
 exports.processEmail = _process_email.processEmail;
@@ -252,31 +346,31 @@ exports.useLanguage = _localise.useLanguage;
 exports.acceptLanguages = _localise.acceptLanguages;
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports) {
 
 module.exports = require("express");
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports) {
 
 module.exports = require("express-dot-engine");
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports) {
 
 module.exports = require("path");
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports) {
 
 module.exports = require("serve-favicon");
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -287,7 +381,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.clearCache = undefined;
 
-var _cloudflare = __webpack_require__(25);
+var _cloudflare = __webpack_require__(26);
 
 var _cloudflare2 = _interopRequireDefault(_cloudflare);
 
@@ -311,7 +405,7 @@ var clearCache = function clearCache(cacheParams) {
 exports.clearCache = clearCache;
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -326,7 +420,7 @@ var _dynamo = __webpack_require__(1);
 
 var _dynamo2 = _interopRequireDefault(_dynamo);
 
-var _shortid = __webpack_require__(4);
+var _shortid = __webpack_require__(5);
 
 var _shortid2 = _interopRequireDefault(_shortid);
 
@@ -400,7 +494,7 @@ var collectionsProcess = function collectionsProcess(emailObj) {
 exports.collectionsProcess = collectionsProcess;
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -452,7 +546,7 @@ exports.deleteEmailFromDynamo = deleteEmailFromDynamo;
 exports.deleteCollectionItemFromDynamo = deleteCollectionItemFromDynamo;
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -500,7 +594,7 @@ var getCollection = function getCollection(collectionParams) {
 exports.getCollection = getCollection;
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -526,7 +620,7 @@ var getRawEmail = function getRawEmail(id) {
 exports.getRawEmail = getRawEmail;
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -555,46 +649,6 @@ var getStoredEmail = function getStoredEmail(id) {
 exports.getStoredEmail = getStoredEmail;
 
 /***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var acceptLanguages = ['ar', 'ar-ae', 'ar-bh', 'ar-dz', 'ar-eg', 'ar-iq', 'ar-jo', 'ar-kw', 'ar-lb', 'ar-ly', 'ar-ma', 'ar-om', 'ar-qa', 'ar-sa', 'ar-sy', 'ar-tn', 'ar-ye', // arabic
-'en', 'en-gb', 'en-us', 'en-au', 'en-ca', 'en-ie', 'en-nz', 'en-za', // english
-'es', 'es-ar', 'es-bo', 'es-cl', 'es-co', 'es-cr', 'es-do', 'es-ec', 'es-gt', 'es-hn', 'es-mx', 'es-ni', 'es-pa', 'es-pe', 'es-pr', 'es-py', 'es-sv', 'es-uy', 'es-ve', // spanish
-'ru', 'ru-md', // russian
-'zh', 'zh-cn', // chinese simplified
-'zh-hk', 'zh-sg', 'zh-tw' // chinese traditional
-];
-
-// parses an express request and returns a language template folder
-// falls-back to english
-var useLanguage = function useLanguage(req) {
-  var acceptedLanguage = req.acceptsLanguages(acceptLanguages);
-  console.log('browser language: ', acceptedLanguage);
-  if (acceptedLanguage) {
-    var lang = acceptedLanguage.substring(0, 2); // take the first two characters only
-
-    // traditional chinese
-    if (['zh-hk', 'zh-sg', 'zh-tw'].includes(acceptedLanguage)) {
-      lang = acceptedLanguage;
-    }
-
-    return lang;
-  } else {
-    return 'en';
-  }
-};
-
-exports.useLanguage = useLanguage;
-exports.acceptLanguages = acceptLanguages;
-
-/***/ }),
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -606,7 +660,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.addTimeSince = exports.preRender = exports.processEmail = undefined;
 
-var _mailparser = __webpack_require__(27);
+var _mailparser = __webpack_require__(30);
 
 var _mailparser2 = _interopRequireDefault(_mailparser);
 
@@ -614,7 +668,7 @@ var _sanitizeHtml = __webpack_require__(3);
 
 var _sanitizeHtml2 = _interopRequireDefault(_sanitizeHtml);
 
-var _shortid = __webpack_require__(4);
+var _shortid = __webpack_require__(5);
 
 var _shortid2 = _interopRequireDefault(_shortid);
 
@@ -622,20 +676,23 @@ var _imgur = __webpack_require__(23);
 
 var _imgur2 = _interopRequireDefault(_imgur);
 
+var _localise = __webpack_require__(4);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var sanitizeOptions = {
   // allowedTags: [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
   // 'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
   // 'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre', 'img' ],
-  allowedTags: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol', 'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div', 'thead', 'caption', 'pre', 'img', 'dir', 'marquee'],
+  allowedTags: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol', 'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div', 'thead', 'caption', 'img', 'dir', 'marquee', 'font'],
   allowedAttributes: {
     a: ['href', 'name', 'target', 'rel'],
     // We don't currently allow img itself by default, but this
     // would make sense if we did
     img: ['src', 'width'],
     p: ['dir'],
-    div: ['dir']
+    div: ['dir'],
+    font: ['size', 'color', 'face']
   },
   // Lots of these won't come up by default because we don't allow them
   selfClosing: ['img', 'br', 'hr', 'area', 'base', 'basefont', 'input', 'link', 'meta'],
@@ -723,18 +780,36 @@ var tidyEmail = function tidyEmail(email) {
   return email;
 };
 
+// detect email content language and set a language code on the email object
+var setLanguage = function setLanguage(email) {
+  var lang3 = (0, _localise.detectLanguage)(email);
+  email.language = (0, _localise.langCode3to2)(lang3);
+  return email;
+};
+
 // Convert YouTube links into embeds
 var filterLinks = function filterLinks(email) {
   // find links
   var links = email.html.match(/<a.+?(<\/a>)/g);
   if (links) {
     links = links.map(function (link) {
-      var link_text = link.match(/>(.+?)(?=<\/a>)/)[1];
-      var link_href = link.match(/href\="(.+?)(?=")/)[1];
+
+      if (link.match(/>(.+?)(?=<\/a>)/) && link.match(/>(.+?)(?=<\/a>)/)[1]) {
+        var link_text = link.match(/>(.+?)(?=<\/a>)/)[1];
+      } else {
+        var link_text = null;
+      }
+
+      if (link.match(/href\="(.+?)(?=")/) && link.match(/href\="(.+?)(?=")/)[1]) {
+        var link_href = link.match(/href\="(.+?)(?=")/)[1];
+      } else {
+        var link_href = null;
+      }
+
       var isYouTube = /https?:\/\/(?:www\.)?youtu(?:be)?(\.com|\.be)\/(?:watch\?v=)?[a-zA-Z0-9-_]{11}/.test(link_href);
 
       // emails may contain links links to YouTube domains that aren't videos?
-      if (link_href.match(/[a-zA-Z0-9-_]{11}/)) {
+      if (link_href && link_href.match(/[a-zA-Z0-9-_]{11}/)) {
         var YouTubeID = link_href.match(/[a-zA-Z0-9-_]{11}/)[0];
       } else {
         var YouTubeID = false;
@@ -760,12 +835,11 @@ var filterLinks = function filterLinks(email) {
     });
   }
 
-  // console.log(email.html)
   return email;
 };
 
 var processEmail = function processEmail(rawEmail) {
-  return parseMail(rawEmail).then(tidyEmail).then(processImages).then(sanitize).then(filterLinks).then(function (_ref) {
+  return parseMail(rawEmail).then(tidyEmail).then(setLanguage).then(processImages).then(sanitize).then(filterLinks).then(function (_ref) {
     var messageId = _ref.messageId,
         to = _ref.to,
         from = _ref.from,
@@ -773,7 +847,8 @@ var processEmail = function processEmail(rawEmail) {
         bcc = _ref.bcc,
         subject = _ref.subject,
         html = _ref.html,
-        date = _ref.date;
+        date = _ref.date,
+        language = _ref.language;
 
 
     // join to, cc, bcc
@@ -797,6 +872,7 @@ var processEmail = function processEmail(rawEmail) {
       messageId: _shortid2.default.generate(),
       headerMessageId: messageId,
       timeAdded: new Date().getTime(),
+      language: language,
       editKey: _shortid2.default.generate() + _shortid2.default.generate()
     };
     if (cc) {
@@ -883,6 +959,12 @@ var _ses = __webpack_require__(21);
 
 var _ses2 = _interopRequireDefault(_ses);
 
+var _dot = __webpack_require__(27);
+
+var _dot2 = _interopRequireDefault(_dot);
+
+var _replyEmail = __webpack_require__(24);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var sendReply = function sendReply(mailObj) {
@@ -900,16 +982,11 @@ var sendReply = function sendReply(mailObj) {
   }).join(',');
   var stagingTest = /staging(\+[\w\-]+)?@publishthis\.email/;
 
-  var pteDomain = stagingTest.test(emailStr) ? 'http://staging.publishthis.email' : 'http://www.publishthis.email';
+  mailObj.pteDomain = stagingTest.test(emailStr) ? 'http://staging.publishthis.email' : 'http://www.publishthis.email';
 
-  // var emailWarning = ''
-  // if(mailObj.oversizeAttachments){
-  //   emailWarning = `<p><strong>Your images were too large, so we haven't included them this time.</strong> <i>publishthis.email supports image attachments up to a total of 350kb per email. To include images in your email, please use smaller attachments.</i></p>`
-  // }
-  var emailBody = '<p>Good news!</p>\n                      <p>We\u2019ve received your email <strong>' + mailObj.subject + '</strong>, converted it into a tidy little web page, and published it online here:</p>\n                      <p><a href="' + pteDomain + '/' + mailObj.messageId + '">' + pteDomain + '/' + mailObj.messageId + '</a></p>\n                      <p>For a brief moment there, you were the creator of the newest page on the internet. Congratulations.</p>\n                      <p>Sadly, that moment has passed, but you can be the creator of the newest page on the internet at any time. Simply send another email to <a href="mailto:page@publishthis.email">page@publishthis.email</a> to publish a page, or <a href="mailto:email@publishthis.email">email@publishthis.email</a> to publish any email online instantly - we\u2019ll reply with a link to your new page almost instantly.</p>\n                      <p>Until then,</p>\n                      <p><strong>Thanks from <a href="https://www.publishthis.email">publishthis.email</a></strong></p>\n                      <p>Delete your page: <a href="' + pteDomain + '/' + mailObj.messageId + '/delete/' + mailObj.editKey + '">' + pteDomain + '/' + mailObj.messageId + '/delete/' + mailObj.editKey + '</a></p>\n                      ';
-  if (mailObj.collectionId) {
-    emailBody = emailBody + '<p>This page is part of a collection: <a href="' + pteDomain + '/c/' + mailObj.collectionId + '">' + pteDomain + '/c/' + mailObj.collectionId + '</a></p>';
-  }
+  // set reply template for the appropriate language
+  var replyTemplate = _dot2.default.template(_replyEmail.replyEmails[mailObj.language]);
+  var emailBody = replyTemplate(mailObj);
 
   var params = {
     Destination: {
@@ -918,7 +995,7 @@ var sendReply = function sendReply(mailObj) {
     },
     Message: {
       Subject: {
-        Data: mailObj.subject + ' - published on publishthis.email',
+        Data: mailObj.subject + ' - publishthis.email',
         Charset: 'UTF-8'
       },
       Body: {
@@ -1048,15 +1125,15 @@ var _aws2 = _interopRequireDefault(_aws);
 
 var _environment = __webpack_require__(0);
 
-var _express = __webpack_require__(6);
+var _express = __webpack_require__(7);
 
 var _express2 = _interopRequireDefault(_express);
 
-var _expressDotEngine = __webpack_require__(7);
+var _expressDotEngine = __webpack_require__(8);
 
 var _expressDotEngine2 = _interopRequireDefault(_expressDotEngine);
 
-var _serveFavicon = __webpack_require__(9);
+var _serveFavicon = __webpack_require__(10);
 
 var _serveFavicon2 = _interopRequireDefault(_serveFavicon);
 
@@ -1064,12 +1141,12 @@ var _sanitizeHtml = __webpack_require__(3);
 
 var _sanitizeHtml2 = _interopRequireDefault(_sanitizeHtml);
 
-var _actions = __webpack_require__(5);
+var _actions = __webpack_require__(6);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = (0, _express2.default)();
-var path = __webpack_require__(8);
+var path = __webpack_require__(9);
 
 (0, _aws.updateConfig)();
 
@@ -1081,23 +1158,11 @@ app.use(_express2.default.static(path.resolve(__dirname, 'public')));
 app.use((0, _serveFavicon2.default)(path.join(__dirname, 'public', 'favicon.ico')));
 
 app.get('/', function (req, res) {
-  // console.log('browser language: ', req.headers['accept-language'])
-  // console.log('accepted language: ', req.acceptsLanguages(acceptLanguages))
-  // if(req.query.lang && acceptLanguages.includes(req.query.lang)){
-  //   var langCode = req.query.lang.substring(0,2)
-  //
-  //   if(['zh-hk', 'zh-sg', 'zh-tw'].includes(req.query.lang)){
-  //     langCode = req.query.lang // traditional chinese
-  //   }
-  //   res.render(langCode + '/index');
-  // }else{
-  //   res.render(useLanguage(req) + '/index');
-  // }
-  var lang = (0, _actions.useLanguage)(req);
+  var lang = (0, _actions.useLanguage)(req); // get browser language
   if (lang == 'en') {
     res.render('en' + '/index');
   } else {
-    res.redirect(301, '/' + lang + '/');
+    res.redirect(301, '/' + lang + '/'); // redirect to other languages
   }
 });
 
@@ -1127,13 +1192,18 @@ app.get('/zh-tw/', function (req, res) {
 });
 
 app.get('/create/:messageId', function (req, res) {
-  var messageId = 'ida4g8pdkjesfso6m5d6skkrvcd7l4r8gbp60ng1'; // large images
+  // var messageId = 'ucfq0pevg0cmkhs86b30p4u87vfbtkov3etii5o1' // arabic
+  // var messageId = 'rdki1plbl1bv7snds28k66rpbuvdtcrcf11d1rg1' // chinese
+  // var messageId = 'pvom20688e6s4utam0r2uiukld52khsqci21ca01' // russian
+  // var messageId = 'j6pc17lq9unlq12va42jf749vcd7k5u47plfhhg1' // French
+  // var messageId = '7kt4cpfjbepjkl8ldgku1ggmp8lkm9ii3dasfu81' // English + collection
+  var messageId = '235ms787oko9iibmpukok2gmrku5rh3sdckrn181'; //testing
 
-  (0, _actions.getRawEmail)(messageId).then(_actions.processEmail).then(function (email) {
-    console.log(email);
-  })
-  // .then(storeInDynamo)
-  // .then(sendReply)
+  (0, _actions.getRawEmail)(messageId).then(_actions.processEmail)
+  // .then(email => {
+  //   console.log(email)
+  // })
+  .then(_actions.collectionsProcess).then(_actions.storeInDynamo).then(_actions.sendReply)
   // .then(result => {
   //   console.log('stored email:')
   //   console.log(result)
@@ -1198,7 +1268,14 @@ app.get('/:messageId/delete/:editKey', function (req, res) {
 app.get('/:messageId', function (req, res) {
   // console.log(req.params)
   (0, _actions.getStoredEmail)(req.params.messageId).then(_actions.preRender).then(function (mailObj) {
-    mailObj.html = mailObj.html.replace(/<p><br \/>\n<\/p>/g, '');
+    mailObj.html = mailObj.html.replace(/<p><br \/>\n<\/p>/g, ''); //attempting to tidy breaks
+
+    // set footer language
+    if (!mailObj.language) {
+      mailObj.language = 'en';
+    }
+
+    // page or email
     if (mailObj.to[0].address.startsWith('page')) {
 
       res.render('page', mailObj);
@@ -1269,7 +1346,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _imgur = __webpack_require__(26);
+var _imgur = __webpack_require__(29);
 
 var _imgur2 = _interopRequireDefault(_imgur);
 
@@ -1290,24 +1367,57 @@ exports.default = {
 
 /***/ }),
 /* 24 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = require("aws-sdk");
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+     value: true
+});
+var replyEmails = {
+     'ar': '<div dir="rtl">\n       <p>\u0645\u0631\u062D\u0628\u0627,</p>\n       <p>\u0644\u0642\u062F \u062A\u0644\u0642\u064A\u0646\u0627 \u0628\u0631\u064A\u062F\u0643 \u0627\u0644\u0627\u0644\u0643\u062A\u0631\u0648\u0646\u064A <strong>{{=it.subject}}</strong>, \u0642\u0645 \u0628\u062A\u062D\u0648\u064A\u0644\u0629 \u0627\u0644\u064A \u0635\u0641\u062D\u0629 \u0639\u0644\u064A \u0627\u0644\u0646\u062A\u0631\u0646\u062A  \u0648 \u0627\u0646\u0634\u0631\u0629 \u0647\u0646\u0627:</p>\n       <p><a href="{{=it.pteDomain}}/{{=it.messageId}}">{{=it.pteDomain}}/{{=it.messageId}}</a></p>\n       <p><strong>\u062A\u0634\u0643\u0631\u0643.<a href="https://www.publishthis.email">publishthis.email</a></strong></p>\n       <p>\u0627\u062D\u0630\u0641 \u0635\u0641\u062D\u062A\u0643: <a href="{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}">{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}</a></p>\n       {{? it.collectionId}}\n       <p>\u0647\u0630\u0647 \u0627\u0644\u0635\u0641\u062D\u0629 \u062C\u0632\u0621 \u0645\u0646 \u0645\u062C\u0645\u0648\u0639\u0629: <a href="{{=it.pteDomain}}/c/{{=it.collectionId}}">{{=it.pteDomain}}/c/{{=it.collectionId}}</a></p>\n       {{?}}\n       </div>\n       ',
+     'es': '<p>Hola!</p>\n       <p>Hemos recibido tu email <strong>{{=it.subject}}</strong>, lo convertimos en una p\xE1gina web y la publicamos online en este enlace::</p>\n       <p><a href="{{=it.pteDomain}}/{{=it.messageId}}">{{=it.pteDomain}}/{{=it.messageId}}</a></p>\n       <p>Gracias de parte de <strong><a href="https://www.publishthis.email">publishthis.email</a></strong></p>\n       <p>Borra tu p\xE1gina: <a href="{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}">{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}</a></p>\n       {{? it.collectionId}}\n       <p>Esta p\xE1gina es parte de una colecci\xF3n: <a href="{{=it.pteDomain}}/c/{{=it.collectionId}}">{{=it.pteDomain}}/c/{{=it.collectionId}}</a></p>\n       {{?}}\n       ',
+     'en': '<p>Good news!</p>\n       <p>We\u2019ve received your email <strong>{{=it.subject}}</strong>, converted it into a tidy little web page, and published it online here:</p>\n       <p><a href="{{=it.pteDomain}}/{{=it.messageId}}">{{=it.pteDomain}}/{{=it.messageId}}</a></p>\n       <p>For a brief moment there, you were the creator of the newest page on the internet. Congratulations.</p>\n       <p>Sadly, that moment has passed, but you can be the creator of the newest page on the internet at any time. Simply send another email to <a href="mailto:page@publishthis.email">page@publishthis.email</a> to publish a page, or <a href="mailto:email@publishthis.email">email@publishthis.email</a> to publish any email online - we\u2019ll reply with a link to your new page in seconds.</p>\n       <p>Until then,</p>\n       <p><strong>Thanks from <a href="https://www.publishthis.email">publishthis.email</a></strong></p>\n       <p>Delete your page: <a href="{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}">{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}</a></p>\n       {{? it.collectionId}}\n       <p>This page is part of a collection: <a href="{{=it.pteDomain}}/c/{{=it.collectionId}}">{{=it.pteDomain}}/c/{{=it.collectionId}}</a></p>\n       {{?}}\n       ',
+     'ru': '<p>\u041F\u0440\u0438\u0432\u0435\u0442!</p>\n        <p>\u041C\u044B \u043F\u043E\u043B\u0443\u0447\u0438\u043B\u0438 \u0432\u0430\u0448\u0435 \u043F\u0438\u0441\u044C\u043C\u043E <strong>{{=it.subject}}</strong>, \u043F\u0440\u0435\u0432\u0440\u0430\u0442\u0438\u043B\u0438 \u0435\u0433\u043E \u0432 \u0432\u0435\u0431-\u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0443 \u0438 \u043E\u043F\u0443\u0431\u043B\u0438\u043A\u043E\u0432\u0430\u043B\u0438 \u0435\u0433\u043E \u043F\u043E \u044D\u0442\u043E\u0439 \u0441\u0441\u044B\u043B\u043A\u0435:</p>\n        <p><a href="{{=it.pteDomain}}/{{=it.messageId}}">{{=it.pteDomain}}/{{=it.messageId}}</a></p>\n        <p><strong>\u0421\u043F\u0430\u0441\u0438\u0431\u043E \u0437\u0430 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u0435 <a href="https://www.publishthis.email">publishthis.email</a></strong></p>\n        <p>\u0427\u0442\u043E\u0431\u044B \u0443\u0434\u0430\u043B\u0438\u0442\u044C \u0432\u0430\u0448\u0443 \u0432\u0435\u0431-\u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0443, \u043F\u0435\u0440\u0435\u0439\u0434\u0438\u0442\u0435 \u043F\u043E \u0441\u0441\u044B\u043B\u043A\u0435: <a href="{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}">{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}</a></p>\n        {{? it.collectionId}}\n        <p>\u042D\u0442\u0430 \u0432\u0435\u0431-\u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0430 \u044F\u0432\u043B\u044F\u0435\u0442\u0441\u044F \u0447\u0430\u0441\u0442\u044C\u044E \u043A\u043E\u043B\u043B\u0435\u043A\u0446\u0438\u0438: <a href="{{=it.pteDomain}}/c/{{=it.collectionId}}">{{=it.pteDomain}}/c/{{=it.collectionId}}</a></p>\n        {{?}}\n        ',
+     'zh': '<p>\u60A8\u597D\uFF0C</p>\n       <p>\u6211\u4EEC\u5DF2\u6536\u5230\u60A8\u7684\u7535\u5B50\u90AE\u4EF6 <strong>{{=it.subject}}</strong>, \u5C06\u5176\u8F6C\u6362\u4E3A\u7F51\u9875\uFF0C\u5E76\u5728\u7EBF\u53D1\u5E03\uFF1A</p>\n       <p><a href="{{=it.pteDomain}}/{{=it.messageId}}">{{=it.pteDomain}}/{{=it.messageId}}</a></p>\n       <p><strong><a href="https://www.publishthis.email">publishthis.email</a></strong>\u611F\u8C22\u60A8</p>\n       <p>\u5220\u9664\u60A8\u7684\u9875\u9762\uFF1A <a href="{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}">{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}</a></p>\n       {{? it.collectionId}}\n       <p>\u6B64\u9875\u9762\u662F\u6C47\u96C6\u7684\u4E00\u90E8\u5206\uFF1A <a href="{{=it.pteDomain}}/c/{{=it.collectionId}}">{{=it.pteDomain}}/c/{{=it.collectionId}}</a></p>\n       {{?}}\n       ',
+     'zh-t': '<p>\u60A8\u597D\uFF0C</p>\n        <p>\u6211\u5011\u5DF2\u6536\u5230\u60A8\u7684\u96FB\u5B50\u90F5\u4EF6l <strong>{{=it.subject}}</strong>\uFF0C\u5C07\u5176\u8F49\u63DB\u70BA\u7DB2\u9801\uFF0C\u4E26\u5728\u7DDA\u767C\u5E03\uFF1A</p>\n        <p><a href="{{=it.pteDomain}}/{{=it.messageId}}">{{=it.pteDomain}}/{{=it.messageId}}</a></p>\n        <p><strong><a href="https://www.publishthis.email">publishthis.email</a></strong>\u611F\u8B1D\u60A8</p>\n        <p>\u522A\u9664\u60A8\u7684\u9801\u9762\uFF1A<a href="{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}">{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}</a></p>\n        {{? it.collectionId}}\n        <p>\u6B64\u9801\u9762\u662F\u532F\u96C6\u7684\u4E00\u90E8\u5206\uFF1A<a href="{{=it.pteDomain}}/c/{{=it.collectionId}}">{{=it.pteDomain}}/c/{{=it.collectionId}}</a></p>\n        {{?}}\n        '
+};
+
+exports.replyEmails = replyEmails;
 
 /***/ }),
 /* 25 */
 /***/ (function(module, exports) {
 
-module.exports = require("cloudflare");
+module.exports = require("aws-sdk");
 
 /***/ }),
 /* 26 */
 /***/ (function(module, exports) {
 
-module.exports = require("imgur");
+module.exports = require("cloudflare");
 
 /***/ }),
 /* 27 */
+/***/ (function(module, exports) {
+
+module.exports = require("dot");
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports) {
+
+module.exports = require("franc-min");
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports) {
+
+module.exports = require("imgur");
+
+/***/ }),
+/* 30 */
 /***/ (function(module, exports) {
 
 module.exports = require("mailparser");
