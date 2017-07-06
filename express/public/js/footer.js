@@ -25,7 +25,6 @@ function expand(){
 
 function collapse(){
   document.getElementById('footer-expander').setAttribute('class', 'footer-content');
-  ga('send', 'event', 'footer', 'collapsed')
 }
 
 // listen for scroll event
