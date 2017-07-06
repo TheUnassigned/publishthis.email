@@ -98,6 +98,7 @@ img{
   padding-bottom: 10px;
 }
 .footer-content{
+  position: relative;
   text-align: left;
   background-color: #FF5468;
   color: #FFF;
@@ -108,6 +109,13 @@ img{
   -webkit-transition: max-height 1s;
   max-height: 0px;
   border-top: 5px solid #FF5468;
+}
+.footer-close-img{
+  position: absolute;
+  right: 7px;
+  top: 3px;
+  width: 15px;
+  cursor: pointer;
 }
 
 /*expanded*/

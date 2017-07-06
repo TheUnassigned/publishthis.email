@@ -1,7 +1,16 @@
-var expanded = false;
+var removed = false;
+
+function removeFooter(){
+  removed = true;
+  var footer = document.getElementById('footer-expander');
+  footer.parentNode.removeChild(footer);
+
+}
 
 function expand(){
-  document.getElementById('footer-expander').setAttribute('class', 'footer-content footer-content-expanded');
+  if(!removed){
+      document.getElementById('footer-expander').setAttribute('class', 'footer-content footer-content-expanded');
+  }
 }
 
 function collapse(){
