@@ -23,14 +23,14 @@ const useLanguage = req => {
       lang = acceptedLanguage
     }
     return lang
-  // }else if(acceptedLanguage && !acceptedLanguage.isArray){
-  //   // prioritise EN if multiple languages are accepted
-  //   if(acceptedLanguage.includes('en')){
-  //     lang = 'en'
-  //   }else{
-  //     lang = acceptedLanguage[0]
-  //   }
-  //   return lang
+  }else if(acceptedLanguage && acceptedLanguage.isArray){
+    // prioritise EN if multiple languages are accepted
+    if(acceptedLanguage.includes('en')){
+      lang = 'en'
+    }else{
+      lang = acceptedLanguage[0]
+    }
+    return lang
   }else{
     return 'en'
   }
