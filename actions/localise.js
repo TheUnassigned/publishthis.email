@@ -13,6 +13,7 @@ const acceptLanguages = [
 // falls-back to english
 const useLanguage = req => {
   const acceptedLanguage = req.acceptsLanguages(acceptLanguages)
+  console.log(acceptedLanguage)
   if(acceptedLanguage){
     var lang = acceptedLanguage.substring(0,2) // take the first two characters only
 
