@@ -216,9 +216,9 @@ var _francMin2 = _interopRequireDefault(_francMin);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var acceptLanguages = ['ar', 'ar-ae', 'ar-bh', 'ar-dz', 'ar-eg', 'ar-iq', 'ar-jo', 'ar-kw', 'ar-lb', 'ar-ly', 'ar-ma', 'ar-om', 'ar-qa', 'ar-sa', 'ar-sy', 'ar-tn', 'ar-ye', // arabic
-'en', 'en-gb', 'en-us', 'en-au', 'en-ca', 'en-ie', 'en-nz', 'en-za', // english
+var acceptLanguages = ['en', 'en-gb', 'en-us', 'en-au', 'en-ca', 'en-ie', 'en-nz', 'en-za', // english
 'es', 'es-ar', 'es-bo', 'es-cl', 'es-co', 'es-cr', 'es-do', 'es-ec', 'es-gt', 'es-hn', 'es-mx', 'es-ni', 'es-pa', 'es-pe', 'es-pr', 'es-py', 'es-sv', 'es-uy', 'es-ve', // spanish
+// 'ar', 'ar-ae', 'ar-bh', 'ar-dz', 'ar-eg', 'ar-iq', 'ar-jo', 'ar-kw', 'ar-lb', 'ar-ly', 'ar-ma', 'ar-om', 'ar-qa', 'ar-sa', 'ar-sy', 'ar-tn', 'ar-ye', // arabic
 'ru', 'ru-md', // russian
 'zh', 'zh-cn', // chinese simplified
 'zh-hk', 'zh-sg', 'zh-tw' // chinese traditional
@@ -228,15 +228,24 @@ var acceptLanguages = ['ar', 'ar-ae', 'ar-bh', 'ar-dz', 'ar-eg', 'ar-iq', 'ar-jo
 // falls-back to english
 var useLanguage = function useLanguage(req) {
   var acceptedLanguage = req.acceptsLanguages(acceptLanguages);
-  if (acceptedLanguage) {
+  console.log(acceptedLanguage);
+  if (acceptedLanguage && !acceptedLanguage.isArray) {
+
     var lang = acceptedLanguage.substring(0, 2); // take the first two characters only
 
     // traditional chinese
     if (['zh-hk', 'zh-sg', 'zh-tw'].includes(acceptedLanguage)) {
       lang = acceptedLanguage;
     }
-
     return lang;
+    // }else if(acceptedLanguage && !acceptedLanguage.isArray){
+    //   // prioritise EN if multiple languages are accepted
+    //   if(acceptedLanguage.includes('en')){
+    //     lang = 'en'
+    //   }else{
+    //     lang = acceptedLanguage[0]
+    //   }
+    //   return lang
   } else {
     return 'en';
   }
@@ -1166,9 +1175,6 @@ app.get('/', function (req, res) {
   }
 });
 
-app.get('/ar/', function (req, res) {
-  res.render('ar' + '/index');
-});
 app.get('/en/', function (req, res) {
   res.render('en' + '/index');
 });
@@ -1190,6 +1196,7 @@ app.get('/zh-hk/', function (req, res) {
 app.get('/zh-tw/', function (req, res) {
   res.render('zh-t' + '/index');
 });
+// app.get('/ar/', function (req, res) { res.render('ar' + '/index') })
 
 app.get('/create/:messageId', function (req, res) {
   // var messageId = 'ucfq0pevg0cmkhs86b30p4u87vfbtkov3etii5o1' // arabic

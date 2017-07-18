@@ -13,6 +13,7 @@ const acceptLanguages = [
 // falls-back to english
 const useLanguage = req => {
   const acceptedLanguage = req.acceptsLanguages(acceptLanguages)
+  console.log(acceptedLanguage)
   if(acceptedLanguage && !acceptedLanguage.isArray){
 
     var lang = acceptedLanguage.substring(0,2) // take the first two characters only
@@ -22,14 +23,14 @@ const useLanguage = req => {
       lang = acceptedLanguage
     }
     return lang
-  }else if(acceptedLanguage && !acceptedLanguage.isArray){
-    // prioritise EN if multiple languages are accepted
-    if(acceptedLanguage.includes('en')){
-      lang = 'en'
-    }else{
-      lang = acceptedLanguage[0]
-    }
-    return lang
+  // }else if(acceptedLanguage && !acceptedLanguage.isArray){
+  //   // prioritise EN if multiple languages are accepted
+  //   if(acceptedLanguage.includes('en')){
+  //     lang = 'en'
+  //   }else{
+  //     lang = acceptedLanguage[0]
+  //   }
+  //   return lang
   }else{
     return 'en'
   }
