@@ -2,7 +2,7 @@
 <html>
 <head>
 
-  <title>قم بأنشاء صفحة علي النترنت في ثواني. - publishthis.email</title>
+  <title>publishthis.email - Create a Web Page in Seconds</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="stylesheet" type="text/css" href="/css/home.css">
   <link href="https://fonts.googleapis.com/css?family=Martel:300,400|Open+Sans:300,400,600|Roboto+Slab:300,400" rel="stylesheet">
@@ -11,8 +11,8 @@
   <meta name="google-site-verification" content="GMQm9kj6leA_LTzBdFmSyQxCDLNC_yNQERZNhEL7Sjo" />
   <meta property="og:url" content="http://www.publishthis.email" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="publishthis.email - قم بأنشاء صفحات علي الانترنت في ثوان مجانا." />
-  <meta property="og:description" content="قم بأنشاء صفحات علي الانترنت في ثوان مجانا." />
+  <meta property="og:title" content="publishthis.email - Create a web page in seconds, by sending an email." />
+  <meta property="og:description" content="The quickest way to create a web page. No account or sign up needed. Send us an email with your content to publish online, and we'll reply instantly with a link to your new web page." />
   <meta property="og:image" content="http://www.publishthis.email/fb-og.png" />
 
 [[= partial('../partials/head-hreflang.dot')]]

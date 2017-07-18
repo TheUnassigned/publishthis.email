@@ -1,8 +1,4 @@
-  <link rel="alternate" href="http://publishthis.email/" hreflang="en" />
-  <link rel="alternate" href="http://publishthis.email/" hreflang="en-us" />
-  <link rel="alternate" href="http://publishthis.email/" hreflang="en-gb" />
-  <link rel="alternate" href="http://publishthis.email/" hreflang="en-au" />
-  <link rel="alternate" href="http://publishthis.email/" hreflang="en-ca" />
+  <link rel="alternate" href="http://publishthis.email/en/" hreflang="en" />
   <link rel="alternate" href="http://publishthis.email/es/" hreflang="es" />
   <link rel="alternate" href="http://publishthis.email/ru/" hreflang="ru" />
   <link rel="alternate" href="http://publishthis.email/zh/" hreflang="zh" />
@@ -10,3 +6,4 @@
   <link rel="alternate" href="http://publishthis.email/zh-hk/" hreflang="zh-hk" />
   <link rel="alternate" href="http://publishthis.email/zh-sg/" hreflang="zh-sg" />
   <link rel="alternate" href="http://publishthis.email/zh-tw/" hreflang="zh-tw" />
+  <link rel="alternate" href="http://publishthis.email/ar/" hreflang="ar" />
