@@ -52,7 +52,7 @@ app.get('/zh/', function (req, res) { res.render('zh' + '/index') })
 app.get('/zh-sg/', function (req, res) { res.render('zh-t' + '/index') })
 app.get('/zh-hk/', function (req, res) { res.render('zh-t' + '/index') })
 app.get('/zh-tw/', function (req, res) { res.render('zh-t' + '/index') })
-// app.get('/ar/', function (req, res) { res.render('ar' + '/index') })
+app.get('/ar/', function (req, res) { res.render('ar' + '/index') })
 
 app.get('/create/:messageId', function (req, res) {
   // var messageId = 'ucfq0pevg0cmkhs86b30p4u87vfbtkov3etii5o1' // arabic
