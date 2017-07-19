@@ -15,8 +15,6 @@
   <meta property="og:description" content="The quickest way to create a web page. No account or sign up needed. Send us an email with your content to publish online, and we'll reply instantly with a link to your new web page." />
   <meta property="og:image" content="http://www.publishthis.email/fb-og.png" />
 
-  <link rel="canonical" href="http://www.publishthis.email/" />
-
 [[= partial('../partials/head-hreflang.dot')]]
 
 </head>
