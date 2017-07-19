@@ -9,11 +9,11 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="google-site-verification" content="GMQm9kj6leA_LTzBdFmSyQxCDLNC_yNQERZNhEL7Sjo" />
-  <meta property="og:url" content="http://www.publishthis.email/es/" />
+  <meta property="og:url" content="https://www.publishthis.email/es/" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="publishthis.email - Crea una página web en segundos" />
   <meta property="og:description" content="Crea una página web en segundos. Es gratis. No se requieren registro ni cuenta." />
-  <meta property="og:image" content="http://www.publishthis.email/fb-og.png" />
+  <meta property="og:image" content="https://www.publishthis.email/fb-og.png" />
 
 [[= partial('../partials/head-hreflang.dot')]]
 
@@ -32,7 +32,7 @@
         <div class="hero-text-steps">
           <div class="hero-text-step">1. Escribe un email con lo que quieres que tu página tenga</div>
           <div class="hero-text-step">2. Envíalo a <a class="hero-email-link" href="mailto:page@publishthis.email">page@publishthis.email</a></div>
-          <div class="hero-text-step">3. Nosotros te responderemos con un enlace que va a tu <a href="http://www.publishthis.email/rJlcKNynl" target="_blank">nueva página</a></div>
+          <div class="hero-text-step">3. Nosotros te responderemos con un enlace que va a tu <a href="https://www.publishthis.email/rJlcKNynl" target="_blank">nueva página</a></div>
         </div>
         <a class="hero-button" href="mailto:page@publishthis.email">¡Inténtalo!</a>
         <div class="hero-no-account">Es gratis. No se requieren registro ni cuenta.</div>
@@ -44,7 +44,7 @@
   <div class="section section-full">
     <div class="testimonial">
       <div class="testimonial-text">"Need to create a publicly accessible web page as quickly as possible? Publishthis.email turns the contents of an email into a publicly accessible site as quickly as you can write it."</div>
-      <img class="testimonial-img-lh" src="http://i.imgur.com/eSMtZuW.png"/>
+      <img class="testimonial-img-lh" src="https://i.imgur.com/eSMtZuW.png"/>
     </div>
   </div>
   <div class="section-rule"></div> -->
@@ -52,8 +52,8 @@
   <div class="section group">
     <div class="section-half section-half-right">
       <div class="img-stack">
-        <img class="img-stack-1" src="http://i.imgur.com/jciTarh.png"/>
-        <img class="img-stack-2" src="http://i.imgur.com/WGuRll8.png"/>
+        <img class="img-stack-1" src="https://i.imgur.com/jciTarh.png"/>
+        <img class="img-stack-2" src="https://i.imgur.com/WGuRll8.png"/>
       </div>
     </div>
     <div class="section-half section-half-left">
@@ -61,7 +61,7 @@
       <div class="section-content">
         <p>Simplemente envía un email a <strong><a href="mailto:page@publishthis.email">page@publishthis.email</a></strong> que nosotros convertiremos tu email a una página web, usando el asunto de tu email como el título.</p>
         <p>Respondemos a su correo electrónico en segundos con un enlace a su nueva página web.</p>
-        <p>Aquí puedes ver una <a href="http://www.publishthis.email/rJlcKNynl" target="_blank">página de ejemplo.</a></p>
+        <p>Aquí puedes ver una <a href="https://www.publishthis.email/rJlcKNynl" target="_blank">página de ejemplo.</a></p>
       </div>
     </div>
   </div>
@@ -69,7 +69,7 @@
   <!-- section 2 -->
   <div class="section group">
     <div class="section-half section-half-left">
-      <img class="img-nostack img-noshadow" src="http://i.imgur.com/ASUXz9i.jpg" />
+      <img class="img-nostack img-noshadow" src="https://i.imgur.com/ASUXz9i.jpg" />
     </div>
     <div class="section-half section-half-right">
       <div class="section-title">Crea un blog con un email</div>
@@ -95,7 +95,7 @@
   <!-- section 4 -->
   <div class="section group">
     <div class="section-half section-half-left">
-      <img class="img-nostack" src="http://i.imgur.com/lTPk4Nt.jpg" />
+      <img class="img-nostack" src="https://i.imgur.com/lTPk4Nt.jpg" />
     </div>
     <div class="section-half section-half-right">
       <div class="section-title">Utiliza formatos e imágenes</div>

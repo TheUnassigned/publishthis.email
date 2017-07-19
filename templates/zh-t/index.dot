@@ -9,11 +9,11 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="google-site-verification" content="GMQm9kj6leA_LTzBdFmSyQxCDLNC_yNQERZNhEL7Sjo" />
-  <meta property="og:url" content="http://www.publishthis.email" />
+  <meta property="og:url" content="https://www.publishthis.email" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="publishthis.email - 在幾秒鐘內創建一個網頁。" />
   <meta property="og:description" content="1. 寫一封電子郵件，其中包含您頁面的內容。2. 發送至page@publishthis.email。3. 我們將回復一個您新頁面的鏈接。" />
-  <meta property="og:image" content="http://www.publishthis.email/fb-og.png" />
+  <meta property="og:image" content="https://www.publishthis.email/fb-og.png" />
 
 [[= partial('../partials/head-hreflang.dot')]]
 
@@ -43,8 +43,8 @@
   <div class="section group">
     <div class="section-half section-half-right">
       <div class="img-stack">
-        <img class="img-stack-1" src="http://i.imgur.com/jciTarh.png"/>
-        <img class="img-stack-2" src="http://i.imgur.com/WGuRll8.png"/>
+        <img class="img-stack-1" src="https://i.imgur.com/jciTarh.png"/>
+        <img class="img-stack-2" src="https://i.imgur.com/WGuRll8.png"/>
       </div>
     </div>
     <div class="section-half section-half-left">
@@ -52,7 +52,7 @@
       <div class="section-content">
         <p>只需發送電子郵件至<strong><a href="mailto:page@publishthis.email">page@publishthis.email</a></strong>，我們會將您電子郵件的內容轉換成網頁，使用您電子郵件的主題作為標題。</p>
         <p>我們將在幾秒鐘內回覆您的電子郵件，裡面包含鏈接至您的新網頁。</p>
-        <p><a href="http://www.publishthis.email/rJlcKNynl" target="_blank">以下是一個示例頁面。</a></p>
+        <p><a href="https://www.publishthis.email/rJlcKNynl" target="_blank">以下是一個示例頁面。</a></p>
       </div>
     </div>
   </div>
@@ -60,7 +60,7 @@
   <!-- section 2 -->
   <div class="section group">
     <div class="section-half section-half-left">
-      <img class="img-nostack img-noshadow" src="http://i.imgur.com/ASUXz9i.jpg" />
+      <img class="img-nostack img-noshadow" src="https://i.imgur.com/ASUXz9i.jpg" />
     </div>
     <div class="section-half section-half-right">
       <div class="section-title">通過發送一封電子郵件，開始新的部落格</div>
@@ -86,7 +86,7 @@
   <!-- section 4 -->
   <div class="section group">
     <div class="section-half section-half-left">
-      <img class="img-nostack" src="http://i.imgur.com/lTPk4Nt.jpg" />
+      <img class="img-nostack" src="https://i.imgur.com/lTPk4Nt.jpg" />
     </div>
     <div class="section-half section-half-right">
       <div class="section-title">使用格式和圖像</div>
