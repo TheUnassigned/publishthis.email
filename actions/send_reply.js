@@ -15,8 +15,8 @@ const sendReply = mailObj => {
   var stagingTest = /staging(\+[\w\-]+)?@publishthis\.email/
 
   mailObj.pteDomain = stagingTest.test(emailStr) ?
-    'http://staging.publishthis.email' :
-    'http://www.publishthis.email'
+    'https://staging.publishthis.email' :
+    'https://www.publishthis.email'
 
   // set reply template for the appropriate language
   var replyTemplate = doT.template(replyEmails[mailObj.language])
