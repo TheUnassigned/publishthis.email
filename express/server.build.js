@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 22);
+/******/ 	return __webpack_require__(__webpack_require__.s = 23);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -173,7 +173,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.updateConfig = undefined;
 
-var _awsSdk = __webpack_require__(25);
+var _awsSdk = __webpack_require__(26);
 
 var _awsSdk2 = _interopRequireDefault(_awsSdk);
 
@@ -210,7 +210,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.langCode3to2 = exports.detectLanguage = exports.detectWhitelist = exports.acceptLanguages = exports.useLanguage = undefined;
 
-var _francMin = __webpack_require__(28);
+var _francMin = __webpack_require__(29);
 
 var _francMin2 = _interopRequireDefault(_francMin);
 
@@ -303,12 +303,6 @@ exports.langCode3to2 = langCode3to2;
 
 /***/ }),
 /* 5 */
-/***/ (function(module, exports) {
-
-module.exports = require("shortid");
-
-/***/ }),
-/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -317,27 +311,57 @@ module.exports = require("shortid");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.acceptLanguages = exports.useLanguage = exports.clearCache = exports.collectionsProcess = exports.getCollection = exports.addTimeSince = exports.preRender = exports.deleteCollectionItemFromDynamo = exports.deleteEmailFromDynamo = exports.getStoredEmail = exports.storeInDynamo = exports.sendReply = exports.processEmail = exports.getRawEmail = undefined;
+// falls-back to english
+var slugify = function slugify(text) {
+  return text.toString().toLowerCase().replace(/\s+/g, '-') // Replace spaces with -
+  .replace(/[“”"?():;/\\@=&`[\]\|<>^~`#%]/g, '') // Remove non-safe characters
+  .replace(/\-\-+/g, '-') // Replace multiple - with single -
+  .replace(/^-+/, '') // Trim - from start of text
+  .replace(/-+$/, '') // Trim - from end of text
+  .toLowerCase().slice(0, 90);
+};
 
-var _get_raw_email = __webpack_require__(15);
+exports.slugify = slugify;
 
-var _process_email = __webpack_require__(17);
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
 
-var _send_reply = __webpack_require__(18);
+module.exports = require("shortid");
 
-var _store_in_dynamo = __webpack_require__(19);
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
 
-var _get_stored_email = __webpack_require__(16);
+"use strict";
 
-var _get_collection = __webpack_require__(14);
 
-var _delete_from_dynamo = __webpack_require__(13);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.slugify = exports.acceptLanguages = exports.useLanguage = exports.clearCache = exports.collectionsProcess = exports.getCollection = exports.addTimeSince = exports.preRender = exports.deleteCollectionItemFromDynamo = exports.deleteEmailFromDynamo = exports.getStoredEmail = exports.storeInDynamo = exports.sendReply = exports.processEmail = exports.getRawEmail = undefined;
 
-var _collections_process = __webpack_require__(12);
+var _get_raw_email = __webpack_require__(16);
 
-var _clear_cache = __webpack_require__(11);
+var _process_email = __webpack_require__(18);
+
+var _send_reply = __webpack_require__(19);
+
+var _store_in_dynamo = __webpack_require__(20);
+
+var _get_stored_email = __webpack_require__(17);
+
+var _get_collection = __webpack_require__(15);
+
+var _delete_from_dynamo = __webpack_require__(14);
+
+var _collections_process = __webpack_require__(13);
+
+var _clear_cache = __webpack_require__(12);
 
 var _localise = __webpack_require__(4);
+
+var _titleToSlug = __webpack_require__(5);
 
 exports.getRawEmail = _get_raw_email.getRawEmail;
 exports.processEmail = _process_email.processEmail;
@@ -353,33 +377,34 @@ exports.collectionsProcess = _collections_process.collectionsProcess;
 exports.clearCache = _clear_cache.clearCache;
 exports.useLanguage = _localise.useLanguage;
 exports.acceptLanguages = _localise.acceptLanguages;
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
-module.exports = require("express");
+exports.slugify = _titleToSlug.slugify;
 
 /***/ }),
 /* 8 */
 /***/ (function(module, exports) {
 
-module.exports = require("express-dot-engine");
+module.exports = require("express");
 
 /***/ }),
 /* 9 */
 /***/ (function(module, exports) {
 
-module.exports = require("path");
+module.exports = require("express-dot-engine");
 
 /***/ }),
 /* 10 */
 /***/ (function(module, exports) {
 
-module.exports = require("serve-favicon");
+module.exports = require("path");
 
 /***/ }),
 /* 11 */
+/***/ (function(module, exports) {
+
+module.exports = require("serve-favicon");
+
+/***/ }),
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -390,7 +415,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.clearCache = undefined;
 
-var _cloudflare = __webpack_require__(26);
+var _cloudflare = __webpack_require__(27);
 
 var _cloudflare2 = _interopRequireDefault(_cloudflare);
 
@@ -414,7 +439,7 @@ var clearCache = function clearCache(cacheParams) {
 exports.clearCache = clearCache;
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -429,7 +454,7 @@ var _dynamo = __webpack_require__(1);
 
 var _dynamo2 = _interopRequireDefault(_dynamo);
 
-var _shortid = __webpack_require__(5);
+var _shortid = __webpack_require__(6);
 
 var _shortid2 = _interopRequireDefault(_shortid);
 
@@ -503,7 +528,7 @@ var collectionsProcess = function collectionsProcess(emailObj) {
 exports.collectionsProcess = collectionsProcess;
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -555,7 +580,7 @@ exports.deleteEmailFromDynamo = deleteEmailFromDynamo;
 exports.deleteCollectionItemFromDynamo = deleteCollectionItemFromDynamo;
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -603,7 +628,7 @@ var getCollection = function getCollection(collectionParams) {
 exports.getCollection = getCollection;
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -614,7 +639,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.getRawEmail = undefined;
 
-var _s = __webpack_require__(20);
+var _s = __webpack_require__(21);
 
 var _s2 = _interopRequireDefault(_s);
 
@@ -629,7 +654,7 @@ var getRawEmail = function getRawEmail(id) {
 exports.getRawEmail = getRawEmail;
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -658,7 +683,7 @@ var getStoredEmail = function getStoredEmail(id) {
 exports.getStoredEmail = getStoredEmail;
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -669,7 +694,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.addTimeSince = exports.preRender = exports.processEmail = undefined;
 
-var _mailparser = __webpack_require__(30);
+var _mailparser = __webpack_require__(31);
 
 var _mailparser2 = _interopRequireDefault(_mailparser);
 
@@ -677,15 +702,17 @@ var _sanitizeHtml = __webpack_require__(3);
 
 var _sanitizeHtml2 = _interopRequireDefault(_sanitizeHtml);
 
-var _shortid = __webpack_require__(5);
+var _shortid = __webpack_require__(6);
 
 var _shortid2 = _interopRequireDefault(_shortid);
 
-var _imgur = __webpack_require__(23);
+var _imgur = __webpack_require__(24);
 
 var _imgur2 = _interopRequireDefault(_imgur);
 
 var _localise = __webpack_require__(4);
+
+var _titleToSlug = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -796,6 +823,15 @@ var setLanguage = function setLanguage(email) {
   return email;
 };
 
+// generate slug
+var generateSlug = function generateSlug(email) {
+  var slug = (0, _titleToSlug.slugify)(email.subject);
+  console.log(slug);
+  email.slug = slug;
+  console.log(email);
+  return email;
+};
+
 // Convert YouTube links into embeds
 var filterLinks = function filterLinks(email) {
   // find links
@@ -848,7 +884,7 @@ var filterLinks = function filterLinks(email) {
 };
 
 var processEmail = function processEmail(rawEmail) {
-  return parseMail(rawEmail).then(tidyEmail).then(setLanguage).then(processImages).then(sanitize).then(filterLinks).then(function (_ref) {
+  return parseMail(rawEmail).then(tidyEmail).then(setLanguage).then(generateSlug).then(processImages).then(sanitize).then(filterLinks).then(function (_ref) {
     var messageId = _ref.messageId,
         to = _ref.to,
         from = _ref.from,
@@ -857,7 +893,8 @@ var processEmail = function processEmail(rawEmail) {
         subject = _ref.subject,
         html = _ref.html,
         date = _ref.date,
-        language = _ref.language;
+        language = _ref.language,
+        slug = _ref.slug;
 
 
     // join to, cc, bcc
@@ -882,7 +919,8 @@ var processEmail = function processEmail(rawEmail) {
       headerMessageId: messageId,
       timeAdded: new Date().getTime(),
       language: language,
-      editKey: _shortid2.default.generate() + _shortid2.default.generate()
+      editKey: _shortid2.default.generate() + _shortid2.default.generate(),
+      slug: slug
     };
     if (cc) {
       output.cc = cc;
@@ -953,7 +991,7 @@ exports.preRender = preRender;
 exports.addTimeSince = addTimeSince;
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -964,15 +1002,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.sendReply = undefined;
 
-var _ses = __webpack_require__(21);
+var _ses = __webpack_require__(22);
 
 var _ses2 = _interopRequireDefault(_ses);
 
-var _dot = __webpack_require__(27);
+var _dot = __webpack_require__(28);
 
 var _dot2 = _interopRequireDefault(_dot);
 
-var _replyEmail = __webpack_require__(24);
+var _replyEmail = __webpack_require__(25);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1025,7 +1063,7 @@ var sendReply = function sendReply(mailObj) {
 exports.sendReply = sendReply;
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1057,7 +1095,7 @@ var storeInDynamo = function storeInDynamo(emailObj) {
 exports.storeInDynamo = storeInDynamo;
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1091,7 +1129,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1122,7 +1160,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1134,15 +1172,15 @@ var _aws2 = _interopRequireDefault(_aws);
 
 var _environment = __webpack_require__(0);
 
-var _express = __webpack_require__(7);
+var _express = __webpack_require__(8);
 
 var _express2 = _interopRequireDefault(_express);
 
-var _expressDotEngine = __webpack_require__(8);
+var _expressDotEngine = __webpack_require__(9);
 
 var _expressDotEngine2 = _interopRequireDefault(_expressDotEngine);
 
-var _serveFavicon = __webpack_require__(10);
+var _serveFavicon = __webpack_require__(11);
 
 var _serveFavicon2 = _interopRequireDefault(_serveFavicon);
 
@@ -1150,12 +1188,12 @@ var _sanitizeHtml = __webpack_require__(3);
 
 var _sanitizeHtml2 = _interopRequireDefault(_sanitizeHtml);
 
-var _actions = __webpack_require__(6);
+var _actions = __webpack_require__(7);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = (0, _express2.default)();
-var path = __webpack_require__(9);
+var path = __webpack_require__(10);
 
 (0, _aws.updateConfig)();
 
@@ -1201,18 +1239,14 @@ app.get('/ar/', function (req, res) {
 });
 
 app.get('/create/:messageId', function (req, res) {
-  // var messageId = 'ucfq0pevg0cmkhs86b30p4u87vfbtkov3etii5o1' // arabic
-  // var messageId = 'rdki1plbl1bv7snds28k66rpbuvdtcrcf11d1rg1' // chinese
-  // var messageId = 'pvom20688e6s4utam0r2uiukld52khsqci21ca01' // russian
-  // var messageId = 'j6pc17lq9unlq12va42jf749vcd7k5u47plfhhg1' // French
-  // var messageId = '7kt4cpfjbepjkl8ldgku1ggmp8lkm9ii3dasfu81' // English + collection
-  var messageId = '235ms787oko9iibmpukok2gmrku5rh3sdckrn181'; //testing
+  var messageId = '9ddttpaaj2od6kttbpv4q1iqso3md2jm4o0p7b81'; //testing
 
-  (0, _actions.getRawEmail)(messageId).then(_actions.processEmail)
-  // .then(email => {
-  //   console.log(email)
-  // })
-  .then(_actions.collectionsProcess).then(_actions.storeInDynamo).then(_actions.sendReply)
+  (0, _actions.getRawEmail)(messageId).then(_actions.processEmail).then(function (email) {
+    console.log(email);
+  })
+  // .then(collectionsProcess)
+  // .then(storeInDynamo)
+  // .then(sendReply)
   // .then(result => {
   //   console.log('stored email:')
   //   console.log(result)
@@ -1223,13 +1257,17 @@ app.get('/create/:messageId', function (req, res) {
   });
 });
 
-app.get('/:messageId/delete/:editKey', function (req, res) {
+app.get('/:slug/delete/:editKey', function (req, res) {
+  //extract messageId from slug
+  var slug = req.params.slug;
+  var messageId = slug.slice(slug.length - 9, slug.length);
+
   // check for collection
-  (0, _actions.getStoredEmail)(req.params.messageId).then(function (mailObj) {
+  (0, _actions.getStoredEmail)(messageId).then(function (mailObj) {
     // check for match of edit key
     if (mailObj.editKey == req.params.editKey) {
       var deleteParams = {
-        messageId: req.params.messageId,
+        messageId: messageId,
         editKey: req.params.editKey
 
         // delete email from main table
@@ -1274,19 +1312,21 @@ app.get('/:messageId/delete/:editKey', function (req, res) {
   });
 });
 
-app.get('/:messageId', function (req, res) {
-  // console.log(req.params)
-  (0, _actions.getStoredEmail)(req.params.messageId).then(_actions.preRender).then(function (mailObj) {
-    mailObj.html = mailObj.html.replace(/<p><br \/>\n<\/p>/g, ''); //attempting to tidy breaks
+app.get('/:slug', function (req, res) {
 
+  //extract messageId from slug
+  var slug = req.params.slug;
+  var messageId = slug.slice(slug.length - 9, slug.length);
+
+  (0, _actions.getStoredEmail)(messageId).then(_actions.preRender).then(function (mailObj) {
+
+    mailObj.html = mailObj.html.replace(/<p><br \/>\n<\/p>/g, ''); //attempting to tidy breaks
     // set footer language
     if (!mailObj.language) {
       mailObj.language = 'en';
     }
-
     // page or email
     if (mailObj.to[0].address.startsWith('page')) {
-
       res.render('page', mailObj);
     } else {
       mailObj.timestamp = new Date(mailObj.timeAdded).toString();
@@ -1345,7 +1385,7 @@ app.listen(_environment.config.PORT, function () {
 });
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1355,7 +1395,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _imgur = __webpack_require__(29);
+var _imgur = __webpack_require__(30);
 
 var _imgur2 = _interopRequireDefault(_imgur);
 
@@ -1375,7 +1415,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1396,37 +1436,37 @@ var replyEmails = {
 exports.replyEmails = replyEmails;
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports) {
 
 module.exports = require("aws-sdk");
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports) {
 
 module.exports = require("cloudflare");
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports) {
 
 module.exports = require("dot");
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports) {
 
 module.exports = require("franc-min");
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports) {
 
 module.exports = require("imgur");
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports) {
 
 module.exports = require("mailparser");
