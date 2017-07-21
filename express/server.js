@@ -55,21 +55,16 @@ app.get('/zh-tw/', function (req, res) { res.render('zh-t' + '/index') })
 app.get('/ar/', function (req, res) { res.render('ar' + '/index') })
 
 app.get('/create/:messageId', function (req, res) {
-  // var messageId = 'ucfq0pevg0cmkhs86b30p4u87vfbtkov3etii5o1' // arabic
-  // var messageId = 'rdki1plbl1bv7snds28k66rpbuvdtcrcf11d1rg1' // chinese
-  // var messageId = 'pvom20688e6s4utam0r2uiukld52khsqci21ca01' // russian
-  // var messageId = 'j6pc17lq9unlq12va42jf749vcd7k5u47plfhhg1' // French
-  // var messageId = '7kt4cpfjbepjkl8ldgku1ggmp8lkm9ii3dasfu81' // English + collection
-  var messageId = '235ms787oko9iibmpukok2gmrku5rh3sdckrn181' //testing
+  var messageId = '9ddttpaaj2od6kttbpv4q1iqso3md2jm4o0p7b81' //testing
 
   getRawEmail(messageId)
   .then(processEmail)
-  // .then(email => {
-  //   console.log(email)
-  // })
-  .then(collectionsProcess)
-  .then(storeInDynamo)
-  .then(sendReply)
+  .then(email => {
+    console.log(email)
+  })
+  // .then(collectionsProcess)
+  // .then(storeInDynamo)
+  // .then(sendReply)
   // .then(result => {
   //   console.log('stored email:')
   //   console.log(result)
@@ -78,14 +73,18 @@ app.get('/create/:messageId', function (req, res) {
   .catch(e => console.log(e))
 })
 
-app.get('/:messageId/delete/:editKey', (req, res) => {
+app.get('/:slug/delete/:editKey', (req, res) => {
+  //extract messageId from slug
+  var slug = req.params.slug
+  var messageId = slug.slice(slug.length - 9, slug.length)
+
   // check for collection
-  getStoredEmail(req.params.messageId)
+  getStoredEmail(messageId)
   .then(mailObj => {
     // check for match of edit key
     if(mailObj.editKey == req.params.editKey){
       const deleteParams = {
-        messageId: req.params.messageId,
+        messageId: messageId,
         editKey: req.params.editKey
       }
 
@@ -141,21 +140,23 @@ app.get('/:messageId/delete/:editKey', (req, res) => {
   })
 })
 
-app.get('/:messageId', (req, res) => {
-  // console.log(req.params)
-  getStoredEmail(req.params.messageId)
+app.get('/:slug', (req, res) => {
+
+  //extract messageId from slug
+  var slug = req.params.slug
+  var messageId = slug.slice(slug.length - 9, slug.length)
+
+  getStoredEmail(messageId)
   .then(preRender)
   .then(mailObj => {
-    mailObj.html = mailObj.html.replace(/<p><br \/>\n<\/p>/g, '') //attempting to tidy breaks
 
+    mailObj.html = mailObj.html.replace(/<p><br \/>\n<\/p>/g, '') //attempting to tidy breaks
     // set footer language
     if(!mailObj.language){
       mailObj.language = 'en'
     }
-
     // page or email
     if(mailObj.to[0].address.startsWith('page')){
-
       res.render('page', mailObj)
     }else{
       mailObj.timestamp = (new Date(mailObj.timeAdded)).toString()

@@ -8,6 +8,7 @@ import { deleteEmailFromDynamo, deleteCollectionItemFromDynamo } from './delete_
 import { collectionsProcess } from './collections_process'
 import { clearCache } from './clear_cache'
 import { useLanguage, acceptLanguages } from './localise'
+import { slugify } from './title-to-slug'
 
 export {
   getRawEmail,
@@ -23,5 +24,6 @@ export {
   collectionsProcess,
   clearCache,
   useLanguage,
-  acceptLanguages
+  acceptLanguages,
+  slugify
 }

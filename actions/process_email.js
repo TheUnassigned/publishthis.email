@@ -3,6 +3,7 @@ import sanitizeHtml from 'sanitize-html'
 import shortid from 'shortid'
 import imgur from '/imgur/imgur'
 import { detectWhitelist, detectLanguage, langCode3to2 } from '/actions/localise'
+import { slugify } from '/actions/title-to-slug'
 
 const sanitizeOptions = {
   // allowedTags: [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
@@ -103,6 +104,15 @@ const setLanguage = email => {
   return email
 }
 
+// generate slug
+const generateSlug = email => {
+  var slug = slugify(email.subject)
+  console.log(slug)
+  email.slug = slug
+  console.log(email)
+  return email
+}
+
 // Convert YouTube links into embeds
 const filterLinks = email => {
   // find links
@@ -154,10 +164,11 @@ const processEmail = rawEmail => {
   return parseMail(rawEmail)
   .then(tidyEmail)
   .then(setLanguage)
+  .then(generateSlug)
   .then(processImages)
   .then(sanitize)
   .then(filterLinks)
-  .then(({ messageId, to, from, cc, bcc, subject, html, date, language }) => {
+  .then(({ messageId, to, from, cc, bcc, subject, html, date, language, slug }) => {
 
     // join to, cc, bcc
     // match for staging/page/email and label
@@ -179,7 +190,8 @@ const processEmail = rawEmail => {
       headerMessageId: messageId,
       timeAdded: new Date().getTime(),
       language,
-      editKey: shortid.generate() + shortid.generate()
+      editKey: shortid.generate() + shortid.generate(),
+      slug
     }
     if(cc) { output.cc = cc }
     if(bcc) { output.bcc = bcc }
