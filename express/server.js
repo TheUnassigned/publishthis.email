@@ -145,6 +145,7 @@ app.get('/:slug', (req, res) => {
   //extract messageId from slug
   var slug = req.params.slug
   var messageId = slug.slice(slug.length - 9, slug.length)
+  console.log(slug, messageId)
 
   getStoredEmail(messageId)
   .then(preRender)
