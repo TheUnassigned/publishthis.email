@@ -115,7 +115,7 @@ img{
 }
 .footer-close-img{
   position: absolute;
-  right: 7px;
+  left: 7px;
   top: 3px;
   width: 15px;
   cursor: pointer;
