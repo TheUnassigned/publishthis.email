@@ -1,10 +1,10 @@
 var replyEmails = {
   'ar': `<div dir="rtl">
        <p>مرحبا,</p>
-       <p>لقد تلقينا بريدك الالكتروني <strong>{{=it.subject}}</strong>, قم بتحويلة الي صفحة علي النترنت  و انشرة هنا:</p>
+       <p>لقد تلقينا بريدك الإلكتروني <strong>{{=it.subject}}</strong>,  , ثم قمنا بتحويله الي صفحة ويب ونشرناه علي الإنترنت هنا:</p>
        <p><a href="https://publishth.is/{{=it.messageId}}">https://publishth.is/{{=it.messageId}}</a></p>
        {{? it.slug}}<p><a href="{{=it.pteDomain}}/{{=it.slug}}-{{=it.messageId}}">{{=it.pteDomain}}/{{=it.slug}}-{{=it.messageId}}</a></p>{{?}}
-       <p><strong>تشكرك.<a href="https://www.publishthis.email">publishthis.email</a></strong></p>
+       <p><strong>شكرا لك،<a href="https://www.publishthis.email">publishthis.email</a></strong></p>
        <p>احذف صفحتك: <a href="{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}">{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}</a></p>
        {{? it.collectionId}}
        <p>هذه الصفحة جزء من مجموعة: <a href="{{=it.pteDomain}}/c/{{=it.collectionId}}">{{=it.pteDomain}}/c/{{=it.collectionId}}</a></p>

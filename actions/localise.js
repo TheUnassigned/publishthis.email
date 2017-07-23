@@ -12,7 +12,7 @@ const acceptLanguages = [
 // parses an express request and returns a language template folder
 // falls-back to english
 const useLanguage = req => {
-  const acceptedLanguage = req.acceptsLanguages(acceptLanguages)
+  var acceptedLanguage = req.acceptsLanguages(acceptLanguages)
   console.log(acceptedLanguage)
   if(acceptedLanguage && !acceptedLanguage.isArray){
 

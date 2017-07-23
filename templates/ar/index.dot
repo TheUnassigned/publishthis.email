@@ -28,11 +28,11 @@
   <div class="hero group">
     <div class="hero-table">
       <div class="hero-cell">
-        <div class="hero-text" dir="rtl">قم بأنشاء صفحة علي النترنت في ثواني.</div>
+        <div class="hero-text" dir="rtl">قم بإنشاء صفحتك في ثواني.</div>
         <div class="hero-text-steps">
-          <div class="hero-text-step"dir="rtl">1. أكتب محتوي صفحتك في بريد الكتروني.</div>
-          <div class="hero-text-step" dir="rtl">2. قم بأرسالة الي <a class="hero-email-link" href="mailto:page@publishthis.email">page@publishthis.email</a></div>
-          <div class="hero-text-step"dir="rtl">3. سنقوم بأرسال رابط صفحتك الجديدة.</div>
+          <div class="hero-text-step"dir="rtl">1. أكتب بريد الكتروني يتضمن محتوي صفحتكي</div>
+          <div class="hero-text-step" dir="rtl">2.   قم بإرساله الي:<a class="hero-email-link" href="mailto:page@publishthis.email">page@publishthis.email</a></div>
+          <div class="hero-text-step"dir="rtl">3. سوف نرسل لك رابط صفحتك الجديدة</div>
         </div>
         <a class="hero-button" href="mailto:page@publishthis.email" dir="rtl">جربها!</a>
         <div class="hero-no-account"dir="rtl"> مجاني و لا يحتاج الي حساب او تسجيل.</div>
@@ -48,9 +48,9 @@
       </div>
     </div>
     <div class="section-half section-half-left">
-      <div class="section-title" dir="rtl">قم بأنشاء صفحة علي النترنت في ثواني.</div>
+      <div class="section-title" dir="rtl">قم بإنشاء صفحتك في ثواني.</div>
       <div class="section-content" dir="rtl">
-        <p>قم ببساطة بأسال بريد الكتروني علي <strong><a href="mailto:page@publishthis.email">page@publishthis.email</a></strong> و سوف نأخذ المحتوي الذي ارسلتة و نضعة علي صفحتك علي الانترنت مستخدمين موضوع بريدك ليكون عنوان الصفحة.</p>
+        <p>ببساطة أرسل بريد الي: <strong><a href="mailto:page@publishthis.email">page@publishthis.email</a></strong> ليتم تحويل محتوي بريدك الي صفحة ويب، ويكون عنوان هذه الصفحة هو موضوع البريد الذي أرسلته.</p>
         <p>سنقوم بالرد علي بريدك برابط صفحتك الجديدة خلال ثواني. </p>
         <!-- sample page -->
         <!-- <p>و هذه نموزج من الصفح.</p> -->
@@ -93,8 +93,8 @@
     <div class="section-half section-half-right">
       <div class="section-title" dir="rtl">استخدم التصميم و الصور.</div>
       <div class="section-content"dir="rtl">
-        <p>استخدم محرر بريدك الالكتروني لأضافة التصميم الاساسي الي صفحك, و يشمل الخطوط العريضة و المائلة و العنواين و القوائم و الروابط.</p>
-        <p>يمكنك ارفاق صورة في بريدك الالكتروني ايضا.</p>
+        <p>استخدم محرر بريدك الالكتروني لإضافة التصميم الاساسي الي صفحتك, و يشمل الخطوط العريضة و المائلة و العناوين و القوائم و الروابط.</p>
+        <p>يمكنك إضافة الصور في بريدك الإلكتروني ايضا.</p>
       </div>
     </div>
   </div>
@@ -102,7 +102,7 @@
   <!-- feedback -->
   <div class="section section-full">
     <div class="feedback" dir="rtl">
-       ارسل لنا بريد الكتروني علي <a href="mailto:hello@publishthis.email">hello@publishthis.email</a>.
+     راسلنا علي: <a href="mailto:hello@publishthis.email">hello@publishthis.email</a>.
     </div>
   </div>
   <div class="section-rule"></div>
