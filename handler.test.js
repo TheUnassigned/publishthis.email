@@ -8,8 +8,9 @@ aws.config.update({
 
 var handler = require('./serverless/handler')
 
-handler.view({
-  pathParameters: {
-    id: 'S1H7hxatg'
+handler.listSubscribe({
+  queryStringParameters: {
+    listId: '12345',
+    subscriberEmail: 'nick.drewe@gmail.com'
   }
-}, null, (err, res) => console.log(res))
+})

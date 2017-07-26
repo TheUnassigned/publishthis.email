@@ -31,6 +31,8 @@ provider:
     PTE_S3_BUCKET: ${file(./serverless.env.yml):${opt:stage}.PTE_S3_BUCKET}
     PTE_COLLECTION_TABLE: ${file(./serverless.env.yml):${opt:stage}.PTE_COLLECTION_TABLE}
     PTE_COLLECTION_ITEM_TABLE: ${file(./serverless.env.yml):${opt:stage}.PTE_COLLECTION_ITEM_TABLE}
+    PTE_LISTS_TABLE: ${file(./serverless.env.yml):${opt:stage}.PTE_LISTS_TABLE}
+    PTE_LIST_SUBSCRIBERS_TABLE: ${file(./serverless.env.yml):${opt:stage}.PTE_LIST_SUBSCRIBERS_TABLE}
   memorySize: 256
   timeout: 20
   profile: pte
@@ -75,6 +77,12 @@ provider:
 functions:
   receive:
     handler: handler.receive
+  list-subscribe:
+    handler: handler.listSubscribe
+    events:
+      - http:
+          path: list/subscribe
+          method: get
   view:
     handler: handler.view
     events:

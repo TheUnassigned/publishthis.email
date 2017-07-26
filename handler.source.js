@@ -4,8 +4,11 @@ import {
   storeInDynamo,
   sendReply,
   getStoredEmail,
-  collectionsProcess
+  collectionsProcess,
+  isSubscribed,
+  addSubscriber
 } from './actions'
+import shortid from 'shortid'
 import dot from 'dot'
 import emailTpl from '/templates/email.dot'
 import pageTpl from '/templates/page.dot'
@@ -31,6 +34,41 @@ const receive = (event, context, callback) => {
       callback(null, { "disposition" : "STOP_RULE_SET" })
     })
     .catch(err => console.log(err.stack))
+}
+
+const listSubscribe = (event, context, callback) => {
+  const subscriber = {
+    subscriberEmail: event.queryStringParameters.subscriberEmail,
+    listId: event.queryStringParameters.listId,
+    verified: false,
+    subscriberId: shortid.generate(),
+    editKey: shortid.generate() + shortid.generate()
+  }
+
+
+  // this is a double negative... Sort it out tomorrow
+  isSubscribed(subscriber)
+    .then(record => {
+      console.log(record)
+    })
+    .catch(e => {
+      console.log(e)
+    })
+
+  // addSubscriber(subscriber)
+  //   .then(subscriber => {
+  //     console.log(subscriber)
+  //   })
+  // .catch(e => {
+  //   console.log(e)
+  // })
+  // check if subscriber exists
+    // create subscriber
+
+  // get list owner
+    // send verification email
+
+
 }
 
 const view = (event, context, callback) => {
@@ -67,5 +105,6 @@ const view = (event, context, callback) => {
 
 export {
   receive,
+  listSubscribe,
   view
 }
