@@ -60,9 +60,13 @@ app.get('/name-your-list', function (req, res) {
 app.get('/page-sent', function (req, res) {
   res.render('page-sent')
 })
+app.get('/email-verified', function (req, res) {
+  res.render('email-verified')
+})
 
 app.get('/create/:messageId', function (req, res) {
-  var messageId = '9ddttpaaj2od6kttbpv4q1iqso3md2jm4o0p7b81' //testing
+  // var messageId = '2ljatek3dgs5gthccq91ra632vr9epfc35re9mg1' // zh
+  var messageId = 'q6on5vgqqlj33bpads7lk132qorld918epkvnh81' // zh-t
 
   getRawEmail(messageId)
   .then(processEmail)

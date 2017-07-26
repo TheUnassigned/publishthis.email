@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Email address verified - publishthis.email</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="/css/view.css">
+  <link href="https://fonts.googleapis.com/css?family=Martel:300,400|Open+Sans:300,400,600|Roboto+Slab:300,400" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body>
+  <div class="page-margin page">
+    <h1>Email address confirmed!</h1>
+    <p>Thanks for confirming your email address. You are now subscribed to updates.</p>
+    <!-- Did you know you can publish call to action here!!! -->
+  </div>
+  [[= partial('partials/analytics.dot') ]]
+</body>
+</html>

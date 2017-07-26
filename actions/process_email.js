@@ -99,8 +99,7 @@ const tidyEmail = email => {
 
 // detect email content language and set a language code on the email object
 const setLanguage = email => {
-  var lang3 = detectLanguage(email)
-  email.language = langCode3to2(lang3)
+  email.language = detectLanguage(email)
   return email
 }
 

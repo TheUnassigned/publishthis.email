@@ -1,4 +1,5 @@
 import franc from 'franc-min'
+import TradOrSimp from 'traditional-or-simplified'
 
 const acceptLanguages = [
   'en', 'en-gb', 'en-us', 'en-au', 'en-ca', 'en-ie', 'en-nz', 'en-za', // english
@@ -85,9 +86,17 @@ const detectLanguage = email => {
   const detectedLanguage = franc(sample, { whitelist: detectWhitelist })
 
   if(allowedLanguages.indexOf(detectedLanguage) > -1){
-    return detectedLanguage
+    console.log(detectedLanguage)
+    if(detectedLanguage == 'cmn' && TradOrSimp.isTraditional(sample)){
+      return 'zh-t'
+    }else if(detectedLanguage == 'cmn' && TradOrSimp.isSimplified(sample)){
+      return 'zh'
+    }else{
+      return langCode3to2(detectedLanguage)
+    }
+
   }else{
-    return 'eng' // fall back to english
+    return 'en' // fall back to english
   }
 }
 
