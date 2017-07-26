@@ -119,7 +119,8 @@
           margin-left: 5px; }
 
       a {
-        color: #3498db;
+        color: #FF5468;
+        /*font-weight: bold;*/
         text-decoration: underline; }
 
       /* -------------------------------------
@@ -277,7 +278,7 @@
           <div class="content">
 
             <!-- START CENTERED WHITE CONTAINER -->
-            <span class="preheader">This is preheader text. Some clients will show this text as a preview.</span>
+            <span class="preheader">Success! Your page has been published.</span>
             <table class="main">
 
               <!-- START MAIN CONTENT AREA -->
@@ -287,18 +288,18 @@
                     <tr>
                       <td>
                        <p>Good news!</p>
-                       <p>We’ve received your email <strong>{{=it.subject}}</strong>, converted it into a tidy little web page, and published it online here:</p>
+                       <p>We’ve received your email <strong>{{=it.subject}}</strong>, converted it into a tidy little web page and published it online:</p>
                        <p><a href="https://publishth.is/{{=it.messageId}}">https://publishth.is/{{=it.messageId}}</a></p>
                        {{? it.slug}}<p><a href="{{=it.pteDomain}}/{{=it.slug}}-{{=it.messageId}}">{{=it.pteDomain}}/{{=it.slug}}-{{=it.messageId}}</a></p>{{?}}
-                       <p>For a brief moment there, you were the creator of the newest page on the internet. Congratulations.</p>
-                       <p>Sadly, that moment has passed, but you can be the creator of the newest page on the internet at any time. Simply send another email to <a href="mailto:page@publishthis.email">page@publishthis.email</a> to publish a page - we’ll reply with a link to your new page in seconds.</p>
-                       <p><strong>Thanks from <a href="https://www.publishthis.email">publishthis.email</a></strong></p>
+                       <p>For a brief moment you were the creator of the newest page on the internet. Congratulations.</p>
+                       <p>Sadly, that moment has passed. But you can be the creator of the newest page on the internet at any time. Simply send another email to <a href="mailto:page@publishthis.email">page@publishthis.email</a> to publish a page - we’ll reply with a link to your new page in seconds.</p>
+
                        <p>Delete your page: <a href="{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}">{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}</a></p>
                        {{? it.collectionId}}
-                       <p>This page is part of a collection: <a href="{{=it.pteDomain}}/c/{{=it.collectionId}}">{{=it.pteDomain}}/c/{{=it.collectionId}}</a></p>
+                       <p>This page is part of a collection. Any pages you send to <a href="mailto:page+{{it.label}}@publishthis.email">page+{{it.label}}@publishthis.email</a> will be added to this collection: <a href="{{=it.pteDomain}}/c/{{=it.collectionId}}">{{=it.pteDomain}}/c/{{=it.collectionId}}</a></p>
                        {{?}}
-                       </br>
-                       <img src="http://i.imgur.com/QoCKNTi.png" width="262px"/>
+                       <p>Thanks,</p>
+                       <a href="https://www.publishthis.email"><img src="http://i.imgur.com/QoCKNTi.png" width="262px"/></a>
                         <!-- <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                           <tbody>
                             <tr>
