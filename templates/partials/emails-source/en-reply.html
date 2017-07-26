@@ -296,27 +296,10 @@
 
                        <p>Delete your page: <a href="{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}">{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}</a></p>
                        {{? it.collectionId}}
-                       <p>This page is part of a collection. Any pages you send to <a href="mailto:page+{{it.label}}@publishthis.email">page+{{it.label}}@publishthis.email</a> will be added to this collection: <a href="{{=it.pteDomain}}/c/{{=it.collectionId}}">{{=it.pteDomain}}/c/{{=it.collectionId}}</a></p>
+                       <p>This page is part of your <strong>{{=it.label}}</strong> collection. Any pages you send to <strong>page+{{=it.label}}@publishthis.email</strong> will be added to this collection: <a href="{{=it.pteDomain}}/c/{{=it.collectionId}}">{{=it.pteDomain}}/c/{{=it.collectionId}}</a></p>
                        {{?}}
                        <p>Thanks,</p>
                        <a href="https://www.publishthis.email"><img src="http://i.imgur.com/QoCKNTi.png" width="262px"/></a>
-                        <!-- <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
-                          <tbody>
-                            <tr>
-                              <td align="left">
-                                <table border="0" cellpadding="0" cellspacing="0">
-                                  <tbody>
-                                    <tr>
-                                      <td> <a href="http://htmlemail.io" target="_blank">Call To Action</a> </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table> -->
-                        <!-- <p>This is a really simple email template. Its sole purpose is to get the recipient to click the button with no distractions.</p>
-                        <p>Good luck! Hope it works.</p> -->
                       </td>
                     </tr>
                   </table>
