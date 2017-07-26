@@ -47,7 +47,7 @@ a{
 }
 
 .body{
-  margin-bottom: 120px;
+  margin-bottom: 60px;
 }
 
 img{
@@ -263,6 +263,94 @@ img{
     height: 100%;
 }
 
+/*subscription box*/
+.subscription{
+  background-color: #2F99CC;
+  padding: 10px;
+  font-family: 'Open Sans', sans-serif;
+  text-align: center;
+  color: #FFF;
+  margin-bottom: 60px;
+}
+.subscribe-heading{
+  font-size: 24px;
+  font-weight: 600;
+}
+.subscribe-subheading{
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 24px;
+}
+.subscribe-form{
+  margin-bottom: 8px;
+}
+.subscribe-error{
+  font-size: 12px;
+  font-weight: 400;
+}
+.subscribe-hidden{
+  display: none;
+}
+
+/*common form elements*/
+.form{
+  color: #FFF;
+}
+.form input{
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  padding: 11px;
+  border: 0;
+  border-radius: 2px;
+  margin-top: 8px;
+  width: 250px
+}
+.input-border{
+  border: 1px solid #CBCBCB !important;
+}
+.form .input-error{
+  border: 3px solid #FF5468;
+}
+.form-button{
+  font-family: 'Open Sans', sans-serif;
+  display: inline-block;
+  font-size: 16px;
+  background-color: #115B7E;
+  padding: 5px 20px;
+  border-radius: 2px;
+  cursor: pointer;
+  margin-left: 4px;
+}
+
+/*name your list*/
+
+/*page sent comfirmation*/
+.share-links{
+  font-size: 0;
+}
+.share-link{
+  font-family: 'Open Sans', sans-serif;
+  color: #FFF;
+  display: inline-block;
+  background: #444444;
+  padding: 7px 25px 7px 20px;
+  margin-bottom: 5px;
+  border-radius: 2px;
+  margin-right: 5px;
+  font-size: 20px;
+  cursor: pointer;
+}
+.share-link-fb{
+  background-color: #306199;
+}
+.share-link-tw{
+  background-color: #26C4F1
+}
+.share-link-icon{
+  width: 20px;
+  margin-right: 5px;
+}
 @media (max-width: 720px) {
   body{
     font-size: 16px;

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Page sent - publishthis.email</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="/css/view.css">
+  <link href="https://fonts.googleapis.com/css?family=Martel:300,400|Open+Sans:300,400,600|Roboto+Slab:300,400" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body>
+  <div class="page-margin page">
+    <h1>Your page has been sent!</h1>
+    <p>Your page has been packaged up safely, sealed and delivered to your <strong>99</strong> subscribers.</p>
+    <p>Why not take a moment to post your page out to your followers on social media:</p>
+    <div class="share-links">
+      <div class="share-link">
+        <img class="share-link-icon" src="./img/001-link-symbol.svg"/>
+        Link
+      </div>
+      <div class="share-link share-link-fb">
+        <img class="share-link-icon" src="./img/003-facebook-letter-logo.svg"/>
+        Share
+      </div>
+      <div class="share-link share-link-tw">
+        <img class="share-link-icon" src="./img/002-twitter-logo.svg"/>
+        Tweet
+      </div>
+    </div>
+  </div>
+  [[= partial('partials/analytics.dot') ]]
+</body>
+</html>

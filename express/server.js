@@ -42,7 +42,6 @@ app.get('/', function (req, res) {
   }else{
     res.redirect(301, '/' + lang + '/') // redirect to other languages
   }
-
 })
 
 app.get('/en/', function (req, res) { res.render('en' + '/index') })
@@ -53,6 +52,14 @@ app.get('/zh-sg/', function (req, res) { res.render('zh-t' + '/index') })
 app.get('/zh-hk/', function (req, res) { res.render('zh-t' + '/index') })
 app.get('/zh-tw/', function (req, res) { res.render('zh-t' + '/index') })
 app.get('/ar/', function (req, res) { res.render('ar' + '/index') })
+
+app.get('/name-your-list', function (req, res) {
+  res.render('name-your-list')
+})
+
+app.get('/page-sent', function (req, res) {
+  res.render('page-sent')
+})
 
 app.get('/create/:messageId', function (req, res) {
   var messageId = '9ddttpaaj2od6kttbpv4q1iqso3md2jm4o0p7b81' //testing

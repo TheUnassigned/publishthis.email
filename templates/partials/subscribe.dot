@@ -1,0 +1,27 @@
+<div class="subscription">
+  <div id="subscribe" class="subscribe">
+    <div class="subscribe-heading">
+      Subscribe for updates
+    </div>
+    <div class="subscribe-subheading">
+      Receive updates directly to your inbox.
+    </div>
+    <div class="subscribe-form form">
+      <input id="email" placeholder="Enter your email address" />
+      <div class="form-button" onclick="subscribe()">Subscribe</div>
+      <div id="error" class="subscribe-hidden">
+        Oops, it looks like there is a problem with your email address.
+      </div>
+    </div>
+
+  </div>
+  <div id="confirm" class="subscribe-hidden">
+    <div class="subscribe-heading">
+      Confirm your subscription!
+    </div>
+    <div class="subscribe-subheading">
+      We’ve sent you an email to verify your email address. Please click the link inside the email to confirm your subscription. Thank you!
+    </div>
+  </div>
+</div>
+<script src="/js/subscribe.js"></script>

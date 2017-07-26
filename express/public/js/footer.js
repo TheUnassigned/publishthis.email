@@ -21,10 +21,13 @@ function expand(){
     window.location = 'http://www.publishthis.email';
   }
   ga('send', 'event', 'footer', 'expanded')
+  console.log('event')
 }
 
 function collapse(){
-  document.getElementById('footer-expander').setAttribute('class', 'footer-content');
+  if(!removed){
+    document.getElementById('footer-expander').setAttribute('class', 'footer-content');
+  }
 }
 
 // listen for scroll event

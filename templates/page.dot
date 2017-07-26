@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
   <title>[[=model.subject]] - publishthis.email</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="stylesheet" type="text/css" href="/css/view.css">
@@ -16,6 +15,7 @@
       <div class="timestamp">[[=model.timestamp]]</div>
     </div> -->
     <div class="body">[[=model.html]]</div>
+    [[= partial('partials/subscribe.dot') ]]
   </div>
   [[= partial('partials/footers/' + model.language + '.dot') ]]
   [[= partial('partials/analytics.dot') ]]

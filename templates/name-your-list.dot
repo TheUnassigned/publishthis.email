@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Name your list - publishthis.email</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="/css/view.css">
+  <link href="https://fonts.googleapis.com/css?family=Martel:300,400|Open+Sans:300,400,600|Roboto+Slab:300,400" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body>
+  <div class="page-margin page">
+    <h1>Give your list a name!</h1>
+    <div class="name-form form">
+      <input id="name" class="input-border" placeholder="List name"/>
+      <div class="form-button" onclick="save()">Save</div>
+    </div>
+    <p>Give your list a name to help your subscribers understand more about your list.</p>
+    <p>Your list name will appear in the subscription box for new subscribers and as the "from" name when you send a new post to your subscribers.</p>
+  </div>
+  [[= partial('partials/analytics.dot') ]]
+</body>
+</html>
