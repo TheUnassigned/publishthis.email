@@ -16,6 +16,7 @@ const config = {
   IMGUR_ID: env.PTE_IMGUR_ID,
   IMGUR_SECRET: env.PTE_IMGUR_SECRET,
   API_URL: env.PTE_API_URL,
+  S3_BUCKET_LIST: env.PTE_S3_BUCKET_LIST,
   PORT: env.PORT || 3000
 }
 

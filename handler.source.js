@@ -1,33 +1,29 @@
 import {
   getRawEmail,
   processEmail,
+  processListEmail,
   storeInDynamo,
   sendReply,
-  getStoredEmail,
+  sendListPreview,
   collectionsProcess,
   isNotSubscribed,
   addSubscriber,
   sendSubscriberVerification,
   verifySubscriberId,
-  unsubscribe
+  unsubscribe,
+  isNewList,
+  addListToDB,
+  sendNewListWelcome
 } from './actions'
-import shortid from 'shortid'
-import dot from 'dot'
-import emailTpl from '/templates/email.dot'
-import pageTpl from '/templates/page.dot'
-import errorTpl from '/templates/404.dot'
-
-// cached email dot template compiler
-const emailCompiler = dot.template(emailTpl)
-const pageCompiler = dot.template(pageTpl)
-const compiler404 = dot.template(errorTpl)
+import { config } from '/config/environment'
 
 // debugging
 const util = require('util')
 
+// receive function for pages
 const receive = (event, context, callback) => {
   const messageId = event.Records[0].s3.object.key
-  getRawEmail(messageId)
+  getRawEmail(messageId, config.S3_BUCKET)
   .then(processEmail)
   .then(collectionsProcess)
   .then(storeInDynamo)
@@ -38,6 +34,52 @@ const receive = (event, context, callback) => {
   })
   .catch(err => console.log(err.stack))
 }
+
+// receive function for lists
+const listReceive = (event, context, callback) => {
+  const messageId = event.Records[0].s3.object.key
+
+  getRawEmail(messageId, config.S3_BUCKET_LIST)
+  .then(processListEmail)
+  .then(collectionsProcess)
+  .then(storeInDynamo)
+  .then(mailObj => {
+    // build list object
+    const list = {
+      ownerEmail: mailObj.from[0].address,
+      collectionName: mailObj.label || 'defaultglobal'
+    }
+    // check if list exists
+    isNewList(list) // check if list exists
+      .then(addListToDB) // add new list to DB
+      .then(list => { // new list
+        // build welcome email + links
+        console.log(list)
+        console.log('New list created!')
+      })
+      .catch(e => { // list already exists
+        console.log('List already exists')
+        console.log(e)
+        // add lists & subscriber numbers
+        // send preview & publish email
+      })
+  })
+
+
+
+
+  //
+  // .then(sendListPreview)
+  // .then(result => {
+  //   console.log('successful receive:', messageId, result)
+  //   callback(null, { "disposition" : "STOP_RULE_SET" })
+  // })
+  // .catch(err => console.log(err.stack))
+
+
+
+}
+
 
 // subscription endpoint called directly from submission form returns { success: true/false, msg: 'error message' }
 const listSubscribe = (event, context, callback) => {
@@ -98,45 +140,43 @@ const verifySubscriber = (event, context, callback) => {
     const response = { statusCode: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*',  'Access-Control-Allow-Credentials' : 'true' }, body: JSON.stringify({ success: false, msg: 'no subscriberId provided' }) }
     callback(null, response)
   }
+}
+
+// List creation from API
+// Checks if a list exists. If not, creates a new list and sends setup instructions.
+// accepts ownerEmail and collectionName (optional)
+// /list/create?ownerEmail=________&collectionName=________
+const listCreateFromAPI = (event, context, callback) => {
+  const list = {
+    ownerEmail: event.queryStringParameters.ownerEmail
+  }
+  list.collectionName = event.queryStringParameters.collectionName ? event.queryStringParameters.collectionName : 'defaultglobal'
+
+  isNewList(list) // check if list exists
+    .then(addListToDB) // add new list to DB
+    .then(sendNewListWelcome) // send new list instructions
+    .then(result => {
+      console.log(result)
+      console.log('New list!')
+      const response = { statusCode: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*',  'Access-Control-Allow-Credentials' : 'true' }, body: JSON.stringify({ success: true }) }
+      callback(null, response)
+    })
+    .catch(e => {
+      console.log(e)
+      const response = { statusCode: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*',  'Access-Control-Allow-Credentials' : 'true' }, body: JSON.stringify(e) }
+      callback(null, response)
+    })
+
 
 }
 
-const view = (event, context, callback) => {
-  // get the email id from the event
-  const messageId = event.pathParameters.id
 
-  getStoredEmail(messageId)
-  .then(mailObj => {
-    // render the dot email template with the mail obj
-    const html = mailObj.to.startsWith('page') ?
-    pageCompiler(mailObj) :
-    emailCompiler(mailObj)
-
-    const response = {
-      statusCode: 200,
-      headers: {
-        'Content-Type': 'text/html'
-      },
-      body: html
-    }
-    callback(null, response)
-  }).catch(e => {
-    console.log(e)
-    const response = {
-      statusCode: 404,
-      headers: {
-        'Content-Type': 'text/html'
-      },
-      body: compiler404({ error: e })
-    }
-    callback(null, response)
-  })
-}
 
 export {
   receive,
   listSubscribe,
   verifySubscriber,
   listUnsubscribe,
-  view
+  listCreateFromAPI,
+  listReceive
 }

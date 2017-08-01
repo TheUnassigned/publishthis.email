@@ -29,6 +29,7 @@ provider:
     PTE_IMGUR_SECRET: ${file(./serverless.env.yml):${opt:stage}.PTE_IMGUR_SECRET}
     PTE_EMAIL_TABLE: ${file(./serverless.env.yml):${opt:stage}.PTE_EMAIL_TABLE}
     PTE_S3_BUCKET: ${file(./serverless.env.yml):${opt:stage}.PTE_S3_BUCKET}
+    PTE_S3_BUCKET_LIST: ${file(./serverless.env.yml):${opt:stage}.PTE_S3_BUCKET_LIST}
     PTE_COLLECTION_TABLE: ${file(./serverless.env.yml):${opt:stage}.PTE_COLLECTION_TABLE}
     PTE_COLLECTION_ITEM_TABLE: ${file(./serverless.env.yml):${opt:stage}.PTE_COLLECTION_ITEM_TABLE}
     PTE_LISTS_TABLE: ${file(./serverless.env.yml):${opt:stage}.PTE_LISTS_TABLE}
@@ -77,6 +78,8 @@ provider:
 functions:
   receive:
     handler: handler.receive
+  list-receive:
+    handler: handler.listReceive
   list-subscribe:
     handler: handler.listSubscribe
     events:
@@ -98,12 +101,6 @@ functions:
           path: list/verify
           method: get
           cors: true
-  view:
-    handler: handler.view
-    events:
-      - http:
-          path: email/{id}
-          method: get
 
 
 #    The following are a few example events you can configure

@@ -10,7 +10,9 @@ import sanitizeHtml from 'sanitize-html'
 import {
   getRawEmail,
   processEmail,
+  processListEmail,
   sendReply,
+  sendListPreview,
   storeInDynamo,
   getStoredEmail,
   deleteEmailFromDynamo,
@@ -96,13 +98,24 @@ app.get('/unsubscribe', function (req, res) {
 
 app.get('/create/:messageId', function (req, res) {
   // var messageId = '2ljatek3dgs5gthccq91ra632vr9epfc35re9mg1' // zh
-  var messageId = 'q6on5vgqqlj33bpads7lk132qorld918epkvnh81' // zh-t
+  var messageId = '979jj082r465msi9qsdd5o1fea9v5o8fhr6luo81' // zh-t
 
-  getRawEmail(messageId)
-  .then(processEmail)
-  .then(email => {
-    console.log(email)
+  // list receive
+  getRawEmail(messageId, config.S3_BUCKET_LIST)
+  .then(processListEmail)
+  .then(collectionsProcess)
+  .then(storeInDynamo)
+  .then(sendListPreview)
+  .then(result => {
+    console.log('successful receive:', messageId, result)
+    callback(null, { "disposition" : "STOP_RULE_SET" })
   })
+  .catch(err => console.log(err.stack))
+
+
+  // email receive
+  // getRawEmail(messageId)
+  // .then(processEmail)
   // .then(collectionsProcess)
   // .then(storeInDynamo)
   // .then(sendReply)
@@ -111,7 +124,7 @@ app.get('/create/:messageId', function (req, res) {
   //   console.log(result)
   //   res.send(true)
   // })
-  .catch(e => console.log(e))
+  // .catch(e => console.log(e))
 })
 
 app.get('/:slug/delete/:editKey', (req, res) => {
@@ -196,11 +209,11 @@ app.get('/:slug', (req, res) => {
       mailObj.language = 'en'
     }
     // page or email
-    if(mailObj.to[0].address.startsWith('page')){
-      res.render('page', mailObj)
-    }else{
+    if(mailObj.to[0].address.startsWith('email')){
       mailObj.timestamp = (new Date(mailObj.timeAdded)).toString()
       res.render('email', mailObj)
+    }else{
+      res.render('page', mailObj)
     }
   })
   .catch(e => {

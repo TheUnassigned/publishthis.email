@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 28);
+/******/ 	return __webpack_require__(__webpack_require__.s = 31);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -94,6 +94,7 @@ var config = {
   IMGUR_ID: env.PTE_IMGUR_ID,
   IMGUR_SECRET: env.PTE_IMGUR_SECRET,
   API_URL: env.PTE_API_URL,
+  S3_BUCKET_LIST: env.PTE_S3_BUCKET_LIST,
   PORT: env.PORT || 3000
 };
 
@@ -182,7 +183,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.updateConfig = undefined;
 
-var _awsSdk = __webpack_require__(32);
+var _awsSdk = __webpack_require__(35);
 
 var _awsSdk2 = _interopRequireDefault(_awsSdk);
 
@@ -203,18 +204,55 @@ exports.updateConfig = updateConfig;
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = require("shortid");
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _aws = __webpack_require__(2);
+
+var _aws2 = _interopRequireDefault(_aws);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ses = new _aws2.default.SES();
+
+var sendEmail = function sendEmail(params) {
+  return new Promise(function (resolve, reject) {
+    ses.sendEmail(params, function (err, data) {
+      return err ? reject(err) : resolve(data);
+    });
+  });
+};
+
+exports.default = {
+  sendEmail: sendEmail
+};
 
 /***/ }),
 /* 4 */
 /***/ (function(module, exports) {
 
-module.exports = require("sanitize-html");
+module.exports = require("dot");
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports) {
+
+module.exports = require("shortid");
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+module.exports = require("sanitize-html");
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -225,11 +263,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.langCode3to2 = exports.detectLanguage = exports.detectWhitelist = exports.acceptLanguages = exports.useLanguage = undefined;
 
-var _francMin = __webpack_require__(34);
+var _francMin = __webpack_require__(37);
 
 var _francMin2 = _interopRequireDefault(_francMin);
 
-var _traditionalOrSimplified = __webpack_require__(37);
+var _traditionalOrSimplified = __webpack_require__(40);
 
 var _traditionalOrSimplified2 = _interopRequireDefault(_traditionalOrSimplified);
 
@@ -328,7 +366,7 @@ exports.detectLanguage = detectLanguage;
 exports.langCode3to2 = langCode3to2;
 
 /***/ }),
-/* 6 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -350,43 +388,6 @@ var slugify = function slugify(text) {
 exports.slugify = slugify;
 
 /***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _aws = __webpack_require__(2);
-
-var _aws2 = _interopRequireDefault(_aws);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var ses = new _aws2.default.SES();
-
-var sendEmail = function sendEmail(params) {
-  return new Promise(function (resolve, reject) {
-    ses.sendEmail(params, function (err, data) {
-      return err ? reject(err) : resolve(data);
-    });
-  });
-};
-
-exports.default = {
-  sendEmail: sendEmail
-};
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports) {
-
-module.exports = require("dot");
-
-/***/ }),
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -396,39 +397,66 @@ module.exports = require("dot");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.unsubscribe = exports.verifySubscriberId = exports.sendSubscriberVerification = exports.isNotSubscribed = exports.addSubscriber = exports.slugify = exports.acceptLanguages = exports.useLanguage = exports.clearCache = exports.collectionsProcess = exports.getCollection = exports.addTimeSince = exports.preRender = exports.deleteCollectionItemFromDynamo = exports.deleteEmailFromDynamo = exports.getStoredEmail = exports.storeInDynamo = exports.sendReply = exports.processEmail = exports.getRawEmail = undefined;
+var replyEmails = {
+  'ar': '<div dir="rtl">\n<p>\u0645\u0631\u062D\u0628\u0627,</p>\n<p>\u0644\u0642\u062F \u062A\u0644\u0642\u064A\u0646\u0627 \u0628\u0631\u064A\u062F\u0643 \u0627\u0644\u0625\u0644\u0643\u062A\u0631\u0648\u0646\u064A <strong>{{=it.subject}}</strong>,  , \u062B\u0645 \u0642\u0645\u0646\u0627 \u0628\u062A\u062D\u0648\u064A\u0644\u0647 \u0627\u0644\u064A \u0635\u0641\u062D\u0629 \u0648\u064A\u0628 \u0648\u0646\u0634\u0631\u0646\u0627\u0647 \u0639\u0644\u064A \u0627\u0644\u0625\u0646\u062A\u0631\u0646\u062A \u0647\u0646\u0627:</p>\n<p><a href="https://publishth.is/{{=it.messageId}}">https://publishth.is/{{=it.messageId}}</a></p>\n{{? it.slug}}<p><a href="{{=it.pteDomain}}/{{=it.slug}}-{{=it.messageId}}">{{=it.pteDomain}}/{{=it.slug}}-{{=it.messageId}}</a></p>{{?}}\n<p><strong>\u0634\u0643\u0631\u0627 \u0644\u0643\u060C<a href="https://www.publishthis.email">publishthis.email</a></strong></p>\n<p>\u0627\u062D\u0630\u0641 \u0635\u0641\u062D\u062A\u0643: <a href="{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}">{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}</a></p>\n{{? it.collectionId}}\n<p>\u0647\u0630\u0647 \u0627\u0644\u0635\u0641\u062D\u0629 \u062C\u0632\u0621 \u0645\u0646 \u0645\u062C\u0645\u0648\u0639\u0629: <a href="{{=it.pteDomain}}/c/{{=it.collectionId}}">{{=it.pteDomain}}/c/{{=it.collectionId}}</a></p>\n{{?}}\n</div>\n',
+  'es': '<p>Hola!</p>\n<p>Hemos recibido tu email <strong>{{=it.subject}}</strong>, lo convertimos en una p\xE1gina web y la publicamos online en este enlace::</p>\n<p><a href="https://publishth.is/{{=it.messageId}}">https://publishth.is/{{=it.messageId}}</a></p>\n{{? it.slug}}<p><a href="{{=it.pteDomain}}/{{=it.slug}}-{{=it.messageId}}">{{=it.pteDomain}}/{{=it.slug}}-{{=it.messageId}}</a></p>{{?}}\n<p>Gracias de parte de <strong><a href="https://www.publishthis.email">publishthis.email</a></strong></p>\n<p>Borra tu p\xE1gina: <a href="{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}">{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}</a></p>\n{{? it.collectionId}}\n<p>Esta p\xE1gina es parte de una colecci\xF3n: <a href="{{=it.pteDomain}}/c/{{=it.collectionId}}">{{=it.pteDomain}}/c/{{=it.collectionId}}</a></p>\n{{?}}\n',
+  'en': '\n<!DOCTYPE html><html> <head> <meta name="viewport" content="width=device-width"> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <title>{{=it.subject}}</title> <style type="text/css"> /* ------------------------------------- RESPONSIVE AND MOBILE FRIENDLY STYLES ------------------------------------- */ @media only screen and (max-width: 620px){table[class=body] h1{font-size: 28px !important; margin-bottom: 10px !important;}table[class=body] p, table[class=body] ul, table[class=body] ol, table[class=body] td, table[class=body] span, table[class=body] a{font-size: 16px !important;}table[class=body] .wrapper, table[class=body] .article{padding: 10px !important;}table[class=body] .content{padding: 0 !important;}table[class=body] .container{padding: 0 !important; width: 100% !important;}table[class=body] .main{border-left-width: 0 !important; border-radius: 0 !important; border-right-width: 0 !important;}table[class=body] .btn table{width: 100% !important;}table[class=body] .btn a{width: 100% !important;}table[class=body] .img-responsive{height: auto !important; max-width: 100% !important; width: auto !important;}}/* ------------------------------------- PRESERVE THESE STYLES IN THE HEAD ------------------------------------- */ @media all{.ExternalClass{width: 100%;}.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div{line-height: 100%;}.apple-link a{color: inherit !important; font-family: inherit !important; font-size: inherit !important; font-weight: inherit !important; line-height: inherit !important; text-decoration: none !important;}.btn-primary table td:hover{background-color: #34495e !important;}.btn-primary a:hover{background-color: #34495e !important; border-color: #34495e !important;}}</style> </head> <body class="" style="background-color:#f6f6f6;font-family:sans-serif;-webkit-font-smoothing:antialiased;font-size:14px;line-height:1.4;margin:0;padding:0;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;"> <table border="0" cellpadding="0" cellspacing="0" class="body" style="border-collapse:separate;mso-table-lspace:0pt;mso-table-rspace:0pt;background-color:#f6f6f6;width:100%;"> <tr> <td style="font-family:sans-serif;font-size:14px;vertical-align:top;">&nbsp;</td><td class="container" style="font-family:sans-serif;font-size:14px;vertical-align:top;display:block;max-width:580px;padding:10px;width:580px;Margin:0 auto !important;"> <div class="content" style="box-sizing:border-box;display:block;Margin:0 auto;max-width:580px;padding:10px;"> <span class="preheader" style="color:transparent;display:none;height:0;max-height:0;max-width:0;opacity:0;overflow:hidden;mso-hide:all;visibility:hidden;width:0;">Success! Your page has been published.</span> <table class="main" style="border-collapse:separate;mso-table-lspace:0pt;mso-table-rspace:0pt;background:#fff;border-radius:3px;width:100%;"> <tr> <td class="wrapper" style="font-family:sans-serif;font-size:14px;vertical-align:top;box-sizing:border-box;padding:20px;"> <table border="0" cellpadding="0" cellspacing="0" style="border-collapse:separate;mso-table-lspace:0pt;mso-table-rspace:0pt;width:100%;"> <tr> <td style="font-family:sans-serif;font-size:14px;vertical-align:top;"> <p style="font-family:sans-serif;font-size:14px;font-weight:normal;margin:0;Margin-bottom:15px;">Good news!</p><p style="font-family:sans-serif;font-size:14px;font-weight:normal;margin:0;Margin-bottom:15px;">We\u2019ve received your email <strong>{{=it.subject}}</strong>, converted it into a tidy little web page and published it online:</p><p style="font-family:sans-serif;font-size:14px;font-weight:normal;margin:0;Margin-bottom:15px;"><a href="https://publishth.is/{{=it.messageId}}" style="color:#FF5468;text-decoration:underline;">https://publishth.is/{{=it.messageId}}</a></p>{{? it.slug}}<p style="font-family:sans-serif;font-size:14px;font-weight:normal;margin:0;Margin-bottom:15px;"><a href="{{=it.pteDomain}}/{{=it.slug}}-{{=it.messageId}}" style="color:#FF5468;text-decoration:underline;">{{=it.pteDomain}}/{{=it.slug}}-{{=it.messageId}}</a></p>{{?}}<p style="font-family:sans-serif;font-size:14px;font-weight:normal;margin:0;Margin-bottom:15px;">For a brief moment you were the creator of the newest page on the internet. Congratulations.</p><p style="font-family:sans-serif;font-size:14px;font-weight:normal;margin:0;Margin-bottom:15px;">Sadly, that moment has passed. But you can be the creator of the newest page on the internet at any time. Simply send another email to <a href="mailto:page@publishthis.email" style="color:#FF5468;text-decoration:underline;">page@publishthis.email</a> to publish a page - we\u2019ll reply with a link to your new page in seconds.</p><p style="font-family:sans-serif;font-size:14px;font-weight:normal;margin:0;Margin-bottom:15px;">Delete your page: <a href="{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}" style="color:#FF5468;text-decoration:underline;">{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}</a></p>{{? it.collectionId}}<p style="font-family:sans-serif;font-size:14px;font-weight:normal;margin:0;Margin-bottom:15px;">This page is part of your <strong>{{=it.label}}</strong> collection. Any pages you send to <strong>page+{{=it.label}}@publishthis.email</strong> will be added to this collection: <a href="{{=it.pteDomain}}/c/{{=it.collectionId}}" style="color:#FF5468;text-decoration:underline;">{{=it.pteDomain}}/c/{{=it.collectionId}}</a></p>{{?}}<p style="font-family:sans-serif;font-size:14px;font-weight:normal;margin:0;Margin-bottom:15px;">Thanks,</p><a href="https://www.publishthis.email" style="color:#FF5468;text-decoration:underline;"><img src="http://i.imgur.com/QoCKNTi.png" width="262px" style="border:none;-ms-interpolation-mode:bicubic;max-width:100%;"/></a> </td></tr></table> </td></tr></table> <div class="footer" style="clear:both;padding-top:10px;text-align:center;width:100%;"> <table border="0" cellpadding="0" cellspacing="0" style="border-collapse:separate;mso-table-lspace:0pt;mso-table-rspace:0pt;width:100%;"> <tr> <td class="content-block" style="font-family:sans-serif;font-size:14px;vertical-align:top;color:#999999;font-size:12px;text-align:center;"> <span class="apple-link" style="color:#999999;font-size:12px;text-align:center;">Publish This Email Pty Ltd, 6/63 Elizabeth St, Richmond, VIC 3121, Australia</span> <br>Don\'t like these emails? <a href="http://i.imgur.com/CScmqnj.gif" style="color:#FF5468;text-decoration:underline;color:#999999;font-size:12px;text-align:center;">Unsubscribe</a>. </td></tr><!-- <tr> <td class="content-block powered-by"> Powered by <a href="http://htmlemail.io">HTMLemail</a>. </td></tr>--> </table> </div></div></td><td style="font-family:sans-serif;font-size:14px;vertical-align:top;">&nbsp;</td></tr></table> </body></html>\n',
+  'ru': '<p>\u041F\u0440\u0438\u0432\u0435\u0442!</p>\n<p>\u041C\u044B \u043F\u043E\u043B\u0443\u0447\u0438\u043B\u0438 \u0432\u0430\u0448\u0435 \u043F\u0438\u0441\u044C\u043C\u043E <strong>{{=it.subject}}</strong>, \u043F\u0440\u0435\u0432\u0440\u0430\u0442\u0438\u043B\u0438 \u0435\u0433\u043E \u0432 \u0432\u0435\u0431-\u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0443 \u0438 \u043E\u043F\u0443\u0431\u043B\u0438\u043A\u043E\u0432\u0430\u043B\u0438 \u0435\u0433\u043E \u043F\u043E \u044D\u0442\u043E\u0439 \u0441\u0441\u044B\u043B\u043A\u0435:</p>\n<p><a href="https://publishth.is/{{=it.messageId}}">https://publishth.is/{{=it.messageId}}</a></p>\n{{? it.slug}}<p><a href="{{=it.pteDomain}}/{{=it.slug}}-{{=it.messageId}}">{{=it.pteDomain}}/{{=it.slug}}-{{=it.messageId}}</a></p>{{?}}\n<p><strong>\u0421\u043F\u0430\u0441\u0438\u0431\u043E \u0437\u0430 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u0435 <a href="https://www.publishthis.email">publishthis.email</a></strong></p>\n<p>\u0427\u0442\u043E\u0431\u044B \u0443\u0434\u0430\u043B\u0438\u0442\u044C \u0432\u0430\u0448\u0443 \u0432\u0435\u0431-\u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0443, \u043F\u0435\u0440\u0435\u0439\u0434\u0438\u0442\u0435 \u043F\u043E \u0441\u0441\u044B\u043B\u043A\u0435: <a href="{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}">{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}</a></p>\n{{? it.collectionId}}\n<p>\u042D\u0442\u0430 \u0432\u0435\u0431-\u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0430 \u044F\u0432\u043B\u044F\u0435\u0442\u0441\u044F \u0447\u0430\u0441\u0442\u044C\u044E \u043A\u043E\u043B\u043B\u0435\u043A\u0446\u0438\u0438: <a href="{{=it.pteDomain}}/c/{{=it.collectionId}}">{{=it.pteDomain}}/c/{{=it.collectionId}}</a></p>\n{{?}}\n',
+  'zh': '<p>\u60A8\u597D\uFF0C</p>\n<p>\u6211\u4EEC\u5DF2\u6536\u5230\u60A8\u7684\u7535\u5B50\u90AE\u4EF6 <strong>{{=it.subject}}</strong>, \u5C06\u5176\u8F6C\u6362\u4E3A\u7F51\u9875\uFF0C\u5E76\u5728\u7EBF\u53D1\u5E03\uFF1A</p>\n<p><a href="https://publishth.is/{{=it.messageId}}">https://publishth.is/{{=it.messageId}}</a></p>\n{{? it.slug}}<p><a href="{{=it.pteDomain}}/{{=it.slug}}-{{=it.messageId}}">{{=it.pteDomain}}/{{=it.slug}}-{{=it.messageId}}</a></p>{{?}}\n<p><strong><a href="https://www.publishthis.email">publishthis.email</a></strong>\u611F\u8C22\u60A8</p>\n<p>\u5220\u9664\u60A8\u7684\u9875\u9762\uFF1A <a href="{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}">{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}</a></p>\n{{? it.collectionId}}\n<p>\u6B64\u9875\u9762\u662F\u6C47\u96C6\u7684\u4E00\u90E8\u5206\uFF1A <a href="{{=it.pteDomain}}/c/{{=it.collectionId}}">{{=it.pteDomain}}/c/{{=it.collectionId}}</a></p>\n{{?}}\n',
+  'zh-t': '<p>\u60A8\u597D\uFF0C</p>\n<p>\u6211\u5011\u5DF2\u6536\u5230\u60A8\u7684\u96FB\u5B50\u90F5\u4EF6l <strong>{{=it.subject}}</strong>\uFF0C\u5C07\u5176\u8F49\u63DB\u70BA\u7DB2\u9801\uFF0C\u4E26\u5728\u7DDA\u767C\u5E03\uFF1A</p>\n<p><a href="https://publishth.is/{{=it.messageId}}">https://publishth.is/{{=it.messageId}}</a></p>\n{{? it.slug}}<p><a href="{{=it.pteDomain}}/{{=it.slug}}-{{=it.messageId}}">{{=it.pteDomain}}/{{=it.slug}}-{{=it.messageId}}</a></p>{{?}}\n<p><strong><a href="https://www.publishthis.email">publishthis.email</a></strong>\u611F\u8B1D\u60A8</p>\n<p>\u522A\u9664\u60A8\u7684\u9801\u9762\uFF1A<a href="{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}">{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}</a></p>\n{{? it.collectionId}}\n<p>\u6B64\u9801\u9762\u662F\u532F\u96C6\u7684\u4E00\u90E8\u5206\uFF1A<a href="{{=it.pteDomain}}/c/{{=it.collectionId}}">{{=it.pteDomain}}/c/{{=it.collectionId}}</a></p>\n{{?}}\n'
+};
 
-var _get_raw_email = __webpack_require__(19);
+exports.replyEmails = replyEmails;
 
-var _process_email = __webpack_require__(24);
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
 
-var _send_reply = __webpack_require__(25);
+"use strict";
 
-var _store_in_dynamo = __webpack_require__(26);
 
-var _get_stored_email = __webpack_require__(20);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.sendNewListWelcome = exports.addListToDB = exports.isNewList = exports.unsubscribe = exports.verifySubscriberId = exports.sendSubscriberVerification = exports.isNotSubscribed = exports.addSubscriber = exports.slugify = exports.acceptLanguages = exports.useLanguage = exports.clearCache = exports.collectionsProcess = exports.getCollection = exports.addTimeSince = exports.preRender = exports.deleteCollectionItemFromDynamo = exports.deleteEmailFromDynamo = exports.getStoredEmail = exports.storeInDynamo = exports.sendListPreview = exports.sendReply = exports.processListEmail = exports.processEmail = exports.getRawEmail = undefined;
 
-var _get_collection = __webpack_require__(18);
+var _get_raw_email = __webpack_require__(20);
 
-var _delete_from_dynamo = __webpack_require__(17);
+var _process_email = __webpack_require__(26);
 
-var _collections_process = __webpack_require__(16);
+var _send_reply = __webpack_require__(28);
 
-var _clear_cache = __webpack_require__(15);
+var _send_list_preview = __webpack_require__(27);
 
-var _localise = __webpack_require__(5);
+var _store_in_dynamo = __webpack_require__(29);
 
-var _titleToSlug = __webpack_require__(6);
+var _get_stored_email = __webpack_require__(21);
 
-var _list_subscribe = __webpack_require__(21);
+var _get_collection = __webpack_require__(19);
 
-var _list_verify = __webpack_require__(23);
+var _delete_from_dynamo = __webpack_require__(18);
 
-var _list_unsubscribe = __webpack_require__(22);
+var _collections_process = __webpack_require__(17);
+
+var _clear_cache = __webpack_require__(16);
+
+var _localise = __webpack_require__(7);
+
+var _titleToSlug = __webpack_require__(8);
+
+var _list_subscribe = __webpack_require__(23);
+
+var _list_verify = __webpack_require__(25);
+
+var _list_unsubscribe = __webpack_require__(24);
+
+var _list_create = __webpack_require__(22);
 
 exports.getRawEmail = _get_raw_email.getRawEmail;
 exports.processEmail = _process_email.processEmail;
+exports.processListEmail = _process_email.processListEmail;
 exports.sendReply = _send_reply.sendReply;
+exports.sendListPreview = _send_list_preview.sendListPreview;
 exports.storeInDynamo = _store_in_dynamo.storeInDynamo;
 exports.getStoredEmail = _get_stored_email.getStoredEmail;
 exports.deleteEmailFromDynamo = _delete_from_dynamo.deleteEmailFromDynamo;
@@ -446,39 +474,42 @@ exports.isNotSubscribed = _list_subscribe.isNotSubscribed;
 exports.sendSubscriberVerification = _list_subscribe.sendSubscriberVerification;
 exports.verifySubscriberId = _list_verify.verifySubscriberId;
 exports.unsubscribe = _list_unsubscribe.unsubscribe;
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports) {
-
-module.exports = require("express");
+exports.isNewList = _list_create.isNewList;
+exports.addListToDB = _list_create.addListToDB;
+exports.sendNewListWelcome = _list_create.sendNewListWelcome;
 
 /***/ }),
 /* 11 */
 /***/ (function(module, exports) {
 
-module.exports = require("express-dot-engine");
+module.exports = require("express");
 
 /***/ }),
 /* 12 */
 /***/ (function(module, exports) {
 
-module.exports = require("path");
+module.exports = require("express-dot-engine");
 
 /***/ }),
 /* 13 */
 /***/ (function(module, exports) {
 
-module.exports = require("request");
+module.exports = require("path");
 
 /***/ }),
 /* 14 */
 /***/ (function(module, exports) {
 
-module.exports = require("serve-favicon");
+module.exports = require("request");
 
 /***/ }),
 /* 15 */
+/***/ (function(module, exports) {
+
+module.exports = require("serve-favicon");
+
+/***/ }),
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -489,7 +520,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.clearCache = undefined;
 
-var _cloudflare = __webpack_require__(33);
+var _cloudflare = __webpack_require__(36);
 
 var _cloudflare2 = _interopRequireDefault(_cloudflare);
 
@@ -513,7 +544,7 @@ var clearCache = function clearCache(cacheParams) {
 exports.clearCache = clearCache;
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -528,7 +559,7 @@ var _dynamo = __webpack_require__(1);
 
 var _dynamo2 = _interopRequireDefault(_dynamo);
 
-var _shortid = __webpack_require__(3);
+var _shortid = __webpack_require__(5);
 
 var _shortid2 = _interopRequireDefault(_shortid);
 
@@ -602,7 +633,7 @@ var collectionsProcess = function collectionsProcess(emailObj) {
 exports.collectionsProcess = collectionsProcess;
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -654,7 +685,7 @@ exports.deleteEmailFromDynamo = deleteEmailFromDynamo;
 exports.deleteCollectionItemFromDynamo = deleteCollectionItemFromDynamo;
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -702,7 +733,7 @@ var getCollection = function getCollection(collectionParams) {
 exports.getCollection = getCollection;
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -713,7 +744,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.getRawEmail = undefined;
 
-var _s = __webpack_require__(27);
+var _s = __webpack_require__(30);
 
 var _s2 = _interopRequireDefault(_s);
 
@@ -721,14 +752,14 @@ var _environment = __webpack_require__(0);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var getRawEmail = function getRawEmail(id) {
-  return _s2.default.get(id, _environment.config.S3_BUCKET);
+var getRawEmail = function getRawEmail(id, bucket) {
+  return _s2.default.get(id, bucket);
 };
 
 exports.getRawEmail = getRawEmail;
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -757,7 +788,115 @@ var getStoredEmail = function getStoredEmail(id) {
 exports.getStoredEmail = getStoredEmail;
 
 /***/ }),
-/* 21 */
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.sendNewListWelcome = exports.addListToDB = exports.isNewList = undefined;
+
+var _dynamo = __webpack_require__(1);
+
+var _dynamo2 = _interopRequireDefault(_dynamo);
+
+var _ses = __webpack_require__(3);
+
+var _ses2 = _interopRequireDefault(_ses);
+
+var _dot = __webpack_require__(4);
+
+var _dot2 = _interopRequireDefault(_dot);
+
+var _shortid = __webpack_require__(5);
+
+var _shortid2 = _interopRequireDefault(_shortid);
+
+var _environment = __webpack_require__(0);
+
+var _emailFirstList = __webpack_require__(33);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// send welcome email to new lists
+var sendNewListWelcome = function sendNewListWelcome(list) {
+  console.log(list);
+  var template = _dot2.default.template(_emailFirstList.firstListEmails['en']);
+  var emailBody = template(list);
+
+  var params = {
+    Destination: {
+      ToAddresses: [list.ownerEmail],
+      BccAddresses: ['publishthisemail@gmail.com']
+    },
+    Message: {
+      Subject: {
+        Data: 'Your new list! - publishthis.email',
+        Charset: 'UTF-8'
+      },
+      Body: {
+        Html: {
+          Data: emailBody,
+          Charset: 'UTF-8'
+        }
+      }
+    },
+    Source: '"Publish This Email" <noreply@publishthis.email>',
+    ReplyToAddresses: ['"Publish This Email" <hello@publishthis.email>'],
+    ReturnPath: 'return@publishthis.email'
+  };
+
+  console.log(params);
+
+  return _ses2.default.sendEmail(params);
+};
+
+// Checks if a list exists in the DB, if not, builds and returns new list.
+var isNewList = function isNewList(list) {
+  var query = {
+    TableName: _environment.config.LISTS_TABLE,
+    IndexName: 'ownerEmail-collectionName-index',
+    KeyConditionExpression: "ownerEmail = :ownerEmail and collectionName = :collectionName",
+    // FilterExpression: "collectionName = :collectionName",
+    ExpressionAttributeValues: {
+      ":ownerEmail": list.ownerEmail,
+      ":collectionName": list.collectionName
+    },
+    Limit: 1 };
+
+  return _dynamo2.default.query(query).then(function (result) {
+    if (result.Count == 0) {
+      // build new list
+      list.listId = _shortid2.default.generate();
+      list.editKey = _shortid2.default.generate() + _shortid2.default.generate();
+      list.count_subscribers = 0;
+      list.count_unsubscribers = 0;
+      return list;
+    } else {
+      // if list exists, return return an error and the list
+      return Promise.reject({ success: false, msg: 'List already exists', list: list });
+    }
+  });
+};
+
+var addListToDB = function addListToDB(list) {
+  return _dynamo2.default.putResource({
+    TableName: _environment.config.LISTS_TABLE,
+    Item: list
+  }).then(function () {
+    return list;
+  });
+};
+
+exports.isNewList = isNewList;
+exports.addListToDB = addListToDB;
+exports.sendNewListWelcome = sendNewListWelcome;
+
+/***/ }),
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -772,21 +911,21 @@ var _dynamo = __webpack_require__(1);
 
 var _dynamo2 = _interopRequireDefault(_dynamo);
 
-var _ses = __webpack_require__(7);
+var _ses = __webpack_require__(3);
 
 var _ses2 = _interopRequireDefault(_ses);
 
-var _dot = __webpack_require__(8);
+var _dot = __webpack_require__(4);
 
 var _dot2 = _interopRequireDefault(_dot);
 
-var _shortid = __webpack_require__(3);
+var _shortid = __webpack_require__(5);
 
 var _shortid2 = _interopRequireDefault(_shortid);
 
 var _environment = __webpack_require__(0);
 
-var _emailVerify = __webpack_require__(31);
+var _emailVerify = __webpack_require__(34);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -859,7 +998,7 @@ exports.addSubscriber = addSubscriber;
 exports.sendSubscriberVerification = sendSubscriberVerification;
 
 /***/ }),
-/* 22 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -890,7 +1029,7 @@ var unsubscribe = function unsubscribe(subscriberId) {
 exports.unsubscribe = unsubscribe;
 
 /***/ }),
-/* 23 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -926,7 +1065,7 @@ var verifySubscriberId = function verifySubscriberId(subscriberId) {
 exports.verifySubscriberId = verifySubscriberId;
 
 /***/ }),
-/* 24 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -935,27 +1074,27 @@ exports.verifySubscriberId = verifySubscriberId;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.addTimeSince = exports.preRender = exports.processEmail = undefined;
+exports.addTimeSince = exports.preRender = exports.processListEmail = exports.processEmail = undefined;
 
-var _mailparser = __webpack_require__(36);
+var _mailparser = __webpack_require__(39);
 
 var _mailparser2 = _interopRequireDefault(_mailparser);
 
-var _sanitizeHtml = __webpack_require__(4);
+var _sanitizeHtml = __webpack_require__(6);
 
 var _sanitizeHtml2 = _interopRequireDefault(_sanitizeHtml);
 
-var _shortid = __webpack_require__(3);
+var _shortid = __webpack_require__(5);
 
 var _shortid2 = _interopRequireDefault(_shortid);
 
-var _imgur = __webpack_require__(29);
+var _imgur = __webpack_require__(32);
 
 var _imgur2 = _interopRequireDefault(_imgur);
 
-var _localise = __webpack_require__(5);
+var _localise = __webpack_require__(7);
 
-var _titleToSlug = __webpack_require__(6);
+var _titleToSlug = __webpack_require__(8);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1125,57 +1264,61 @@ var filterLinks = function filterLinks(email) {
   return email;
 };
 
+var buildEmailObj = function buildEmailObj(rawEmail) {
+  var messageId = rawEmail.messageId;
+  var to = rawEmail.to;
+  var from = rawEmail.from;
+  var cc = rawEmail.cc;
+  var bcc = rawEmail.bcc;
+  var subject = rawEmail.subject;
+  var html = rawEmail.html;
+  var date = rawEmail.date;
+  var language = rawEmail.language;
+  var slug = rawEmail.slug;
+  // join to, cc, bcc
+  // match for staging/page/email and label
+  var recipients = to;
+  if (cc) {
+    recipients = recipients.concat(cc);
+  }
+  if (bcc) {
+    recipients = recipients.concat(bcc);
+  }
+  var labelMatch = recipients.map(function (r) {
+    return r.address;
+  }).join(',').match(/(staging|page|email)(?:\+)([\w]+)(?:@publishthis.email)/);
+
+  var output = {
+    to: to,
+    from: from,
+    subject: subject,
+    html: html,
+    messageId: _shortid2.default.generate(),
+    headerMessageId: messageId,
+    timeAdded: new Date().getTime(),
+    language: language,
+    editKey: _shortid2.default.generate() + _shortid2.default.generate(),
+    slug: slug
+  };
+  if (cc) {
+    output.cc = cc;
+  }
+  if (bcc) {
+    output.bcc = bcc;
+  }
+  if (labelMatch) {
+    output.label = labelMatch[2];
+  }
+
+  return output;
+};
+
 var processEmail = function processEmail(rawEmail) {
-  return parseMail(rawEmail).then(tidyEmail).then(setLanguage).then(generateSlug).then(processImages).then(sanitize).then(filterLinks).then(function (_ref) {
-    var messageId = _ref.messageId,
-        to = _ref.to,
-        from = _ref.from,
-        cc = _ref.cc,
-        bcc = _ref.bcc,
-        subject = _ref.subject,
-        html = _ref.html,
-        date = _ref.date,
-        language = _ref.language,
-        slug = _ref.slug;
+  return parseMail(rawEmail).then(tidyEmail).then(setLanguage).then(generateSlug).then(processImages).then(sanitize).then(filterLinks).then(buildEmailObj);
+};
 
-
-    // join to, cc, bcc
-    // match for staging/page/email and label
-    var recipients = to;
-    if (cc) {
-      recipients = recipients.concat(cc);
-    }
-    if (bcc) {
-      recipients = recipients.concat(bcc);
-    }
-    var labelMatch = recipients.map(function (r) {
-      return r.address;
-    }).join(',').match(/(staging|page|email)(?:\+)([\w]+)(?:@publishthis.email)/);
-
-    var output = {
-      to: to,
-      from: from,
-      subject: subject,
-      html: html,
-      messageId: _shortid2.default.generate(),
-      headerMessageId: messageId,
-      timeAdded: new Date().getTime(),
-      language: language,
-      editKey: _shortid2.default.generate() + _shortid2.default.generate(),
-      slug: slug
-    };
-    if (cc) {
-      output.cc = cc;
-    }
-    if (bcc) {
-      output.bcc = bcc;
-    }
-    if (labelMatch) {
-      output.label = labelMatch[2];
-    }
-
-    return output;
-  });
+var processListEmail = function processListEmail(rawEmail) {
+  return parseMail(rawEmail).then(tidyEmail).then(setLanguage).then(generateSlug).then(processImages).then(sanitize).then(buildEmailObj);
 };
 
 // any modifications before rendering to templates
@@ -1229,11 +1372,71 @@ var addTimeSince = function addTimeSince(items) {
 };
 
 exports.processEmail = processEmail;
+exports.processListEmail = processListEmail;
 exports.preRender = preRender;
 exports.addTimeSince = addTimeSince;
 
 /***/ }),
-/* 25 */
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.sendListPreview = undefined;
+
+var _ses = __webpack_require__(3);
+
+var _ses2 = _interopRequireDefault(_ses);
+
+var _dot = __webpack_require__(4);
+
+var _dot2 = _interopRequireDefault(_dot);
+
+var _emailReply = __webpack_require__(9);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var sendListPreview = function sendListPreview(mailObj) {
+
+  mailObj.pteDomain = 'https://www.publishthis.email';
+
+  // set reply template for the appropriate language
+  var replyTemplate = _dot2.default.template(_emailReply.replyEmails[mailObj.language]);
+  var emailBody = replyTemplate(mailObj);
+
+  var params = {
+    Destination: {
+      ToAddresses: [mailObj.from[0].address],
+      BccAddresses: ['publishthisemail@gmail.com']
+    },
+    Message: {
+      Subject: {
+        Data: mailObj.subject + ' - publishthis.email',
+        Charset: 'UTF-8'
+      },
+      Body: {
+        Html: {
+          Data: emailBody,
+          Charset: 'UTF-8'
+        }
+      }
+    },
+    Source: '"Publish This Email" <noreply@publishthis.email>',
+    ReplyToAddresses: ['"Publish This Email" <hello@publishthis.email>'],
+    ReturnPath: 'return@publishthis.email'
+  };
+
+  return _ses2.default.sendEmail(params);
+};
+
+exports.sendListPreview = sendListPreview;
+
+/***/ }),
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1244,15 +1447,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.sendReply = undefined;
 
-var _ses = __webpack_require__(7);
+var _ses = __webpack_require__(3);
 
 var _ses2 = _interopRequireDefault(_ses);
 
-var _dot = __webpack_require__(8);
+var _dot = __webpack_require__(4);
 
 var _dot2 = _interopRequireDefault(_dot);
 
-var _emailReply = __webpack_require__(30);
+var _emailReply = __webpack_require__(9);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1305,7 +1508,7 @@ var sendReply = function sendReply(mailObj) {
 exports.sendReply = sendReply;
 
 /***/ }),
-/* 26 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1337,7 +1540,7 @@ var storeInDynamo = function storeInDynamo(emailObj) {
 exports.storeInDynamo = storeInDynamo;
 
 /***/ }),
-/* 27 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1371,7 +1574,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 28 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1383,32 +1586,32 @@ var _aws2 = _interopRequireDefault(_aws);
 
 var _environment = __webpack_require__(0);
 
-var _express = __webpack_require__(10);
+var _express = __webpack_require__(11);
 
 var _express2 = _interopRequireDefault(_express);
 
-var _request = __webpack_require__(13);
+var _request = __webpack_require__(14);
 
 var _request2 = _interopRequireDefault(_request);
 
-var _expressDotEngine = __webpack_require__(11);
+var _expressDotEngine = __webpack_require__(12);
 
 var _expressDotEngine2 = _interopRequireDefault(_expressDotEngine);
 
-var _serveFavicon = __webpack_require__(14);
+var _serveFavicon = __webpack_require__(15);
 
 var _serveFavicon2 = _interopRequireDefault(_serveFavicon);
 
-var _sanitizeHtml = __webpack_require__(4);
+var _sanitizeHtml = __webpack_require__(6);
 
 var _sanitizeHtml2 = _interopRequireDefault(_sanitizeHtml);
 
-var _actions = __webpack_require__(9);
+var _actions = __webpack_require__(10);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = (0, _express2.default)();
-var path = __webpack_require__(12);
+var path = __webpack_require__(13);
 
 (0, _aws.updateConfig)();
 
@@ -1465,7 +1668,7 @@ app.get('/page-sent', function (req, res) {
 app.get('/verify', function (req, res) {
   if (req.query.sid) {
     var subscriberId = req.query.sid;
-    var url = _environment.config.API_URL + 'verify?subscriberId=' + subscriberId;
+    var url = _environment.config.API_URL + 'list/verify?subscriberId=' + subscriberId;
     (0, _request2.default)(url, function (error, response, body) {
       res.render('email-verified');
     });
@@ -1480,7 +1683,7 @@ app.get('/unsubscribe', function (req, res) {
   if (req.query.sid) {
     var subscriberId = req.query.sid;
     console.log(subscriberId);
-    var url = _environment.config.API_URL + 'unsubscribe?subscriberId=' + subscriberId;
+    var url = _environment.config.API_URL + 'list/unsubscribe?subscriberId=' + subscriberId;
     (0, _request2.default)(url, function (error, response, body) {
       console.log(error);
       console.log(body);
@@ -1496,9 +1699,19 @@ app.get('/create/:messageId', function (req, res) {
   // var messageId = '2ljatek3dgs5gthccq91ra632vr9epfc35re9mg1' // zh
   var messageId = 'q6on5vgqqlj33bpads7lk132qorld918epkvnh81'; // zh-t
 
-  (0, _actions.getRawEmail)(messageId).then(_actions.processEmail).then(function (email) {
-    console.log(email);
-  })
+  // list receive
+  (0, _actions.getRawEmail)(messageId, _environment.config.S3_BUCKET_LIST).then(_actions.processListEmail).then(_actions.collectionsProcess).then(_actions.storeInDynamo).then(_actions.sendListPreview)
+  // .then(sendReply)
+  .then(function (result) {
+    console.log('successful receive:', messageId, result);
+    callback(null, { "disposition": "STOP_RULE_SET" });
+  }).catch(function (err) {
+    return console.log(err.stack);
+  });
+
+  // email receive
+  // getRawEmail(messageId)
+  // .then(processEmail)
   // .then(collectionsProcess)
   // .then(storeInDynamo)
   // .then(sendReply)
@@ -1507,9 +1720,7 @@ app.get('/create/:messageId', function (req, res) {
   //   console.log(result)
   //   res.send(true)
   // })
-  .catch(function (e) {
-    return console.log(e);
-  });
+  // .catch(e => console.log(e))
 });
 
 app.get('/:slug/delete/:editKey', function (req, res) {
@@ -1639,7 +1850,7 @@ app.listen(_environment.config.PORT, function () {
 });
 
 /***/ }),
-/* 29 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1649,7 +1860,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _imgur = __webpack_require__(35);
+var _imgur = __webpack_require__(38);
 
 var _imgur2 = _interopRequireDefault(_imgur);
 
@@ -1669,7 +1880,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 30 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1678,19 +1889,14 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var replyEmails = {
-  'ar': '<div dir="rtl">\n<p>\u0645\u0631\u062D\u0628\u0627,</p>\n<p>\u0644\u0642\u062F \u062A\u0644\u0642\u064A\u0646\u0627 \u0628\u0631\u064A\u062F\u0643 \u0627\u0644\u0625\u0644\u0643\u062A\u0631\u0648\u0646\u064A <strong>{{=it.subject}}</strong>,  , \u062B\u0645 \u0642\u0645\u0646\u0627 \u0628\u062A\u062D\u0648\u064A\u0644\u0647 \u0627\u0644\u064A \u0635\u0641\u062D\u0629 \u0648\u064A\u0628 \u0648\u0646\u0634\u0631\u0646\u0627\u0647 \u0639\u0644\u064A \u0627\u0644\u0625\u0646\u062A\u0631\u0646\u062A \u0647\u0646\u0627:</p>\n<p><a href="https://publishth.is/{{=it.messageId}}">https://publishth.is/{{=it.messageId}}</a></p>\n{{? it.slug}}<p><a href="{{=it.pteDomain}}/{{=it.slug}}-{{=it.messageId}}">{{=it.pteDomain}}/{{=it.slug}}-{{=it.messageId}}</a></p>{{?}}\n<p><strong>\u0634\u0643\u0631\u0627 \u0644\u0643\u060C<a href="https://www.publishthis.email">publishthis.email</a></strong></p>\n<p>\u0627\u062D\u0630\u0641 \u0635\u0641\u062D\u062A\u0643: <a href="{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}">{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}</a></p>\n{{? it.collectionId}}\n<p>\u0647\u0630\u0647 \u0627\u0644\u0635\u0641\u062D\u0629 \u062C\u0632\u0621 \u0645\u0646 \u0645\u062C\u0645\u0648\u0639\u0629: <a href="{{=it.pteDomain}}/c/{{=it.collectionId}}">{{=it.pteDomain}}/c/{{=it.collectionId}}</a></p>\n{{?}}\n</div>\n',
-  'es': '<p>Hola!</p>\n<p>Hemos recibido tu email <strong>{{=it.subject}}</strong>, lo convertimos en una p\xE1gina web y la publicamos online en este enlace::</p>\n<p><a href="https://publishth.is/{{=it.messageId}}">https://publishth.is/{{=it.messageId}}</a></p>\n{{? it.slug}}<p><a href="{{=it.pteDomain}}/{{=it.slug}}-{{=it.messageId}}">{{=it.pteDomain}}/{{=it.slug}}-{{=it.messageId}}</a></p>{{?}}\n<p>Gracias de parte de <strong><a href="https://www.publishthis.email">publishthis.email</a></strong></p>\n<p>Borra tu p\xE1gina: <a href="{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}">{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}</a></p>\n{{? it.collectionId}}\n<p>Esta p\xE1gina es parte de una colecci\xF3n: <a href="{{=it.pteDomain}}/c/{{=it.collectionId}}">{{=it.pteDomain}}/c/{{=it.collectionId}}</a></p>\n{{?}}\n',
-  'en': '\n<!DOCTYPE html><html> <head> <meta name="viewport" content="width=device-width"> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <title>{{=it.subject}}</title> <style type="text/css"> /* ------------------------------------- RESPONSIVE AND MOBILE FRIENDLY STYLES ------------------------------------- */ @media only screen and (max-width: 620px){table[class=body] h1{font-size: 28px !important; margin-bottom: 10px !important;}table[class=body] p, table[class=body] ul, table[class=body] ol, table[class=body] td, table[class=body] span, table[class=body] a{font-size: 16px !important;}table[class=body] .wrapper, table[class=body] .article{padding: 10px !important;}table[class=body] .content{padding: 0 !important;}table[class=body] .container{padding: 0 !important; width: 100% !important;}table[class=body] .main{border-left-width: 0 !important; border-radius: 0 !important; border-right-width: 0 !important;}table[class=body] .btn table{width: 100% !important;}table[class=body] .btn a{width: 100% !important;}table[class=body] .img-responsive{height: auto !important; max-width: 100% !important; width: auto !important;}}/* ------------------------------------- PRESERVE THESE STYLES IN THE HEAD ------------------------------------- */ @media all{.ExternalClass{width: 100%;}.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div{line-height: 100%;}.apple-link a{color: inherit !important; font-family: inherit !important; font-size: inherit !important; font-weight: inherit !important; line-height: inherit !important; text-decoration: none !important;}.btn-primary table td:hover{background-color: #34495e !important;}.btn-primary a:hover{background-color: #34495e !important; border-color: #34495e !important;}}</style> </head> <body class="" style="background-color:#f6f6f6;font-family:sans-serif;-webkit-font-smoothing:antialiased;font-size:14px;line-height:1.4;margin:0;padding:0;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;"> <table border="0" cellpadding="0" cellspacing="0" class="body" style="border-collapse:separate;mso-table-lspace:0pt;mso-table-rspace:0pt;background-color:#f6f6f6;width:100%;"> <tr> <td style="font-family:sans-serif;font-size:14px;vertical-align:top;">&nbsp;</td><td class="container" style="font-family:sans-serif;font-size:14px;vertical-align:top;display:block;max-width:580px;padding:10px;width:580px;Margin:0 auto !important;"> <div class="content" style="box-sizing:border-box;display:block;Margin:0 auto;max-width:580px;padding:10px;"> <span class="preheader" style="color:transparent;display:none;height:0;max-height:0;max-width:0;opacity:0;overflow:hidden;mso-hide:all;visibility:hidden;width:0;">Success! Your page has been published.</span> <table class="main" style="border-collapse:separate;mso-table-lspace:0pt;mso-table-rspace:0pt;background:#fff;border-radius:3px;width:100%;"> <tr> <td class="wrapper" style="font-family:sans-serif;font-size:14px;vertical-align:top;box-sizing:border-box;padding:20px;"> <table border="0" cellpadding="0" cellspacing="0" style="border-collapse:separate;mso-table-lspace:0pt;mso-table-rspace:0pt;width:100%;"> <tr> <td style="font-family:sans-serif;font-size:14px;vertical-align:top;"> <p style="font-family:sans-serif;font-size:14px;font-weight:normal;margin:0;Margin-bottom:15px;">Good news!</p><p style="font-family:sans-serif;font-size:14px;font-weight:normal;margin:0;Margin-bottom:15px;">We\u2019ve received your email <strong>{{=it.subject}}</strong>, converted it into a tidy little web page and published it online:</p><p style="font-family:sans-serif;font-size:14px;font-weight:normal;margin:0;Margin-bottom:15px;"><a href="https://publishth.is/{{=it.messageId}}" style="color:#FF5468;text-decoration:underline;">https://publishth.is/{{=it.messageId}}</a></p>{{? it.slug}}<p style="font-family:sans-serif;font-size:14px;font-weight:normal;margin:0;Margin-bottom:15px;"><a href="{{=it.pteDomain}}/{{=it.slug}}-{{=it.messageId}}" style="color:#FF5468;text-decoration:underline;">{{=it.pteDomain}}/{{=it.slug}}-{{=it.messageId}}</a></p>{{?}}<p style="font-family:sans-serif;font-size:14px;font-weight:normal;margin:0;Margin-bottom:15px;">For a brief moment you were the creator of the newest page on the internet. Congratulations.</p><p style="font-family:sans-serif;font-size:14px;font-weight:normal;margin:0;Margin-bottom:15px;">Sadly, that moment has passed. But you can be the creator of the newest page on the internet at any time. Simply send another email to <a href="mailto:page@publishthis.email" style="color:#FF5468;text-decoration:underline;">page@publishthis.email</a> to publish a page - we\u2019ll reply with a link to your new page in seconds.</p><p style="font-family:sans-serif;font-size:14px;font-weight:normal;margin:0;Margin-bottom:15px;">Delete your page: <a href="{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}" style="color:#FF5468;text-decoration:underline;">{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}</a></p>{{? it.collectionId}}<p style="font-family:sans-serif;font-size:14px;font-weight:normal;margin:0;Margin-bottom:15px;">This page is part of your <strong>{{=it.label}}</strong> collection. Any pages you send to <strong>page+{{=it.label}}@publishthis.email</strong> will be added to this collection: <a href="{{=it.pteDomain}}/c/{{=it.collectionId}}" style="color:#FF5468;text-decoration:underline;">{{=it.pteDomain}}/c/{{=it.collectionId}}</a></p>{{?}}<p style="font-family:sans-serif;font-size:14px;font-weight:normal;margin:0;Margin-bottom:15px;">Thanks,</p><a href="https://www.publishthis.email" style="color:#FF5468;text-decoration:underline;"><img src="http://i.imgur.com/QoCKNTi.png" width="262px" style="border:none;-ms-interpolation-mode:bicubic;max-width:100%;"/></a> </td></tr></table> </td></tr></table> <div class="footer" style="clear:both;padding-top:10px;text-align:center;width:100%;"> <table border="0" cellpadding="0" cellspacing="0" style="border-collapse:separate;mso-table-lspace:0pt;mso-table-rspace:0pt;width:100%;"> <tr> <td class="content-block" style="font-family:sans-serif;font-size:14px;vertical-align:top;color:#999999;font-size:12px;text-align:center;"> <span class="apple-link" style="color:#999999;font-size:12px;text-align:center;">Publish This Email Pty Ltd, 6/63 Elizabeth St, Richmond, VIC 3121, Australia</span> <br>Don\'t like these emails? <a href="http://i.imgur.com/CScmqnj.gif" style="color:#FF5468;text-decoration:underline;color:#999999;font-size:12px;text-align:center;">Unsubscribe</a>. </td></tr><!-- <tr> <td class="content-block powered-by"> Powered by <a href="http://htmlemail.io">HTMLemail</a>. </td></tr>--> </table> </div></div></td><td style="font-family:sans-serif;font-size:14px;vertical-align:top;">&nbsp;</td></tr></table> </body></html>\n',
-  'ru': '<p>\u041F\u0440\u0438\u0432\u0435\u0442!</p>\n<p>\u041C\u044B \u043F\u043E\u043B\u0443\u0447\u0438\u043B\u0438 \u0432\u0430\u0448\u0435 \u043F\u0438\u0441\u044C\u043C\u043E <strong>{{=it.subject}}</strong>, \u043F\u0440\u0435\u0432\u0440\u0430\u0442\u0438\u043B\u0438 \u0435\u0433\u043E \u0432 \u0432\u0435\u0431-\u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0443 \u0438 \u043E\u043F\u0443\u0431\u043B\u0438\u043A\u043E\u0432\u0430\u043B\u0438 \u0435\u0433\u043E \u043F\u043E \u044D\u0442\u043E\u0439 \u0441\u0441\u044B\u043B\u043A\u0435:</p>\n<p><a href="https://publishth.is/{{=it.messageId}}">https://publishth.is/{{=it.messageId}}</a></p>\n{{? it.slug}}<p><a href="{{=it.pteDomain}}/{{=it.slug}}-{{=it.messageId}}">{{=it.pteDomain}}/{{=it.slug}}-{{=it.messageId}}</a></p>{{?}}\n<p><strong>\u0421\u043F\u0430\u0441\u0438\u0431\u043E \u0437\u0430 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u0435 <a href="https://www.publishthis.email">publishthis.email</a></strong></p>\n<p>\u0427\u0442\u043E\u0431\u044B \u0443\u0434\u0430\u043B\u0438\u0442\u044C \u0432\u0430\u0448\u0443 \u0432\u0435\u0431-\u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0443, \u043F\u0435\u0440\u0435\u0439\u0434\u0438\u0442\u0435 \u043F\u043E \u0441\u0441\u044B\u043B\u043A\u0435: <a href="{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}">{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}</a></p>\n{{? it.collectionId}}\n<p>\u042D\u0442\u0430 \u0432\u0435\u0431-\u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0430 \u044F\u0432\u043B\u044F\u0435\u0442\u0441\u044F \u0447\u0430\u0441\u0442\u044C\u044E \u043A\u043E\u043B\u043B\u0435\u043A\u0446\u0438\u0438: <a href="{{=it.pteDomain}}/c/{{=it.collectionId}}">{{=it.pteDomain}}/c/{{=it.collectionId}}</a></p>\n{{?}}\n',
-  'zh': '<p>\u60A8\u597D\uFF0C</p>\n<p>\u6211\u4EEC\u5DF2\u6536\u5230\u60A8\u7684\u7535\u5B50\u90AE\u4EF6 <strong>{{=it.subject}}</strong>, \u5C06\u5176\u8F6C\u6362\u4E3A\u7F51\u9875\uFF0C\u5E76\u5728\u7EBF\u53D1\u5E03\uFF1A</p>\n<p><a href="https://publishth.is/{{=it.messageId}}">https://publishth.is/{{=it.messageId}}</a></p>\n{{? it.slug}}<p><a href="{{=it.pteDomain}}/{{=it.slug}}-{{=it.messageId}}">{{=it.pteDomain}}/{{=it.slug}}-{{=it.messageId}}</a></p>{{?}}\n<p><strong><a href="https://www.publishthis.email">publishthis.email</a></strong>\u611F\u8C22\u60A8</p>\n<p>\u5220\u9664\u60A8\u7684\u9875\u9762\uFF1A <a href="{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}">{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}</a></p>\n{{? it.collectionId}}\n<p>\u6B64\u9875\u9762\u662F\u6C47\u96C6\u7684\u4E00\u90E8\u5206\uFF1A <a href="{{=it.pteDomain}}/c/{{=it.collectionId}}">{{=it.pteDomain}}/c/{{=it.collectionId}}</a></p>\n{{?}}\n',
-  'zh-t': '<p>\u60A8\u597D\uFF0C</p>\n<p>\u6211\u5011\u5DF2\u6536\u5230\u60A8\u7684\u96FB\u5B50\u90F5\u4EF6l <strong>{{=it.subject}}</strong>\uFF0C\u5C07\u5176\u8F49\u63DB\u70BA\u7DB2\u9801\uFF0C\u4E26\u5728\u7DDA\u767C\u5E03\uFF1A</p>\n<p><a href="https://publishth.is/{{=it.messageId}}">https://publishth.is/{{=it.messageId}}</a></p>\n{{? it.slug}}<p><a href="{{=it.pteDomain}}/{{=it.slug}}-{{=it.messageId}}">{{=it.pteDomain}}/{{=it.slug}}-{{=it.messageId}}</a></p>{{?}}\n<p><strong><a href="https://www.publishthis.email">publishthis.email</a></strong>\u611F\u8B1D\u60A8</p>\n<p>\u522A\u9664\u60A8\u7684\u9801\u9762\uFF1A<a href="{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}">{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}</a></p>\n{{? it.collectionId}}\n<p>\u6B64\u9801\u9762\u662F\u532F\u96C6\u7684\u4E00\u90E8\u5206\uFF1A<a href="{{=it.pteDomain}}/c/{{=it.collectionId}}">{{=it.pteDomain}}/c/{{=it.collectionId}}</a></p>\n{{?}}\n'
+var firstListEmails = {
+  'en': '\n<p>You\'ve just created your first list using publishthis.email</p>\n<p>To send to your list</p>\n<p>1. Send an email to list@publishthis.email</p>\n<p>2. We\'ll reply with a link to preview your email</p>\n<p>3. Click "Send to list" to distribute your list to your subscribers</p>\n'
 };
 
-exports.replyEmails = replyEmails;
+exports.firstListEmails = firstListEmails;
 
 /***/ }),
-/* 31 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1706,37 +1912,37 @@ var verifyEmails = {
 exports.verifyEmails = verifyEmails;
 
 /***/ }),
-/* 32 */
+/* 35 */
 /***/ (function(module, exports) {
 
 module.exports = require("aws-sdk");
 
 /***/ }),
-/* 33 */
+/* 36 */
 /***/ (function(module, exports) {
 
 module.exports = require("cloudflare");
 
 /***/ }),
-/* 34 */
+/* 37 */
 /***/ (function(module, exports) {
 
 module.exports = require("franc-min");
 
 /***/ }),
-/* 35 */
+/* 38 */
 /***/ (function(module, exports) {
 
 module.exports = require("imgur");
 
 /***/ }),
-/* 36 */
+/* 39 */
 /***/ (function(module, exports) {
 
 module.exports = require("mailparser");
 
 /***/ }),
-/* 37 */
+/* 40 */
 /***/ (function(module, exports) {
 
 module.exports = require("traditional-or-simplified");

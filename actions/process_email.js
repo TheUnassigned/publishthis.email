@@ -106,9 +106,9 @@ const setLanguage = email => {
 // generate slug
 const generateSlug = email => {
   var slug = slugify(email.subject)
-  console.log(slug)
+  // console.log(slug)
   email.slug = slug
-  console.log(email)
+  // console.log(email)
   return email
 }
 
@@ -159,6 +159,47 @@ const filterLinks = email => {
   return email
 }
 
+const buildEmailObj = rawEmail => {
+  const messageId = rawEmail.messageId
+  const to = rawEmail.to
+  const from = rawEmail.from
+  const cc = rawEmail.cc
+  const bcc = rawEmail.bcc
+  const subject = rawEmail.subject
+  const html = rawEmail.html
+  const date = rawEmail.date
+  const language = rawEmail.language
+  const slug = rawEmail.slug
+  // join to, cc, bcc
+  // match for staging/page/email and label
+  var recipients = to
+  if(cc){ recipients = recipients.concat(cc)}
+  if(bcc){ recipients = recipients.concat(bcc)}
+  var labelMatch = recipients.map(r => {
+    return r.address
+  })
+  .join(',')
+  .match(/(staging|page|email)(?:\+)([\w]+)(?:@publishthis.email)/)
+
+  const output = {
+    to,
+    from,
+    subject,
+    html,
+    messageId: shortid.generate(),
+    headerMessageId: messageId,
+    timeAdded: new Date().getTime(),
+    language,
+    editKey: shortid.generate() + shortid.generate(),
+    slug
+  }
+  if(cc) { output.cc = cc }
+  if(bcc) { output.bcc = bcc }
+  if(labelMatch) { output.label = labelMatch[2]}
+
+  return output
+}
+
 const processEmail = rawEmail => {
   return parseMail(rawEmail)
   .then(tidyEmail)
@@ -167,37 +208,17 @@ const processEmail = rawEmail => {
   .then(processImages)
   .then(sanitize)
   .then(filterLinks)
-  .then(({ messageId, to, from, cc, bcc, subject, html, date, language, slug }) => {
+  .then(buildEmailObj)
+}
 
-    // join to, cc, bcc
-    // match for staging/page/email and label
-    var recipients = to
-    if(cc){ recipients = recipients.concat(cc)}
-    if(bcc){ recipients = recipients.concat(bcc)}
-    var labelMatch = recipients.map(r => {
-      return r.address
-    })
-    .join(',')
-    .match(/(staging|page|email)(?:\+)([\w]+)(?:@publishthis.email)/)
-
-    const output = {
-      to,
-      from,
-      subject,
-      html,
-      messageId: shortid.generate(),
-      headerMessageId: messageId,
-      timeAdded: new Date().getTime(),
-      language,
-      editKey: shortid.generate() + shortid.generate(),
-      slug
-    }
-    if(cc) { output.cc = cc }
-    if(bcc) { output.bcc = bcc }
-    if(labelMatch) { output.label = labelMatch[2]}
-
-    return output
-  })
+const processListEmail = rawEmail => {
+  return parseMail(rawEmail)
+  .then(tidyEmail)
+  .then(setLanguage)
+  .then(generateSlug)
+  .then(processImages)
+  .then(sanitize)
+  .then(buildEmailObj)
 }
 
 // any modifications before rendering to templates
@@ -233,6 +254,7 @@ const addTimeSince = items => {
 
 export {
   processEmail,
+  processListEmail,
   preRender,
   addTimeSince
 }

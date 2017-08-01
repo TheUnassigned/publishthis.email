@@ -1,6 +1,7 @@
 import { getRawEmail } from './get_raw_email'
-import { processEmail, preRender, addTimeSince } from './process_email'
+import { processEmail, processListEmail, preRender, addTimeSince } from './process_email'
 import { sendReply } from './send_reply'
+import { sendListPreview } from './list_preview'
 import { storeInDynamo } from './store_in_dynamo'
 import { getStoredEmail } from './get_stored_email'
 import { getCollection } from './get_collection'
@@ -12,11 +13,14 @@ import { slugify } from './title-to-slug'
 import { isNotSubscribed, addSubscriber, sendSubscriberVerification } from './list_subscribe'
 import { verifySubscriberId } from './list_verify'
 import { unsubscribe } from './list_unsubscribe'
+import { isNewList, addListToDB, sendNewListWelcome } from './list_create'
 
 export {
   getRawEmail,
   processEmail,
+  processListEmail,
   sendReply,
+  sendListPreview,
   storeInDynamo,
   getStoredEmail,
   deleteEmailFromDynamo,
@@ -33,5 +37,8 @@ export {
   isNotSubscribed,
   sendSubscriberVerification,
   verifySubscriberId,
-  unsubscribe
+  unsubscribe,
+  isNewList,
+  addListToDB,
+  sendNewListWelcome
 }
