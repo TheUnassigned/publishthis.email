@@ -83,6 +83,21 @@ functions:
       - http:
           path: list/subscribe
           method: get
+          cors: true
+  list-unsubscribe:
+    handler: handler.listUnsubscribe
+    events:
+      - http:
+          path: list/unsubscribe
+          method: get
+          cors: true
+  verify-subscriber:
+    handler: handler.verifySubscriber
+    events:
+      - http:
+          path: list/verify
+          method: get
+          cors: true
   view:
     handler: handler.view
     events:

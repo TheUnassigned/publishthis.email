@@ -8,9 +8,10 @@ aws.config.update({
 
 var handler = require('./serverless/handler')
 
-handler.listSubscribe({
+handler.listUnsubscribe({
   queryStringParameters: {
-    listId: '12345',
-    subscriberEmail: 'nick.drewe@gmail.com'
+    subscriberId: 'BkEXRrhIW'
   }
+}, {}, function(result){
+  console.log(result)
 })

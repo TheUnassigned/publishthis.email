@@ -15,6 +15,7 @@ const config = {
   CF_ZONEID: env.PTE_CF_ZONEID,
   IMGUR_ID: env.PTE_IMGUR_ID,
   IMGUR_SECRET: env.PTE_IMGUR_SECRET,
+  API_URL: env.PTE_API_URL,
   PORT: env.PORT || 3000
 }
 

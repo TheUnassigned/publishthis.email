@@ -3,6 +3,7 @@
 import AWS, { updateConfig } from '/config/aws'
 import { config } from '/config/environment'
 import express from 'express'
+import request from 'request'
 import doTexpress from 'express-dot-engine'
 import favicon from 'serve-favicon'
 import sanitizeHtml from 'sanitize-html'
@@ -60,9 +61,38 @@ app.get('/name-your-list', function (req, res) {
 app.get('/page-sent', function (req, res) {
   res.render('page-sent')
 })
-app.get('/email-verified', function (req, res) {
-  res.render('email-verified')
+
+// Verify endpoint for double opt-in, passes subscriberId to Lambda endpoint and returns success page or 404
+app.get('/verify', function (req, res) {
+  if(req.query.sid){
+    var subscriberId = req.query.sid
+    var url = config.API_URL + 'list/verify?subscriberId=' + subscriberId
+    request(url, function (error, response, body) {
+      res.render('email-verified')
+    });
+  }else{
+    res.status(404)
+    res.render('404')
+  }
 })
+
+// Unsubscribe endpoint
+app.get('/unsubscribe', function (req, res) {
+  if(req.query.sid){
+    var subscriberId = req.query.sid
+    console.log(subscriberId)
+    var url = config.API_URL + 'list/unsubscribe?subscriberId=' + subscriberId
+    request(url, function (error, response, body) {
+      console.log(error)
+      console.log(body)
+      res.render('unsubscribe-confirmed')
+    });
+  }else{
+    res.status(404)
+    res.render('404')
+  }
+})
+
 
 app.get('/create/:messageId', function (req, res) {
   // var messageId = '2ljatek3dgs5gthccq91ra632vr9epfc35re9mg1' // zh

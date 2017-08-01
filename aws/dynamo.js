@@ -44,9 +44,15 @@ const deleteResource = params => {
   return docClient.delete(params).promise()
 }
 
+// Update a resource in the DB
+const updateResource = params => {
+  return docClient.update(params).promise()
+}
+
 export default {
   getResource,
   putResource,
   deleteResource,
+  updateResource,
   query
 }

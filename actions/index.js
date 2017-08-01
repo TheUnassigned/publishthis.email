@@ -9,7 +9,9 @@ import { collectionsProcess } from './collections_process'
 import { clearCache } from './clear_cache'
 import { useLanguage, acceptLanguages } from './localise'
 import { slugify } from './title-to-slug'
-import { isSubscribed, addSubscriber } from './list_subscribe'
+import { isNotSubscribed, addSubscriber, sendSubscriberVerification } from './list_subscribe'
+import { verifySubscriberId } from './list_verify'
+import { unsubscribe } from './list_unsubscribe'
 
 export {
   getRawEmail,
@@ -28,5 +30,8 @@ export {
   acceptLanguages,
   slugify,
   addSubscriber,
-  isSubscribed
+  isNotSubscribed,
+  sendSubscriberVerification,
+  verifySubscriberId,
+  unsubscribe
 }

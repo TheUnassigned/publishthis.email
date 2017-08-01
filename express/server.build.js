@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 23);
+/******/ 	return __webpack_require__(__webpack_require__.s = 28);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -86,11 +86,14 @@ var config = {
   EMAIL_TABLE: env.PTE_EMAIL_TABLE,
   COLLECTION_TABLE: env.PTE_COLLECTION_TABLE,
   COLLECTION_ITEM_TABLE: env.PTE_COLLECTION_ITEM_TABLE,
+  LISTS_TABLE: env.PTE_LISTS_TABLE,
+  LIST_SUBSCRIBERS_TABLE: env.PTE_LIST_SUBSCRIBERS_TABLE,
   CF_KEY: env.PTE_CF_KEY,
   CF_EMAIL: env.PTE_CF_EMAIL,
   CF_ZONEID: env.PTE_CF_ZONEID,
   IMGUR_ID: env.PTE_IMGUR_ID,
   IMGUR_SECRET: env.PTE_IMGUR_SECRET,
+  API_URL: env.PTE_API_URL,
   PORT: env.PORT || 3000
 };
 
@@ -154,10 +157,16 @@ var deleteResource = function deleteResource(params) {
   return docClient.delete(params).promise();
 };
 
+// Update a resource in the DB
+var updateResource = function updateResource(params) {
+  return docClient.update(params).promise();
+};
+
 exports.default = {
   getResource: getResource,
   putResource: putResource,
   deleteResource: deleteResource,
+  updateResource: updateResource,
   query: query
 };
 
@@ -173,7 +182,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.updateConfig = undefined;
 
-var _awsSdk = __webpack_require__(26);
+var _awsSdk = __webpack_require__(32);
 
 var _awsSdk2 = _interopRequireDefault(_awsSdk);
 
@@ -196,10 +205,16 @@ exports.updateConfig = updateConfig;
 /* 3 */
 /***/ (function(module, exports) {
 
-module.exports = require("sanitize-html");
+module.exports = require("shortid");
 
 /***/ }),
 /* 4 */
+/***/ (function(module, exports) {
+
+module.exports = require("sanitize-html");
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -210,9 +225,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.langCode3to2 = exports.detectLanguage = exports.detectWhitelist = exports.acceptLanguages = exports.useLanguage = undefined;
 
-var _francMin = __webpack_require__(29);
+var _francMin = __webpack_require__(34);
 
 var _francMin2 = _interopRequireDefault(_francMin);
+
+var _traditionalOrSimplified = __webpack_require__(37);
+
+var _traditionalOrSimplified2 = _interopRequireDefault(_traditionalOrSimplified);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -289,9 +308,16 @@ var detectLanguage = function detectLanguage(email) {
   var detectedLanguage = (0, _francMin2.default)(sample, { whitelist: detectWhitelist });
 
   if (allowedLanguages.indexOf(detectedLanguage) > -1) {
-    return detectedLanguage;
+    console.log(detectedLanguage);
+    if (detectedLanguage == 'cmn' && _traditionalOrSimplified2.default.isTraditional(sample)) {
+      return 'zh-t';
+    } else if (detectedLanguage == 'cmn' && _traditionalOrSimplified2.default.isSimplified(sample)) {
+      return 'zh';
+    } else {
+      return langCode3to2(detectedLanguage);
+    }
   } else {
-    return 'eng'; // fall back to english
+    return 'en'; // fall back to english
   }
 };
 
@@ -302,7 +328,7 @@ exports.detectLanguage = detectLanguage;
 exports.langCode3to2 = langCode3to2;
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -324,12 +350,6 @@ var slugify = function slugify(text) {
 exports.slugify = slugify;
 
 /***/ }),
-/* 6 */
-/***/ (function(module, exports) {
-
-module.exports = require("shortid");
-
-/***/ }),
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -339,29 +359,72 @@ module.exports = require("shortid");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.slugify = exports.acceptLanguages = exports.useLanguage = exports.clearCache = exports.collectionsProcess = exports.getCollection = exports.addTimeSince = exports.preRender = exports.deleteCollectionItemFromDynamo = exports.deleteEmailFromDynamo = exports.getStoredEmail = exports.storeInDynamo = exports.sendReply = exports.processEmail = exports.getRawEmail = undefined;
 
-var _get_raw_email = __webpack_require__(16);
+var _aws = __webpack_require__(2);
 
-var _process_email = __webpack_require__(18);
+var _aws2 = _interopRequireDefault(_aws);
 
-var _send_reply = __webpack_require__(19);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _store_in_dynamo = __webpack_require__(20);
+var ses = new _aws2.default.SES();
 
-var _get_stored_email = __webpack_require__(17);
+var sendEmail = function sendEmail(params) {
+  return new Promise(function (resolve, reject) {
+    ses.sendEmail(params, function (err, data) {
+      return err ? reject(err) : resolve(data);
+    });
+  });
+};
 
-var _get_collection = __webpack_require__(15);
+exports.default = {
+  sendEmail: sendEmail
+};
 
-var _delete_from_dynamo = __webpack_require__(14);
+/***/ }),
+/* 8 */
+/***/ (function(module, exports) {
 
-var _collections_process = __webpack_require__(13);
+module.exports = require("dot");
 
-var _clear_cache = __webpack_require__(12);
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
 
-var _localise = __webpack_require__(4);
+"use strict";
 
-var _titleToSlug = __webpack_require__(5);
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.unsubscribe = exports.verifySubscriberId = exports.sendSubscriberVerification = exports.isNotSubscribed = exports.addSubscriber = exports.slugify = exports.acceptLanguages = exports.useLanguage = exports.clearCache = exports.collectionsProcess = exports.getCollection = exports.addTimeSince = exports.preRender = exports.deleteCollectionItemFromDynamo = exports.deleteEmailFromDynamo = exports.getStoredEmail = exports.storeInDynamo = exports.sendReply = exports.processEmail = exports.getRawEmail = undefined;
+
+var _get_raw_email = __webpack_require__(19);
+
+var _process_email = __webpack_require__(24);
+
+var _send_reply = __webpack_require__(25);
+
+var _store_in_dynamo = __webpack_require__(26);
+
+var _get_stored_email = __webpack_require__(20);
+
+var _get_collection = __webpack_require__(18);
+
+var _delete_from_dynamo = __webpack_require__(17);
+
+var _collections_process = __webpack_require__(16);
+
+var _clear_cache = __webpack_require__(15);
+
+var _localise = __webpack_require__(5);
+
+var _titleToSlug = __webpack_require__(6);
+
+var _list_subscribe = __webpack_require__(21);
+
+var _list_verify = __webpack_require__(23);
+
+var _list_unsubscribe = __webpack_require__(22);
 
 exports.getRawEmail = _get_raw_email.getRawEmail;
 exports.processEmail = _process_email.processEmail;
@@ -378,33 +441,44 @@ exports.clearCache = _clear_cache.clearCache;
 exports.useLanguage = _localise.useLanguage;
 exports.acceptLanguages = _localise.acceptLanguages;
 exports.slugify = _titleToSlug.slugify;
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports) {
-
-module.exports = require("express");
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports) {
-
-module.exports = require("express-dot-engine");
+exports.addSubscriber = _list_subscribe.addSubscriber;
+exports.isNotSubscribed = _list_subscribe.isNotSubscribed;
+exports.sendSubscriberVerification = _list_subscribe.sendSubscriberVerification;
+exports.verifySubscriberId = _list_verify.verifySubscriberId;
+exports.unsubscribe = _list_unsubscribe.unsubscribe;
 
 /***/ }),
 /* 10 */
 /***/ (function(module, exports) {
 
-module.exports = require("path");
+module.exports = require("express");
 
 /***/ }),
 /* 11 */
 /***/ (function(module, exports) {
 
-module.exports = require("serve-favicon");
+module.exports = require("express-dot-engine");
 
 /***/ }),
 /* 12 */
+/***/ (function(module, exports) {
+
+module.exports = require("path");
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports) {
+
+module.exports = require("request");
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports) {
+
+module.exports = require("serve-favicon");
+
+/***/ }),
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -415,7 +489,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.clearCache = undefined;
 
-var _cloudflare = __webpack_require__(27);
+var _cloudflare = __webpack_require__(33);
 
 var _cloudflare2 = _interopRequireDefault(_cloudflare);
 
@@ -439,7 +513,7 @@ var clearCache = function clearCache(cacheParams) {
 exports.clearCache = clearCache;
 
 /***/ }),
-/* 13 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -454,7 +528,7 @@ var _dynamo = __webpack_require__(1);
 
 var _dynamo2 = _interopRequireDefault(_dynamo);
 
-var _shortid = __webpack_require__(6);
+var _shortid = __webpack_require__(3);
 
 var _shortid2 = _interopRequireDefault(_shortid);
 
@@ -528,7 +602,7 @@ var collectionsProcess = function collectionsProcess(emailObj) {
 exports.collectionsProcess = collectionsProcess;
 
 /***/ }),
-/* 14 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -580,7 +654,7 @@ exports.deleteEmailFromDynamo = deleteEmailFromDynamo;
 exports.deleteCollectionItemFromDynamo = deleteCollectionItemFromDynamo;
 
 /***/ }),
-/* 15 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -628,7 +702,7 @@ var getCollection = function getCollection(collectionParams) {
 exports.getCollection = getCollection;
 
 /***/ }),
-/* 16 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -639,7 +713,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.getRawEmail = undefined;
 
-var _s = __webpack_require__(21);
+var _s = __webpack_require__(27);
 
 var _s2 = _interopRequireDefault(_s);
 
@@ -654,7 +728,7 @@ var getRawEmail = function getRawEmail(id) {
 exports.getRawEmail = getRawEmail;
 
 /***/ }),
-/* 17 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -683,7 +757,176 @@ var getStoredEmail = function getStoredEmail(id) {
 exports.getStoredEmail = getStoredEmail;
 
 /***/ }),
-/* 18 */
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.sendSubscriberVerification = exports.addSubscriber = exports.isNotSubscribed = undefined;
+
+var _dynamo = __webpack_require__(1);
+
+var _dynamo2 = _interopRequireDefault(_dynamo);
+
+var _ses = __webpack_require__(7);
+
+var _ses2 = _interopRequireDefault(_ses);
+
+var _dot = __webpack_require__(8);
+
+var _dot2 = _interopRequireDefault(_dot);
+
+var _shortid = __webpack_require__(3);
+
+var _shortid2 = _interopRequireDefault(_shortid);
+
+var _environment = __webpack_require__(0);
+
+var _emailVerify = __webpack_require__(31);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var sendSubscriberVerification = function sendSubscriberVerification(subscriber) {
+  var template = _dot2.default.template(_emailVerify.verifyEmails['en']);
+  var emailBody = template(subscriber);
+
+  var params = {
+    Destination: {
+      ToAddresses: [subscriber.subscriberEmail],
+      BccAddresses: ['publishthisemail@gmail.com']
+    },
+    Message: {
+      Subject: {
+        Data: 'Verify your email address - publishthis.email',
+        Charset: 'UTF-8'
+      },
+      Body: {
+        Html: {
+          Data: emailBody,
+          Charset: 'UTF-8'
+        }
+      }
+    },
+    Source: '"Publish This Email" <noreply@publishthis.email>',
+    ReplyToAddresses: ['"Publish This Email" <hello@publishthis.email>'],
+    ReturnPath: 'return@publishthis.email'
+  };
+
+  return _ses2.default.sendEmail(params);
+};
+
+var isNotSubscribed = function isNotSubscribed(subscriber) {
+  return _dynamo2.default.query({
+    TableName: _environment.config.LIST_SUBSCRIBERS_TABLE,
+    IndexName: 'subscriberEmail-listId-index',
+    KeyConditionExpression: "#subscriberEmail = :subscriberEmail and #listId >= :listId",
+    ExpressionAttributeNames: {
+      "#subscriberEmail": "subscriberEmail",
+      "#listId": "listId"
+    },
+    ExpressionAttributeValues: {
+      ":subscriberEmail": subscriber.subscriberEmail,
+      ":listId": subscriber.listId
+    },
+    Limit: 1 }).then(function (result) {
+    if (result.Count == 0) {
+      // build new subscriber
+      subscriber.verified = false;
+      subscriber.subscriberId = _shortid2.default.generate();
+      subscriber.editKey = _shortid2.default.generate() + _shortid2.default.generate();
+      return subscriber;
+    } else {
+      return Promise.reject(new Error('(isNotSubscribed): User already subscribed'));
+    }
+  });
+};
+
+var addSubscriber = function addSubscriber(subscriber) {
+  return _dynamo2.default.putResource({
+    TableName: _environment.config.LIST_SUBSCRIBERS_TABLE,
+    Item: subscriber
+  }).then(function () {
+    return subscriber;
+  });
+};
+
+exports.isNotSubscribed = isNotSubscribed;
+exports.addSubscriber = addSubscriber;
+exports.sendSubscriberVerification = sendSubscriberVerification;
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.unsubscribe = undefined;
+
+var _dynamo = __webpack_require__(1);
+
+var _dynamo2 = _interopRequireDefault(_dynamo);
+
+var _environment = __webpack_require__(0);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var unsubscribe = function unsubscribe(subscriberId) {
+  return _dynamo2.default.deleteResource({
+    TableName: _environment.config.LIST_SUBSCRIBERS_TABLE,
+    Key: {
+      subscriberId: subscriberId
+    }
+  });
+};
+
+exports.unsubscribe = unsubscribe;
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.verifySubscriberId = undefined;
+
+var _dynamo = __webpack_require__(1);
+
+var _dynamo2 = _interopRequireDefault(_dynamo);
+
+var _environment = __webpack_require__(0);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var verifySubscriberId = function verifySubscriberId(subscriberId) {
+  var params = {
+    TableName: _environment.config.LIST_SUBSCRIBERS_TABLE,
+    Key: {
+      "subscriberId": subscriberId
+    },
+    UpdateExpression: "set verified = :v",
+    ExpressionAttributeValues: {
+      ":v": true
+    },
+    ReturnValues: "UPDATED_NEW"
+  };
+  return _dynamo2.default.updateResource(params);
+};
+exports.verifySubscriberId = verifySubscriberId;
+
+/***/ }),
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -694,25 +937,25 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.addTimeSince = exports.preRender = exports.processEmail = undefined;
 
-var _mailparser = __webpack_require__(31);
+var _mailparser = __webpack_require__(36);
 
 var _mailparser2 = _interopRequireDefault(_mailparser);
 
-var _sanitizeHtml = __webpack_require__(3);
+var _sanitizeHtml = __webpack_require__(4);
 
 var _sanitizeHtml2 = _interopRequireDefault(_sanitizeHtml);
 
-var _shortid = __webpack_require__(6);
+var _shortid = __webpack_require__(3);
 
 var _shortid2 = _interopRequireDefault(_shortid);
 
-var _imgur = __webpack_require__(24);
+var _imgur = __webpack_require__(29);
 
 var _imgur2 = _interopRequireDefault(_imgur);
 
-var _localise = __webpack_require__(4);
+var _localise = __webpack_require__(5);
 
-var _titleToSlug = __webpack_require__(5);
+var _titleToSlug = __webpack_require__(6);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -818,8 +1061,7 @@ var tidyEmail = function tidyEmail(email) {
 
 // detect email content language and set a language code on the email object
 var setLanguage = function setLanguage(email) {
-  var lang3 = (0, _localise.detectLanguage)(email);
-  email.language = (0, _localise.langCode3to2)(lang3);
+  email.language = (0, _localise.detectLanguage)(email);
   return email;
 };
 
@@ -991,7 +1233,7 @@ exports.preRender = preRender;
 exports.addTimeSince = addTimeSince;
 
 /***/ }),
-/* 19 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1002,15 +1244,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.sendReply = undefined;
 
-var _ses = __webpack_require__(22);
+var _ses = __webpack_require__(7);
 
 var _ses2 = _interopRequireDefault(_ses);
 
-var _dot = __webpack_require__(28);
+var _dot = __webpack_require__(8);
 
 var _dot2 = _interopRequireDefault(_dot);
 
-var _replyEmail = __webpack_require__(25);
+var _emailReply = __webpack_require__(30);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1032,7 +1274,7 @@ var sendReply = function sendReply(mailObj) {
   mailObj.pteDomain = stagingTest.test(emailStr) ? 'https://staging.publishthis.email' : 'https://www.publishthis.email';
 
   // set reply template for the appropriate language
-  var replyTemplate = _dot2.default.template(_replyEmail.replyEmails[mailObj.language]);
+  var replyTemplate = _dot2.default.template(_emailReply.replyEmails[mailObj.language]);
   var emailBody = replyTemplate(mailObj);
 
   var params = {
@@ -1063,7 +1305,7 @@ var sendReply = function sendReply(mailObj) {
 exports.sendReply = sendReply;
 
 /***/ }),
-/* 20 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1095,7 +1337,7 @@ var storeInDynamo = function storeInDynamo(emailObj) {
 exports.storeInDynamo = storeInDynamo;
 
 /***/ }),
-/* 21 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1129,38 +1371,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _aws = __webpack_require__(2);
-
-var _aws2 = _interopRequireDefault(_aws);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var ses = new _aws2.default.SES();
-
-var sendEmail = function sendEmail(params) {
-  return new Promise(function (resolve, reject) {
-    ses.sendEmail(params, function (err, data) {
-      return err ? reject(err) : resolve(data);
-    });
-  });
-};
-
-exports.default = {
-  sendEmail: sendEmail
-};
-
-/***/ }),
-/* 23 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1172,28 +1383,32 @@ var _aws2 = _interopRequireDefault(_aws);
 
 var _environment = __webpack_require__(0);
 
-var _express = __webpack_require__(8);
+var _express = __webpack_require__(10);
 
 var _express2 = _interopRequireDefault(_express);
 
-var _expressDotEngine = __webpack_require__(9);
+var _request = __webpack_require__(13);
+
+var _request2 = _interopRequireDefault(_request);
+
+var _expressDotEngine = __webpack_require__(11);
 
 var _expressDotEngine2 = _interopRequireDefault(_expressDotEngine);
 
-var _serveFavicon = __webpack_require__(11);
+var _serveFavicon = __webpack_require__(14);
 
 var _serveFavicon2 = _interopRequireDefault(_serveFavicon);
 
-var _sanitizeHtml = __webpack_require__(3);
+var _sanitizeHtml = __webpack_require__(4);
 
 var _sanitizeHtml2 = _interopRequireDefault(_sanitizeHtml);
 
-var _actions = __webpack_require__(7);
+var _actions = __webpack_require__(9);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = (0, _express2.default)();
-var path = __webpack_require__(10);
+var path = __webpack_require__(12);
 
 (0, _aws.updateConfig)();
 
@@ -1246,8 +1461,40 @@ app.get('/page-sent', function (req, res) {
   res.render('page-sent');
 });
 
+// Verify endpoint for double opt-in, passes subscriberId to Lambda endpoint and returns success page or 404
+app.get('/verify', function (req, res) {
+  if (req.query.sid) {
+    var subscriberId = req.query.sid;
+    var url = _environment.config.API_URL + 'verify?subscriberId=' + subscriberId;
+    (0, _request2.default)(url, function (error, response, body) {
+      res.render('email-verified');
+    });
+  } else {
+    res.status(404);
+    res.render('404');
+  }
+});
+
+// Unsubscribe endpoint
+app.get('/unsubscribe', function (req, res) {
+  if (req.query.sid) {
+    var subscriberId = req.query.sid;
+    console.log(subscriberId);
+    var url = _environment.config.API_URL + 'unsubscribe?subscriberId=' + subscriberId;
+    (0, _request2.default)(url, function (error, response, body) {
+      console.log(error);
+      console.log(body);
+      res.render('unsubscribe-confirmed');
+    });
+  } else {
+    res.status(404);
+    res.render('404');
+  }
+});
+
 app.get('/create/:messageId', function (req, res) {
-  var messageId = '9ddttpaaj2od6kttbpv4q1iqso3md2jm4o0p7b81'; //testing
+  // var messageId = '2ljatek3dgs5gthccq91ra632vr9epfc35re9mg1' // zh
+  var messageId = 'q6on5vgqqlj33bpads7lk132qorld918epkvnh81'; // zh-t
 
   (0, _actions.getRawEmail)(messageId).then(_actions.processEmail).then(function (email) {
     console.log(email);
@@ -1392,7 +1639,7 @@ app.listen(_environment.config.PORT, function () {
 });
 
 /***/ }),
-/* 24 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1402,7 +1649,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _imgur = __webpack_require__(30);
+var _imgur = __webpack_require__(35);
 
 var _imgur2 = _interopRequireDefault(_imgur);
 
@@ -1422,7 +1669,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 25 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1443,40 +1690,56 @@ var replyEmails = {
 exports.replyEmails = replyEmails;
 
 /***/ }),
-/* 26 */
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var verifyEmails = {
+  'en': '\n<!DOCTYPE html><html> <head> <meta name="viewport" content="width=device-width"> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <title>Please verify your email address</title> <style type="text/css"> /* ------------------------------------- RESPONSIVE AND MOBILE FRIENDLY STYLES ------------------------------------- */ @media only screen and (max-width: 620px){table[class=body] h1{font-size: 28px !important; margin-bottom: 10px !important;}table[class=body] p, table[class=body] ul, table[class=body] ol, table[class=body] td, table[class=body] span, table[class=body] a{font-size: 16px !important;}table[class=body] .wrapper, table[class=body] .article{padding: 10px !important;}table[class=body] .content{padding: 0 !important;}table[class=body] .container{padding: 0 !important; width: 100% !important;}table[class=body] .main{border-left-width: 0 !important; border-radius: 0 !important; border-right-width: 0 !important;}table[class=body] .btn table{width: 100% !important;}table[class=body] .btn a{width: 100% !important;}table[class=body] .img-responsive{height: auto !important; max-width: 100% !important; width: auto !important;}}/* ------------------------------------- PRESERVE THESE STYLES IN THE HEAD ------------------------------------- */ @media all{.ExternalClass{width: 100%;}.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div{line-height: 100%;}.apple-link a{color: inherit !important; font-family: inherit !important; font-size: inherit !important; font-weight: inherit !important; line-height: inherit !important; text-decoration: none !important;}.btn-primary table td:hover{background-color: #34495e !important;}.btn-primary a:hover{background-color: #34495e !important; border-color: #34495e !important;}}</style> </head> <body class="" style="background-color:#f6f6f6;font-family:sans-serif;-webkit-font-smoothing:antialiased;font-size:14px;line-height:1.4;margin:0;padding:0;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;"> <table border="0" cellpadding="0" cellspacing="0" class="body" style="border-collapse:separate;mso-table-lspace:0pt;mso-table-rspace:0pt;background-color:#f6f6f6;width:100%;"> <tr> <td style="font-family:sans-serif;font-size:14px;vertical-align:top;">&nbsp;</td><td class="container" style="font-family:sans-serif;font-size:14px;vertical-align:top;display:block;max-width:580px;padding:10px;width:580px;Margin:0 auto !important;"> <div class="content" style="box-sizing:border-box;display:block;Margin:0 auto;max-width:580px;padding:10px;"> <span class="preheader" style="color:transparent;display:none;height:0;max-height:0;max-width:0;opacity:0;overflow:hidden;mso-hide:all;visibility:hidden;width:0;">Please verify your email address to receive updates.</span> <table class="main" style="border-collapse:separate;mso-table-lspace:0pt;mso-table-rspace:0pt;background:#fff;border-radius:3px;width:100%;"> <tr> <td class="wrapper" style="font-family:sans-serif;font-size:14px;vertical-align:top;box-sizing:border-box;padding:20px;"> <table border="0" cellpadding="0" cellspacing="0" style="border-collapse:separate;mso-table-lspace:0pt;mso-table-rspace:0pt;width:100%;"> <tr> <td style="font-family:sans-serif;font-size:14px;vertical-align:top;"> <h2 style="color:#000000;font-family:sans-serif;font-weight:400;line-height:1.4;margin:0;Margin-bottom:30px;">Please verify your email address</h2> <p style="font-family:sans-serif;font-size:14px;font-weight:normal;margin:0;Margin-bottom:15px;">Hi there,</p><p style="font-family:sans-serif;font-size:14px;font-weight:normal;margin:0;Margin-bottom:15px;">Please click the link below to verify your email address and begin receiving updates.</p><table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary" style="border-collapse:separate;mso-table-lspace:0pt;mso-table-rspace:0pt;box-sizing:border-box;width:100%;"> <tbody> <tr> <td align="left" style="font-family:sans-serif;font-size:14px;vertical-align:top;padding-bottom:15px;"> <table border="0" cellpadding="0" cellspacing="0" style="border-collapse:separate;mso-table-lspace:0pt;mso-table-rspace:0pt;width:100%;width:auto;"> <tbody> <tr> <td style="font-family:sans-serif;font-size:14px;vertical-align:top;background-color:#ffffff;border-radius:5px;text-align:center;background-color:#3498db;"> <a href="https://www.publishthis.email/verify?sid={{=it.subscriberId}}" target="_blank" style="text-decoration:underline;background-color:#ffffff;border:solid 1px #3498db;border-radius:5px;box-sizing:border-box;color:#3498db;cursor:pointer;display:inline-block;font-size:14px;font-weight:bold;margin:0;padding:12px 25px;text-decoration:none;text-transform:capitalize;background-color:#3498db;border-color:#3498db;color:#ffffff;">Verify your email address</a> </td></tr></tbody> </table> </td></tr></tbody> </table> <p style="font-family:sans-serif;font-size:14px;font-weight:normal;margin:0;Margin-bottom:15px;">Thanks, publishthis.email </p></td></tr></table> </td></tr></table> <div class="footer" style="clear:both;padding-top:10px;text-align:center;width:100%;"> <table border="0" cellpadding="0" cellspacing="0" style="border-collapse:separate;mso-table-lspace:0pt;mso-table-rspace:0pt;width:100%;"> <tr> <td class="content-block" style="font-family:sans-serif;font-size:14px;vertical-align:top;color:#999999;font-size:12px;text-align:center;"> <span class="apple-link" style="color:#999999;font-size:12px;text-align:center;">Publish This Email Pty Ltd. 6/63 Elizabeth St, Richmond 3121 VIC, Australia</span> <br>Don\'t like these emails? <a href="https://www.publishthis.email/unsubscribe?sid={{=it.subscriberId}}" style="color:#3498db;text-decoration:underline;color:#999999;font-size:12px;text-align:center;">Unsubscribe</a>. </td></tr></table> </div></div></td><td style="font-family:sans-serif;font-size:14px;vertical-align:top;">&nbsp;</td></tr></table> </body></html>\n'
+};
+
+exports.verifyEmails = verifyEmails;
+
+/***/ }),
+/* 32 */
 /***/ (function(module, exports) {
 
 module.exports = require("aws-sdk");
 
 /***/ }),
-/* 27 */
+/* 33 */
 /***/ (function(module, exports) {
 
 module.exports = require("cloudflare");
 
 /***/ }),
-/* 28 */
-/***/ (function(module, exports) {
-
-module.exports = require("dot");
-
-/***/ }),
-/* 29 */
+/* 34 */
 /***/ (function(module, exports) {
 
 module.exports = require("franc-min");
 
 /***/ }),
-/* 30 */
+/* 35 */
 /***/ (function(module, exports) {
 
 module.exports = require("imgur");
 
 /***/ }),
-/* 31 */
+/* 36 */
 /***/ (function(module, exports) {
 
 module.exports = require("mailparser");
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports) {
+
+module.exports = require("traditional-or-simplified");
 
 /***/ })
 /******/ ])));

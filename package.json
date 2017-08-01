@@ -12,6 +12,9 @@
     "deploy:production": "npm run build:serverless && npm run final:deploy:production",
     "final:deploy:production": "cd serverless && sls deploy --stage production",
     "logs": "cd serverless && sls logs --stage dev -f receive --startTime 2h",
+    "logs:subscribe": "cd serverless && sls logs --stage dev -f list-subscribe --startTime 2h",
+    "logs:unsubscribe": "cd serverless && sls logs --stage dev -f list-unsubscribe --startTime 2h",
+    "logs:verify": "cd serverless && sls logs --stage dev -f verify-subscriber --startTime 2h",
     "logs:production": "cd serverless && sls logs --stage production -f receive --startTime 12h",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -28,6 +31,7 @@
     "mailparser": "^0.6.2",
     "moment": "^2.17.1",
     "node-noop": "^1.0.0",
+    "request": "^2.81.0",
     "sanitize-html": "^1.14.1",
     "serve-favicon": "^2.4.1",
     "shortid": "^2.2.6",

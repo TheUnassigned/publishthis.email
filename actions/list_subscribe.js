@@ -1,9 +1,48 @@
 import dynamo from '/aws/dynamo'
+import SES from '/aws/ses'
+import doT from 'dot'
+import shortid from 'shortid'
 import { config } from '/config/environment'
+import { verifyEmails } from '/templates/email-verify'
 
+const sendSubscriberVerification = subscriber => {
+  var template = doT.template(verifyEmails['en'])
+  var emailBody = template(subscriber)
 
-const isSubscribed = subscriber => dynamo.query(
-  { TableName: config.LIST_SUBSCRIBERS_TABLE,
+  const params = {
+    Destination: {
+      ToAddresses: [
+        subscriber.subscriberEmail
+      ],
+      BccAddresses: [
+        'publishthisemail@gmail.com'
+      ]
+    },
+    Message: {
+      Subject: {
+        Data: 'Verify your email address - publishthis.email',
+        Charset: 'UTF-8'
+      },
+      Body: {
+        Html: {
+          Data: emailBody,
+          Charset: 'UTF-8'
+        }
+      }
+    },
+    Source: '"Publish This Email" <noreply@publishthis.email>',
+    ReplyToAddresses: [
+      '"Publish This Email" <hello@publishthis.email>'
+    ],
+    ReturnPath: 'return@publishthis.email'
+  }
+
+  return SES.sendEmail(params)
+}
+
+const isNotSubscribed = subscriber => {
+  return dynamo.query({
+    TableName: config.LIST_SUBSCRIBERS_TABLE,
     IndexName: 'subscriberEmail-listId-index',
     KeyConditionExpression: "#subscriberEmail = :subscriberEmail and #listId >= :listId",
     ExpressionAttributeNames:{
@@ -15,14 +54,26 @@ const isSubscribed = subscriber => dynamo.query(
       ":listId": subscriber.listId
     },
     Limit: 1 }
-  )//.then(() => subscriber)
+  ).then(result =>{
+    if(result.Count == 0){
+      // build new subscriber
+      subscriber.verified = false
+      subscriber.subscriberId = shortid.generate()
+      subscriber.editKey = shortid.generate() + shortid.generate()
+      return subscriber
+    }else{
+      return Promise.reject(new Error('(isNotSubscribed): User already subscribed'))
+    }
+  })
+}
 
-  const addSubscriber = subscriber => dynamo.putResource({
-    TableName: config.LIST_SUBSCRIBERS_TABLE,
-    Item: subscriber
-  }).then(() => subscriber)
+const addSubscriber = subscriber => dynamo.putResource({
+  TableName: config.LIST_SUBSCRIBERS_TABLE,
+  Item: subscriber
+}).then(() => subscriber)
 
-  export {
-    isSubscribed,
-    addSubscriber
-  }
+export {
+  isNotSubscribed,
+  addSubscriber,
+  sendSubscriberVerification
+}

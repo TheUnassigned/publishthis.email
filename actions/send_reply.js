@@ -1,6 +1,6 @@
 import SES from '/aws/ses'
 import doT from 'dot'
-import {replyEmails} from '/templates/reply-email'
+import {replyEmails} from '/templates/email-reply'
 
 const sendReply = mailObj => {
 
