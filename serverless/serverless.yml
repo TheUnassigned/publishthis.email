@@ -101,6 +101,13 @@ functions:
           path: list/verify
           method: get
           cors: true
+  deliver:
+    handler: handler.listDeliver
+    events:
+      - http:
+          path: list/deliver
+          method: get
+          cors: true
 
 
 #    The following are a few example events you can configure

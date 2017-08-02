@@ -14,7 +14,6 @@ import {
   isNewList,
   addListToDB,
   sendNewListWelcome,
-  sendNewListWelcomeWithPage,
   sendListReply,
   addListIdToPage
 } from './actions'
@@ -44,25 +43,20 @@ const listReceive = (event, context, callback) => {
   .then(collectionsProcess)
   .then(storeInDynamo)
   .then(mailObj => {
-    const list = {
+    mailObj.list = {
       ownerEmail: mailObj.from[0].address,
       collectionName: mailObj.label || 'defaultglobal'
     }
-    isNewList(list) // check if list exists
-    .then(addListToDB) // add new list to DB
-    .then(list => { // new list
-      sendNewListWelcomeWithPage({ list, mailObj }) // send welcome email + links
-      .catch(e => { console.log(e) })
-
-      addListIdToPage(list.listId, mailObj.messageId) // add listId to page
-    })
-    .catch(e => { // list already exists
-      sendListReply({ list: e.list, mailObj: mailObj })
-      .catch(e => { console.log(e) })
-
-      addListIdToPage(e.list.listId, mailObj.messageId) // add listId to page
-    })
+    return mailObj
   })
+  .then(isNewList)
+  .then(addListToDB) // add new list to DB
+  .then(addListIdToPage) // add listId and sendKey to page
+  .then(sendListReply) // send appropriate reply (new or existing list)
+  .catch(e => {
+    console.log(e)
+  })
+
 }
 
 
@@ -157,11 +151,37 @@ const listCreateFromAPI = (event, context, callback) => {
   })
 }
 
+const listDeliver = (event, context, callback) => {
+  const pkg = {
+    messageId: event.queryStringParameters.mid,
+    sendkey: event.queryStringParameters.sk
+    // email: {}
+    // subscribers: {}
+  }
+
+  // get message from emails table
+  getStoredEmail(messageId)
+  .then(emailObj => {
+    console.log(messageId)
+  })
+
+
+  // confirm query sendKey matches email sendKey
+  // and email hasn't already been sent
+  // update sent status
+  // get list of subscribers
+  // email => template
+  // send to subscribers
+  // return confirm
+  // ERRORS: Message already sent/send key doesn't match
+}
+
 export {
   receive,
   listSubscribe,
   verifySubscriber,
   listUnsubscribe,
   listCreateFromAPI,
-  listReceive
+  listReceive,
+  listDeliver
 }
