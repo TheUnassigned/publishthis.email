@@ -3,7 +3,7 @@ function subscribe(){
   if(validEmail(email)){
     // Subscribe
     var xmlhttp = new XMLHttpRequest();
-    var url = 'https://d4sirptbj7.execute-api.us-east-1.amazonaws.com/dev/list/subscribe?listId=12345&subscriberEmail=nick.drewe@gmail.com';
+    var url = 'https://d4sirptbj7.execute-api.us-east-1.amazonaws.com/dev/list/subscribe?listId=' + listId + '5&subscriberEmail=' + email;
 
     xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {

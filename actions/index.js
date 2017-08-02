@@ -13,7 +13,11 @@ import { slugify } from './title-to-slug'
 import { isNotSubscribed, addSubscriber, sendSubscriberVerification } from './list_subscribe'
 import { verifySubscriberId } from './list_verify'
 import { unsubscribe } from './list_unsubscribe'
-import { isNewList, addListToDB, sendNewListWelcome } from './list_create'
+import { isNewList, addListToDB, sendNewListWelcome, sendNewListWelcomeWithPage } from './list_create'
+import { sendListReply } from './list_reply'
+import { addListIdToPage } from './add_listid_to_page'
+
+
 
 export {
   getRawEmail,
@@ -40,5 +44,8 @@ export {
   unsubscribe,
   isNewList,
   addListToDB,
-  sendNewListWelcome
+  sendNewListWelcome,
+  sendNewListWelcomeWithPage,
+  sendListReply,
+  addListIdToPage
 }

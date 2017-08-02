@@ -24,4 +24,5 @@
     </div>
   </div>
 </div>
+<script>var listId = '[[=model.listId]]';</script>
 <script src="/js/subscribe.js"></script>

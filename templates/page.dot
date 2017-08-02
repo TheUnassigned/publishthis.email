@@ -15,7 +15,9 @@
       <div class="timestamp">[[=model.timestamp]]</div>
     </div> -->
     <div class="body">[[=model.html]]</div>
+    [[? model.listId]]
     [[= partial('partials/subscribe.dot') ]]
+    [[?]]
   </div>
   [[= partial('partials/footers/' + model.language + '.dot') ]]
   [[= partial('partials/analytics.dot') ]]

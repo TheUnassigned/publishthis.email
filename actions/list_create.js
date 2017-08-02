@@ -3,11 +3,11 @@ import SES from '/aws/ses'
 import doT from 'dot'
 import shortid from 'shortid'
 import { config } from '/config/environment'
-import { firstListEmails } from '/templates/email-first-list'
+import { firstListEmails, firstListEmailsWithPage } from '/templates/email-first-list'
 
-// send welcome email to new lists
+// send welcome email to new lists created with no page
 const sendNewListWelcome = list => {
-  console.log(list)
+  // console.log(list)
   var template = doT.template(firstListEmails['en'])
   var emailBody = template(list)
 
@@ -44,6 +44,42 @@ const sendNewListWelcome = list => {
   return SES.sendEmail(params)
 }
 
+const sendNewListWelcomeWithPage = replyContext => {
+  // console.log(list)
+  var template = doT.template(firstListEmailsWithPage['en'])
+  var emailBody = template(replyContext)
+
+  const params = {
+    Destination: {
+      ToAddresses: [
+        replyContext.list.ownerEmail
+      ],
+      BccAddresses: [
+        'publishthisemail@gmail.com'
+      ]
+    },
+    Message: {
+      Subject: {
+        Data: 'Your new list: ' + replyContext.mailObj.subject + ' - publishthis.email',
+        Charset: 'UTF-8'
+      },
+      Body: {
+        Html: {
+          Data: emailBody,
+          Charset: 'UTF-8'
+        }
+      }
+    },
+    Source: '"Publish This Email" <noreply@publishthis.email>',
+    ReplyToAddresses: [
+      '"Publish This Email" <hello@publishthis.email>'
+    ],
+    ReturnPath: 'return@publishthis.email'
+  }
+
+  return SES.sendEmail(params)
+}
+
 
 // Checks if a list exists in the DB, if not, builds and returns new list.
 const isNewList = list => {
@@ -68,7 +104,9 @@ const isNewList = list => {
       return list
     }else{
       // if list exists, return return an error and the list
-      return Promise.reject({ success: false, msg: 'List already exists', list: list})
+      console.log('list exists:')
+      console.log(result)
+      return Promise.reject({ success: false, msg: 'List already exists', list: result.Items[0]})
     }
   })
 }
@@ -81,5 +119,6 @@ const addListToDB = list => dynamo.putResource({
 export {
   isNewList,
   addListToDB,
-  sendNewListWelcome
+  sendNewListWelcome,
+  sendNewListWelcomeWithPage
 }
