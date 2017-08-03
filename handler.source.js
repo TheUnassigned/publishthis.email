@@ -15,7 +15,11 @@ import {
   addListToDB,
   sendNewListWelcome,
   sendListReply,
-  addListIdToPage
+  addListIdToPage,
+  getListSubscribers,
+  getStoredEmail,
+  listSend,
+  markPostSent
 } from './actions'
 import { config } from '/config/environment'
 
@@ -56,7 +60,6 @@ const listReceive = (event, context, callback) => {
   .catch(e => {
     console.log(e)
   })
-
 }
 
 
@@ -139,8 +142,6 @@ const listCreateFromAPI = (event, context, callback) => {
   .then(addListToDB) // add new list to DB
   .then(sendNewListWelcome) // send new list instructions
   .then(result => {
-    console.log(result)
-    console.log('New list!')
     const response = { statusCode: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*',  'Access-Control-Allow-Credentials' : 'true' }, body: JSON.stringify({ success: true }) }
     callback(null, response)
   })
@@ -151,29 +152,37 @@ const listCreateFromAPI = (event, context, callback) => {
   })
 }
 
+// endpoint for triggering a list delivery
+// accepts a messageId and sendKey
 const listDeliver = (event, context, callback) => {
-  const pkg = {
-    messageId: event.queryStringParameters.mid,
-    sendkey: event.queryStringParameters.sk
-    // email: {}
-    // subscribers: {}
-  }
+  var clientSendKey = event.queryStringParameters.sk
+  var messageId = event.queryStringParameters.mid
 
   // get message from emails table
   getStoredEmail(messageId)
-  .then(emailObj => {
-    console.log(messageId)
+  .then(mailPackage => {
+    // confirm client sendKey matches email sendKey
+    if(clientSendKey === mailPackage.sendKey && !mailPackage.delivered){
+      // keys match, send away!
+      return mailPackage
+    }else if(mailPackage.delivered){
+      return Promise.reject({ e: new Error('Already delivered'), msg: 'This page has already been delivered.'})
+    }else{
+      return Promise.reject({e: new Error('Invalid send link'), msg: 'Invalid send link'})
+    }
   })
-
-
-  // confirm query sendKey matches email sendKey
-  // and email hasn't already been sent
-  // update sent status
-  // get list of subscribers
-  // email => template
-  // send to subscribers
-  // return confirm
-  // ERRORS: Message already sent/send key doesn't match
+  .then(getListSubscribers) // get a list of verified subscribers
+  .then(listSend) // send to subscribers
+  .then(markPostSent) // mark post as send (to prevent duplicate sends)
+  .then(mailPackage => {
+    const response = { statusCode: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*',  'Access-Control-Allow-Credentials' : 'true' }, body: JSON.stringify({ success: true, subscriber_count: mailPackage.subscribers.length}) }
+    callback(null, response)
+  })
+  .catch(e => {
+    console.log(e.e, e.msg)
+    const response = { statusCode: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*',  'Access-Control-Allow-Credentials' : 'true' }, body: JSON.stringify({ success: false, msg: e.msg}) }
+    callback(null, response)
+  })
 }
 
 export {

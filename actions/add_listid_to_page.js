@@ -3,6 +3,8 @@ import shortid from 'shortid'
 import { config } from '/config/environment'
 
 const addListIdToPage = mailObj => {
+  console.log('breaking here?:')
+  console.log(mailObj)
   // generate sendKey
   mailObj.sendKey = shortid.generate() + shortid.generate()
 

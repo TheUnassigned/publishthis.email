@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>publishthis.email</title>
+  <title>[[=model.title]] - publishthis.email</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="stylesheet" type="text/css" href="/css/view.css">
   <link href="https://fonts.googleapis.com/css?family=Martel:300,400|Open+Sans:300,400,600|Roboto+Slab:300,400" rel="stylesheet">
