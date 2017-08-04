@@ -2,16 +2,18 @@ import SES from '/aws/ses'
 import dynamo from '/aws/dynamo'
 import doT from 'dot'
 import { config } from '/config/environment'
-import { emailTemplateDelivery } from '/templates/email-template-delivery'
+import { tplDelivery } from '/templates/emails'
 
 const listSend = mailPackage => {
 
   if(mailPackage.subscribers && mailPackage.subscribers.length){
-    var template = doT.template(emailTemplateDelivery['en'])
-    var emailBody = template(mailPackage)
+    var template = doT.template(tplDelivery)
+
 
     // Build email for each subscriber, prepare to send.
     var distribution = mailPackage.subscribers.map(subscriber => {
+      mailPackage.subscriber = subscriber
+      var emailBody = template(mailPackage)
       var params = {
         Destination: {
           ToAddresses: [ subscriber.subscriberEmail ],
@@ -19,15 +21,15 @@ const listSend = mailPackage => {
         },
         Message: {
           Subject: {
-            Data: mailPackage.subject + ' - LIST NAME',
+            Data: mailPackage.subject + ' - ' + mailPackage.list.title,
             Charset: 'UTF-8'
           },
           Body: {
             Html: { Data: emailBody, Charset: 'UTF-8' }
           }
         },
-        Source: '"Publish This Email" <noreply@publishthis.email>',
-        ReplyToAddresses: [ `"LIST NAME" <${mailPackage.from[0].address}>` ],
+        Source: `"${mailPackage.list.title}" <noreply@publishthis.email>`,
+        ReplyToAddresses: [ `"${mailPackage.list.title}" <${mailPackage.from[0].address}>` ],
         ReturnPath: 'return@publishthis.email'
       }
       return SES.sendEmail(params)

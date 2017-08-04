@@ -10,33 +10,34 @@ var handler = require('./handler.source')
 
 // listId: B1GvXjzyDb
 
-handler.listDeliver({
-  queryStringParameters: {
-    mid: 'BJwXsz1wZ',
-    sk: 'r1SwmozkPZBkIDmoM1wZ'
-  }
-}, {}, function(err, response){
-  console.log(err, response)
-})
-
-// handler.listReceive({
-//   Records: [
-//     {
-//       s3: {
-//         object: {
-//           key: '979jj082r465msi9qsdd5o1fea9v5o8fhr6luo81'
-//         }
-//       }
-//     }
-//   ]
-// }, {}, function(result){
-//   console.log(result)
+// handler.listDeliver({
+//   queryStringParameters: {
+//     mid: 'BJwXsz1wZ',
+//     sk: 'r1SwmozkPZBkIDmoM1wZ'
+//   }
+// }, {}, function(err, response){
+//   console.log(err, response)
 // })
 
+handler.listReceive({
+  Records: [
+    {
+      s3: {
+        object: {
+          key: 'b9r7q1un3pg9v98q823l8fjv7vfbv6rgaqm3s001'
+        }
+      }
+    }
+  ]
+}, {}, function(result){
+  console.log(result)
+})
 
-// handler.listUnsubscribe({
+
+// handler.listSubscribe({
 //   queryStringParameters: {
-//     subscriberId: 'BkEXRrhIW'
+//     subscriberEmail: 'nick.drewe+matt@gmail.com',
+//     listId: 'nWsgSknGJe'
 //   }
 // }, {}, function(result){
 //   console.log(result)

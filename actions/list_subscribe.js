@@ -3,7 +3,7 @@ import SES from '/aws/ses'
 import doT from 'dot'
 import shortid from 'shortid'
 import { config } from '/config/environment'
-import { verifyEmails } from '/templates/email-verify'
+import { tplSubscribeVerify } from '/templates/emails'
 
 const sendSubscriberVerification = subscriber => {
   var template = doT.template(verifyEmails['en'])
@@ -41,20 +41,18 @@ const sendSubscriberVerification = subscriber => {
 }
 
 const isNotSubscribed = subscriber => {
-  return dynamo.query({
+  var query = {
     TableName: config.LIST_SUBSCRIBERS_TABLE,
     IndexName: 'subscriberEmail-listId-index',
-    KeyConditionExpression: "#subscriberEmail = :subscriberEmail and #listId >= :listId",
-    ExpressionAttributeNames:{
-      "#subscriberEmail": "subscriberEmail",
-      "#listId": "listId"
-    },
+    KeyConditionExpression: 'subscriberEmail = :subscriberEmail and listId = :listId',
     ExpressionAttributeValues: {
       ":subscriberEmail": subscriber.subscriberEmail,
       ":listId": subscriber.listId
     },
-    Limit: 1 }
-  ).then(result =>{
+    Limit: 1
+  }
+  return dynamo.query(query)
+  .then(result =>{
     if(result.Count == 0){
       // build new subscriber
       subscriber.verified = false

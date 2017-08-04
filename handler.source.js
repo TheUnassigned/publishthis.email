@@ -14,7 +14,9 @@ import {
   isNewList,
   addListToDB,
   sendNewListWelcome,
+  sendNewListReply,
   sendListReply,
+  sendListReplyNoSubs,
   addListIdToPage,
   getListSubscribers,
   getStoredEmail,
@@ -56,24 +58,33 @@ const listReceive = (event, context, callback) => {
   .then(isNewList)
   .then(addListToDB) // add new list to DB
   .then(addListIdToPage) // add listId and sendKey to page
-  .then(sendListReply) // send appropriate reply (new or existing list)
-  .catch(e => {
-    console.log(e)
+  .then(getListSubscribers)
+  .then(mailObj => {
+    if(!mailObj.newList && mailObj.subscribers.length > 0){
+      listSend(mailObj)
+      .then(markPostSent) // mark post as sent (to prevent duplicate sends)
+      .then(sendListReply)
+      .catch(e => { console.log(e) })
+    }else if(mailObj.newList){
+      sendNewListReply(mailObj) // send new list reply
+    }else{
+      sendListReplyNoSubs(mailObj) // send no subscribers reply
+    }
   })
+  .catch(e => { console.log(e) })
 }
 
 
 // subscription endpoint called directly from submission form returns { success: true/false, msg: 'error message' }
 const listSubscribe = (event, context, callback) => {
   const subscriber = {
-    subscriberEmail: event.queryStringParameters.subscriberEmail,
+    subscriberEmail: event.queryStringParameters.subscriberEmail.replace(/\s/g, '+'),
     listId: event.queryStringParameters.listId,
   }
   isNotSubscribed(subscriber)
   .then(addSubscriber)
   .then(sendSubscriberVerification)
   .then(result => {
-    console.log(result)
     // user subscribed & verification sent
     const response = { statusCode: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*',  'Access-Control-Allow-Credentials' : 'true' }, body: JSON.stringify({ success: true }) }
     callback(null, response)
@@ -91,13 +102,10 @@ const listUnsubscribe = (event, context, callback) => {
 
   unsubscribe(subscriberId)
   .then(result => {
-    console.log('unsubscribed' + subscriberId)
-    console.log(result)
     const response = { statusCode: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*',  'Access-Control-Allow-Credentials' : 'true' }, body: JSON.stringify({ success: true }) }
     callback(null, response)
   })
   .catch(e =>{
-    console.log(e)
     const response = { statusCode: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*',  'Access-Control-Allow-Credentials' : 'true' }, body: JSON.stringify({ success: false, msg: e }) }
     callback(null, response)
   })
@@ -122,34 +130,6 @@ const verifySubscriber = (event, context, callback) => {
     const response = { statusCode: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*',  'Access-Control-Allow-Credentials' : 'true' }, body: JSON.stringify({ success: false, msg: 'no subscriberId provided' }) }
     callback(null, response)
   }
-}
-
-// List creation from API
-// Checks if a list exists. If not, creates a new list and sends setup instructions.
-// accepts ownerEmail and collectionName (optional)
-// /list/create?ownerEmail=________&collectionName=________
-const listCreateFromAPI = (event, context, callback) => {
-  // to do:
-  // pass a title from API
-  //
-
-  const list = {
-    ownerEmail: event.queryStringParameters.ownerEmail
-  }
-  list.collectionName = event.queryStringParameters.collectionName ? event.queryStringParameters.collectionName : 'defaultglobal'
-
-  isNewList(list) // check if list exists
-  .then(addListToDB) // add new list to DB
-  .then(sendNewListWelcome) // send new list instructions
-  .then(result => {
-    const response = { statusCode: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*',  'Access-Control-Allow-Credentials' : 'true' }, body: JSON.stringify({ success: true }) }
-    callback(null, response)
-  })
-  .catch(e => {
-    console.log(e)
-    const response = { statusCode: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*',  'Access-Control-Allow-Credentials' : 'true' }, body: JSON.stringify(e) }
-    callback(null, response)
-  })
 }
 
 // endpoint for triggering a list delivery
@@ -190,7 +170,6 @@ export {
   listSubscribe,
   verifySubscriber,
   listUnsubscribe,
-  listCreateFromAPI,
   listReceive,
   listDeliver
 }

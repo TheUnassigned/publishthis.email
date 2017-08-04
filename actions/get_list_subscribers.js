@@ -9,7 +9,7 @@ const getListSubscribers = mailPackage => {
     KeyConditionExpression: 'listId = :id',
     FilterExpression: 'verified = :v',
     ExpressionAttributeValues: {
-      ':id': mailPackage.listId,
+      ':id': mailPackage.list.listId,
       ':v': true
     },
     Limit: limit

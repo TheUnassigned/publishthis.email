@@ -88,7 +88,32 @@ app.get('/unsubscribe', function (req, res) {
       console.log(error)
       console.log(body)
       res.render('unsubscribe-confirmed')
-    });
+    })
+  }else{
+    res.status(404)
+    res.render('404')
+  }
+})
+
+// deliver endpoint
+app.get('/deliver', function (req, res) {
+  if(req.query.mid && req.query.sk){
+
+    var url = `${config.API_URL}list/deliver?mid=${req.query.mid}&sk=${req.query.sk}`
+    request(url, function (error, response, body) {
+      // console.log(error)
+      // console.log(body)
+      console.log(body)
+      var result = JSON.parse(body)
+      console.log(result)
+      if(result.success){
+        var alert = { title: 'Send success', message: `Your message was delivered to your subscribers (${result.subscriber_count})` }
+      }else{
+        var alert = { title: 'Send failed', message: result.msg }
+      }
+
+      res.render('alert', alert)
+    })
   }else{
     res.status(404)
     res.render('404')

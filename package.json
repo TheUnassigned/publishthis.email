@@ -47,6 +47,7 @@
     "babel-root-slash-import": "^1.1.0",
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
+    "gulp": "^3.9.1",
     "local-dynamo": "^0.4.1",
     "mocha": "^3.2.0",
     "nyc": "^10.1.2",
