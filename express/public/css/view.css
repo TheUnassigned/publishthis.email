@@ -265,12 +265,23 @@ img{
 
 /*subscription box*/
 .subscription{
-  background-color: #2F99CC;
+  background-color: #FF5468;
   padding: 10px;
   font-family: 'Open Sans', sans-serif;
   text-align: center;
   color: #FFF;
   margin-bottom: 60px;
+  position: relative;
+}
+/*.subscribe{
+
+}*/
+.subscribe-blur{
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
 }
 .subscribe-heading{
   font-size: 24px;
@@ -290,6 +301,30 @@ img{
 }
 .subscribe-hidden{
   display: none;
+}
+.subscribe-loader-hidden{
+  display: none;
+}
+.subscribe-loader{
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255,84,104,0.5)
+}
+.loader-table{
+  display: table;
+  width: 100%;
+  height: 100%;
+}
+.loader-cell{
+  display: table-cell;
+  vertical-align: middle;
+}
+.loader img{
+  width: 70px;
 }
 
 /*common form elements*/
@@ -316,7 +351,7 @@ img{
   font-family: 'Open Sans', sans-serif;
   display: inline-block;
   font-size: 16px;
-  background-color: #115B7E;
+  background-color: #c73e4e;
   padding: 5px 20px;
   border-radius: 2px;
   cursor: pointer;

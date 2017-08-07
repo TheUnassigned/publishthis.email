@@ -33,29 +33,29 @@ var handler = require('./handler.source')
 //   console.log(err, response)
 // })
 
-handler.listReceive({
-  Records: [
-    {
-      s3: {
-        object: {
-          key: 'ib8f9d0db90llkk5prsa0a163vv9vahajai3c201'
-        }
-      }
-    }
-  ]
-}, {}, function(result){
-  console.log(result)
-})
-
-
-// handler.listSubscribe({
-//   queryStringParameters: {
-//     subscriberEmail: 'nick.drewe+matt@gmail.com',
-//     listId: 'nWsgSknGJe'
-//   }
+// handler.listReceive({
+//   Records: [
+//     {
+//       s3: {
+//         object: {
+//           key: 'ib8f9d0db90llkk5prsa0a163vv9vahajai3c201'
+//         }
+//       }
+//     }
+//   ]
 // }, {}, function(result){
 //   console.log(result)
 // })
+
+
+handler.listSubscribe({
+  queryStringParameters: {
+    subscriberEmail: 'nick.drewe@gmail.com',
+    listId: 'nWsgSknGJe'
+  }
+}, {}, function(result){
+  console.log(result)
+})
 
 // handler.listCreateFromAPI({
 //   queryStringParameters: {

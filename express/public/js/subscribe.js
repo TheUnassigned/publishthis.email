@@ -1,19 +1,29 @@
 function subscribe(){
   var email = document.getElementById('email').value;
   if(validEmail(email)){
+    // show loader
+    document.getElementById('loader').className = 'subscribe-loader';
+    document.getElementById('subscribe').className = 'subscribe-blur';
+
     // Subscribe
     var xmlhttp = new XMLHttpRequest();
-    var url = 'https://d4sirptbj7.execute-api.us-east-1.amazonaws.com/dev/list/subscribe?listId=' + listId + '&subscriberEmail=' + email;
+    var url = 'https://d4sirptbj7.execute-api.us-east-1.amazonaws.com/production/list/subscribe?listId=' + listId + '&subscriberEmail=' + email;
 
     xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
         var result = JSON.parse(this.responseText);
         // finished loading
           if(result.success){
+            // hide loader
+            document.getElementById('loader').className = 'subscribe-loader-hidden';
             // Display comfirmation
             document.getElementById('subscribe').className = 'subscribe-hidden';
             document.getElementById('confirm').className = '';
           }else{
+            // hide loader
+            document.getElementById('subscribe').className = '';
+            document.getElementById('loader').className = 'subscribe-loader-hidden';
+            // display error
             document.getElementById('error').className = 'subscribe-error';
             document.getElementById('error').innerHTML = result.msg;
             document.getElementById('email').className = 'input-error';

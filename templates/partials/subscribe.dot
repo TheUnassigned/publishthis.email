@@ -1,5 +1,13 @@
 <div class="subscription">
-  <div id="subscribe" class="subscribe">
+  <div id="loader" class="subscribe-loader-hidden">
+    <div class="loader-table">
+      <div class="loader-cell">
+        <img src="/img/puff-white.svg" />
+      </div>
+    </div>
+
+  </div>
+  <div id="subscribe">
     <div class="subscribe-heading">
       Subscribe for updates
     </div>
@@ -20,7 +28,7 @@
       Confirm your subscription!
     </div>
     <div class="subscribe-subheading">
-      We’ve sent you an email to verify your email address. Please click the link inside the email to confirm your subscription. Thank you!
+      We’ve sent you an email to verify your email address. Please click the link in the email to confirm your subscription. Thank you!
     </div>
   </div>
 </div>
