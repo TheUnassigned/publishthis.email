@@ -33,19 +33,19 @@ var handler = require('./handler.source')
 //   console.log(err, response)
 // })
 
-handler.listReceive({
-  Records: [
-    {
-      s3: {
-        object: {
-          key: 't5vpd2lkauoibvffg45ccmg15j6qp6ce7jl7ghg1'
-        }
-      }
-    }
-  ]
-}, {}, function(result){
-  console.log(result)
-})
+// handler.listReceive({
+//   Records: [
+//     {
+//       s3: {
+//         object: {
+//           key: 't5vpd2lkauoibvffg45ccmg15j6qp6ce7jl7ghg1'
+//         }
+//       }
+//     }
+//   ]
+// }, {}, function(result){
+//   console.log(result)
+// })
 
 // first
 // ef2hnf5s4q9i8ijt1utsqb3crku5qq3o2hoe5n01
@@ -56,12 +56,20 @@ handler.listReceive({
 
 // handler.listSubscribe({
 //   queryStringParameters: {
-//     subscriberEmail: 'nick.drewe+matt@gmail.com',
+//     subscriberEmail: 'nick.drewe@gmail.com',
 //     listId: 'nWsgSknGJe'
 //   }
 // }, {}, function(result){
 //   console.log(result)
 // })
+
+handler.verifySubscriber({
+  queryStringParameters: {
+    subscriberId: 'SkOk7_HP-'
+  }
+}, {}, function(result){
+  console.log(result)
+})
 
 // handler.listCreateFromAPI({
 //   queryStringParameters: {

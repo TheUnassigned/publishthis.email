@@ -21,7 +21,10 @@ import {
   getListSubscribers,
   getStoredEmail,
   listSend,
-  markPostSent
+  markPostSent,
+  getSubscriberFromSubscriberId,
+  getListFromSubscriber,
+  sendNewSubscriberNotification
 } from './actions'
 import { config } from '/config/environment'
 
@@ -124,6 +127,17 @@ const verifySubscriber = (event, context, callback) => {
     .then(result => {
       const response = { statusCode: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*',  'Access-Control-Allow-Credentials' : 'true' }, body: JSON.stringify({ success: true }) }
       callback(null, response)
+
+      // New subscriber notification
+      getSubscriberFromSubscriberId(subscriberId)
+      .then(getListFromSubscriber)
+      .then(sendNewSubscriberNotification)
+      .then(result => {
+        console.log('new subscriber notification sent')
+      })
+      .catch(e =>{
+        console.log(e)
+      })
     })
     .catch(e => {
       const response = { statusCode: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*',  'Access-Control-Allow-Credentials' : 'true' }, body: JSON.stringify({ success: false, msg: e }) }

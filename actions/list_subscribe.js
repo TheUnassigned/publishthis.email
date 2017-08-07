@@ -6,6 +6,9 @@ import { config } from '/config/environment'
 import { tplSubscribeVerify } from '/templates/emails'
 
 const sendSubscriberVerification = subscriber => {
+
+  console.log(subscriber)
+  
   var template = doT.template(tplSubscribeVerify)
   var emailBody = template(subscriber)
 
