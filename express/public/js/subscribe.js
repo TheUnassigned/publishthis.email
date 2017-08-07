@@ -7,7 +7,7 @@ function subscribe(){
 
     // Subscribe
     var xmlhttp = new XMLHttpRequest();
-    var url = 'https://d4sirptbj7.execute-api.us-east-1.amazonaws.com/production/list/subscribe?listId=' + listId + '&subscriberEmail=' + email;
+    var url = API_URL + 'list/subscribe?listId=' + listId + '&subscriberEmail=' + email;
 
     xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {

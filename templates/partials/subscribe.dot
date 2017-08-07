@@ -33,4 +33,5 @@
   </div>
 </div>
 <script>var listId = '[[=model.listId]]';</script>
+<script>var API_URL = '[[=model.API_URL]]';</script>
 <script src="/js/subscribe.js"></script>

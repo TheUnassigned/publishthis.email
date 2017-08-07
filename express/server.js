@@ -233,6 +233,8 @@ app.get('/:slug', (req, res) => {
     if(!mailObj.language){
       mailObj.language = 'en'
     }
+    // add API url
+    mailObj.API_URL = config.API_URL
     // page or email
     if(mailObj.to[0].address.startsWith('email')){
       mailObj.timestamp = (new Date(mailObj.timeAdded)).toString()
