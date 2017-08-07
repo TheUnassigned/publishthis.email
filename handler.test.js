@@ -38,11 +38,27 @@ var handler = require('./handler.source')
 //     {
 //       s3: {
 //         object: {
-//           key: 'ib8f9d0db90llkk5prsa0a163vv9vahajai3c201'
+//           key: 't5vpd2lkauoibvffg45ccmg15j6qp6ce7jl7ghg1'
 //         }
 //       }
 //     }
 //   ]
+// }, {}, function(result){
+//   console.log(result)
+// })
+
+// first
+// ef2hnf5s4q9i8ijt1utsqb3crku5qq3o2hoe5n01
+
+// second
+// t5vpd2lkauoibvffg45ccmg15j6qp6ce7jl7ghg1
+
+
+// handler.listSubscribe({
+//   queryStringParameters: {
+//     subscriberEmail: 'nick.drewe@gmail.com',
+//     listId: 'nWsgSknGJe'
+//   }
 // }, {}, function(result){
 //   console.log(result)
 // })

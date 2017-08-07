@@ -11,7 +11,7 @@ import { clearCache } from './clear_cache'
 import { useLanguage, acceptLanguages } from './localise'
 import { slugify } from './title-to-slug'
 import { isNotSubscribed, addSubscriber, sendSubscriberVerification } from './list_subscribe'
-import { verifySubscriberId } from './list_verify'
+import { verifySubscriberId, getSubscriberFromSubscriberId, getListFromSubscriber, sendNewSubscriberNotification } from './list_verify'
 import { unsubscribe } from './list_unsubscribe'
 import { isNewList, addListToDB, sendNewListWelcome, sendNewListWelcomeWithPage } from './list_create'
 import { sendListReply, sendNewListReply, sendListReplyNoSubs } from './list_reply'
@@ -55,5 +55,8 @@ export {
   addListIdToPage,
   getListSubscribers,
   listSend,
-  markPostSent
+  markPostSent,
+  getListFromSubscriber,
+  getSubscriberFromSubscriberId,
+  sendNewSubscriberNotification
 }

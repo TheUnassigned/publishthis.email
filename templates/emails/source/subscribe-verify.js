@@ -195,10 +195,8 @@ var tplSubscribeVerify = `<!DOCTYPE html>
             </tr>
             <tr>
               <td style="padding: 40px; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555;">
-                <p>Thanks,
-                </br>
-                <a href="https://www.publishthis.email"><img src="http://i.imgur.com/QoCKNTi.png" width="262px"/></a>
-                </p>
+                <p>Thanks</p>
+                <p><a href="https://www.publishthis.email"><img src="http://i.imgur.com/QoCKNTi.png" width="262px"/></a></p>
               </td>
             </tr>
           </table>
