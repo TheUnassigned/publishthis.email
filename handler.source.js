@@ -49,6 +49,7 @@ const listReceive = (event, context, callback) => {
   .then(collectionsProcess)
   .then(storeInDynamo)
   .then(mailObj => {
+    console.log(mailObj)
     mailObj.list = {
       ownerEmail: mailObj.from[0].address,
       collectionName: mailObj.label || 'defaultglobal'
