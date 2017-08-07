@@ -86,11 +86,13 @@ const listSubscribe = (event, context, callback) => {
   .then(addSubscriber)
   .then(sendSubscriberVerification)
   .then(result => {
+    console.log(result)
     // user subscribed & verification sent
     const response = { statusCode: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*',  'Access-Control-Allow-Credentials' : 'true' }, body: JSON.stringify({ success: true }) }
     callback(null, response)
   })
   .catch(e => {
+    console.log(e)
     // user already subscribed
     const response = { statusCode: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*',  'Access-Control-Allow-Credentials' : 'true' }, body: JSON.stringify({ success: false, msg: 'That email address is already subscribed.'}) }
     callback(null, response)
