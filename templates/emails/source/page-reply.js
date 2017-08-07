@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+var tplPageReply = `<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
     <meta charset="utf-8"> <!-- utf-8 works for most cases -->
     <meta name="viewport" content="width=device-width"> <!-- Forcing initial-scale shouldn't be necessary -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- Use the latest (edge) version of IE rendering engine -->
     <meta name="x-apple-disable-message-reformatting">  <!-- Disable auto-scale in iOS 10 Mail entirely -->
-    <title>Your new list - {{=it.subject}}</title> <!-- The title tag shows in email notifications, like Android 4.4. -->
+    <title>{{=it.subject}}</title> <!-- The title tag shows in email notifications, like Android 4.4. -->
 
 	<!-- CSS Reset -->
     <style>
@@ -138,7 +138,7 @@
 
 		<!-- Visually Hidden Preheader Text : BEGIN -->
 		<div style="display:none;font-size:1px;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;mso-hide:all;font-family: sans-serif;">
-			You've just created a new email list using Publishthis.email.
+			Your page has been published!
 		</div>
 		<!-- Visually Hidden Preheader Text : END -->
 
@@ -173,12 +173,19 @@
 						<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
 							<tr>
 								<td style="padding: 40px; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555;">
-									<h1 style="margin: 0 0 10px 0; font-family: sans-serif; font-size: 24px; line-height: 27px; color: #333333; font-weight: normal;">Your new email list!</h1>
-                  <p>Congratulations on starting your new email list: <strong>{{=it.subject}}</strong></p>
-                  <p>Share this page to start growing your subscribers:</p>
-                  <p><a href="https://www.publishthis.email/{{=it.messageId}}">https://www.publishthis.email/{{=it.messageId}}</a></p>
-                  <h2 style="margin: 0 0 10px 0; font-family: sans-serif; font-size: 18px; line-height: 21px; color: #333333; font-weight: bold;">How to send to your email list</h2>
-                  <p>Simply email <a href="mailto:list{{?it.label}}+{{=it.label}}{{?}}@publishthis.email">list{{?it.label}}+{{=it.label}}{{?}}@publishthis.email</a> and we will automatically send it to your subscribers.</a>
+									<!-- <h1 style="margin: 0 0 10px 0; font-family: sans-serif; font-size: 24px; line-height: 27px; color: #333333; font-weight: normal;">Praesent laoreet malesuada&nbsp;cursus.</h1>
+									<p style="margin: 0;">Maecenas sed ante pellentesque, posuere leo id, eleifend dolor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent laoreet malesuada cursus. Maecenas scelerisque congue eros eu posuere. Praesent in felis ut velit pretium lobortis rhoncus ut&nbsp;erat.</p> -->
+                  <p>Good news!</p>
+                  <p>We’ve received your email <strong>{{=it.subject}}</strong>, converted it into a tidy little web page and published it online:</p>
+                  <p><a href="https://publishth.is/{{=it.messageId}}">https://publishth.is/{{=it.messageId}}</a></p>
+                  <!-- {{? it.slug}}<p><a href="{{=it.pteDomain}}/{{=it.slug}}-{{=it.messageId}}">{{=it.pteDomain}}/{{=it.slug}}-{{=it.messageId}}</a></p>{{?}} -->
+                  <p>For a brief moment you were the creator of the newest page on the internet. Congratulations.</p>
+                  <p>Sadly, that moment has passed. But you can be the creator of the newest page on the internet at any time. Simply send another email to <a href="mailto:page@publishthis.email">page@publishthis.email</a> to publish a page - we’ll reply with a link to your new page in seconds.</p>
+
+                  <p>Delete your page: <a href="{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}">{{=it.pteDomain}}/{{=it.messageId}}/delete/{{=it.editKey}}</a></p>
+                  {{? it.collectionId}}
+                  <p>This page is part of your <strong>{{=it.label}}</strong> collection. Any pages you send to <strong>page+{{=it.label}}@publishthis.email</strong> will be added to this collection page: <a href="{{=it.pteDomain}}/c/{{=it.collectionId}}">{{=it.pteDomain}}/c/{{=it.collectionId}}</a></p>
+                  {{?}}
                   <p>Thanks,</p>
                   <a href="https://www.publishthis.email"><img src="http://i.imgur.com/QoCKNTi.png" width="262px"/></a>
 								</td>
@@ -229,3 +236,5 @@
     </center>
 </body>
 </html>
+`
+export { tplPageReply }

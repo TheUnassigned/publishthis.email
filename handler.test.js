@@ -8,6 +8,20 @@ aws.config.update({
 
 var handler = require('./handler.source')
 
+// handler.receive({
+//   Records: [
+//     {
+//       s3: {
+//         object: {
+//           key: 'g9l4molrbemq0ee46cpp4q2ii9ph49ughiije281'
+//         }
+//       }
+//     }
+//   ]
+// }, {}, function(result){
+//   console.log(result)
+// })
+
 // listId: B1GvXjzyDb
 
 // handler.listDeliver({
@@ -24,7 +38,7 @@ handler.listReceive({
     {
       s3: {
         object: {
-          key: 'b9r7q1un3pg9v98q823l8fjv7vfbv6rgaqm3s001'
+          key: 'ib8f9d0db90llkk5prsa0a163vv9vahajai3c201'
         }
       }
     }

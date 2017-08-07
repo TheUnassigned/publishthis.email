@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+var tplListNew = `<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
     <meta charset="utf-8"> <!-- utf-8 works for most cases -->
     <meta name="viewport" content="width=device-width"> <!-- Forcing initial-scale shouldn't be necessary -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- Use the latest (edge) version of IE rendering engine -->
     <meta name="x-apple-disable-message-reformatting">  <!-- Disable auto-scale in iOS 10 Mail entirely -->
-    <title>Delivery failed: {{=it.subject}}</title> <!-- The title tag shows in email notifications, like Android 4.4. -->
+    <title>Your new list - {{=it.subject}}</title> <!-- The title tag shows in email notifications, like Android 4.4. -->
 
 	<!-- CSS Reset -->
     <style>
@@ -138,7 +138,7 @@
 
 		<!-- Visually Hidden Preheader Text : BEGIN -->
 		<div style="display:none;font-size:1px;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;mso-hide:all;font-family: sans-serif;">
-			Delivery failed: No subscribers.
+			You've just created a new email list using Publishthis.email.
 		</div>
 		<!-- Visually Hidden Preheader Text : END -->
 
@@ -173,9 +173,12 @@
 						<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
 							<tr>
 								<td style="padding: 40px; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555;">
-									<h1 style="margin: 0 0 10px 0; font-family: sans-serif; font-size: 24px; line-height: 27px; color: #333333; font-weight: normal;">Well this is embarassing...</h1>
-                  <p>We're sorry to tell you, but delivery of your email <a href="https://www.publishthis.email/{{=it.messageId}}">{{=it.subject}}</a> failed because you don't have any subscribers yet.</p>
-                  <p>Try sharing the link to your audience to grow your subscribers</p>
+									<h1 style="margin: 0 0 10px 0; font-family: sans-serif; font-size: 24px; line-height: 27px; color: #333333; font-weight: normal;">Your new email list!</h1>
+                  <p>Congratulations on starting your new email list: <strong>{{=it.subject}}</strong></p>
+                  <p>Share this page to start growing your subscribers:</p>
+                  <p><a href="https://www.publishthis.email/{{=it.messageId}}">https://www.publishthis.email/{{=it.messageId}}</a></p>
+                  <h2 style="margin: 0 0 10px 0; font-family: sans-serif; font-size: 18px; line-height: 21px; color: #333333; font-weight: bold;">How to send to your email list</h2>
+                  <p>Simply email <a href="mailto:list{{?it.label}}+{{=it.label}}{{?}}@publishthis.email">list{{?it.label}}+{{=it.label}}{{?}}@publishthis.email</a> and we will automatically send it to your subscribers.</a>
                   <p>Thanks,</p>
                   <a href="https://www.publishthis.email"><img src="http://i.imgur.com/QoCKNTi.png" width="262px"/></a>
 								</td>
@@ -226,3 +229,5 @@
     </center>
 </body>
 </html>
+`
+export { tplListNew }
