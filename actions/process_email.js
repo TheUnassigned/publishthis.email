@@ -179,7 +179,7 @@ const buildEmailObj = rawEmail => {
     return r.address
   })
   .join(',')
-  .match(/(staging|page|email)(?:\+)([\w]+)(?:@publishthis.email)/)
+  .match(/(staging-list|staging|page|email|list)(?:\+)([\w]+)(?:@publishthis.email)/)
 
   const output = {
     to,
