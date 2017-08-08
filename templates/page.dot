@@ -19,7 +19,9 @@
     [[= partial('partials/subscribe.dot') ]]
     [[?]]
   </div>
+  [[? !model.listId]]
   [[= partial('partials/footers/' + model.language + '.dot') ]]
+  [[?]]
   [[= partial('partials/analytics.dot') ]]
 </body>
 </html>
