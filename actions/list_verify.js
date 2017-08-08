@@ -70,7 +70,6 @@ const sendNewSubscriberNotification = list =>{
     ],
     ReturnPath: 'return@publishthis.email'
   }
-  console.log(params)
 
   return SES.sendEmail(params)
 }
