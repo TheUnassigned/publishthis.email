@@ -52,6 +52,7 @@ var tplDelivery = `<!DOCTYPE html>
         /* What it does: Uses a better rendering method when resizing images in IE. */
         img {
             -ms-interpolation-mode:bicubic;
+            max-width: 100%;
         }
 
         /* What it does: A work-around for email clients meddling in triggered links. */
