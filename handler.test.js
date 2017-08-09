@@ -8,19 +8,19 @@ aws.config.update({
 
 var handler = require('./handler.source')
 
-// handler.receive({
-//   Records: [
-//     {
-//       s3: {
-//         object: {
-//           key: 'g9l4molrbemq0ee46cpp4q2ii9ph49ughiije281'
-//         }
-//       }
-//     }
-//   ]
-// }, {}, function(result){
-//   console.log(result)
-// })
+handler.receive({
+  Records: [
+    {
+      s3: {
+        object: {
+          key: 't60sp5qof2v9dlahcg7p7e7rjpvhskae46jja2o1'
+        }
+      }
+    }
+  ]
+}, {}, function(result){
+  console.log(result)
+})
 
 // listId: B1GvXjzyDb
 
@@ -64,14 +64,14 @@ var handler = require('./handler.source')
 // })
 
 
-handler.listSubscribe({
-  queryStringParameters: {
-    subscriberEmail: 'nick.drewe@gmail.com',
-    listId: 'nWsgSknGJe'
-  }
-}, {}, function(result){
-  console.log(result)
-})
+// handler.listSubscribe({
+//   queryStringParameters: {
+//     subscriberEmail: 'nick.drewe@gmail.com',
+//     listId: 'nWsgSknGJe'
+//   }
+// }, {}, function(result){
+//   console.log(result)
+// })
 
 // handler.listCreateFromAPI({
 //   queryStringParameters: {

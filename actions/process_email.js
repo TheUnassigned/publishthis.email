@@ -2,6 +2,7 @@ import MP from 'mailparser'
 import sanitizeHtml from 'sanitize-html'
 import shortid from 'shortid'
 import imgur from '/imgur/imgur'
+import cheerio from 'cheerio'
 import { detectWhitelist, detectLanguage, langCode3to2 } from '/actions/localise'
 import { slugify } from '/actions/title-to-slug'
 
@@ -112,6 +113,30 @@ const generateSlug = email => {
   return email
 }
 
+// strip common signatures from email HTML
+const stripSignatures = email => {
+  // text only emails
+  if(!email.html && email.text){
+    // default iPhone signature
+    email.text.replace(/\n\nSent\sfrom\smy\siPhone/, '')
+  }else{
+    // load html to cheerio
+    var $ = cheerio.load(email.html)
+    // default iPhone signature
+    email.text.replace('<br><br>Sent from my iPhone','')
+
+    // Gmail
+    $('.gmail_signature').remove()
+
+    // Gmail backup
+    $('[data-smartmail=gmail_signature]').remove()
+
+    email.html = $.html()
+  }
+  // console.log(email.html)
+  return email
+}
+
 // Convert YouTube links into embeds
 const filterLinks = email => {
   // find links
@@ -200,8 +225,11 @@ const buildEmailObj = rawEmail => {
   return output
 }
 
+
+
 const processEmail = rawEmail => {
   return parseMail(rawEmail)
+  .then(stripSignatures)
   .then(tidyEmail)
   .then(setLanguage)
   .then(generateSlug)
@@ -213,6 +241,7 @@ const processEmail = rawEmail => {
 
 const processListEmail = rawEmail => {
   return parseMail(rawEmail)
+  .then(stripSignatures)
   .then(tidyEmail)
   .then(setLanguage)
   .then(generateSlug)
