@@ -21,7 +21,7 @@ const listSend = mailPackage => {
         },
         Message: {
           Subject: {
-            Data: mailPackage.subject + ' - ' + mailPackage.list.title,
+            Data: mailPackage.subject,
             Charset: 'UTF-8'
           },
           Body: {

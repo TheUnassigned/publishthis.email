@@ -26,7 +26,7 @@ const sendNewListReply = mailObj => {
       },
       Message: {
         Subject: {
-          Data: 'Your new list: ' + mailObj.subject + ' - publishthis.email',
+          Data: 'Your new list: ' + mailObj.subject,
           Charset: 'UTF-8'
         },
         Body: {
