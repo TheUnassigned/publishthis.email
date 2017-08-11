@@ -11,15 +11,22 @@ const sanitizeOptions = {
   // 'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
   // 'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre', 'img' ],
   allowedTags: [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
-  'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
-  'thead', 'caption', 'img', 'dir', 'marquee', 'font' ],
+  'nl', 'li', 'b', 'i', 'u', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
+  'thead', 'caption', 'img', 'dir', 'marquee', 'font', 'table', 'tbody', 'tr', 'td', 'th', 'col', 'colgroup' ],
   allowedAttributes: {
+    table: ['cellspacing', 'cellpadding', 'border', 'width', 'height', 'dir', 'align', 'size', 'color', 'face'],
+    tbody: ['cellspacing', 'cellpadding', 'border', 'width', 'height', 'dir', 'align', 'size', 'color', 'face'],
+    tr: ['cellspacing', 'cellpadding', 'border', 'width', 'height', 'dir', 'align', 'size', 'color', 'face'],
+    td: ['cellspacing', 'cellpadding', 'border', 'width', 'height', 'dir', 'align', 'size', 'color', 'face'],
+    th: ['cellspacing', 'cellpadding', 'border', 'width', 'height', 'dir', 'align', 'size', 'color', 'face'],
+    col: ['cellspacing', 'cellpadding', 'border', 'width', 'height', 'dir', 'align', 'size', 'color', 'face'],
+    colgroup: ['cellspacing', 'cellpadding', 'border', 'width', 'height', 'dir', 'align', 'size', 'color', 'face'],
     a: [ 'href', 'name', 'target', 'rel' ],
     // We don't currently allow img itself by default, but this
     // would make sense if we did
     img: [ 'src', 'width' ],
-    p: [ 'dir'],
-    div: ['dir'],
+    p: [ 'dir', 'size', 'color', 'face'],
+    div: ['dir', 'size', 'color', 'face'],
     font: ['size', 'color', 'face']
   },
   // Lots of these won't come up by default because we don't allow them

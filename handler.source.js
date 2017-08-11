@@ -24,7 +24,9 @@ import {
   markPostSent,
   getSubscriberFromSubscriberId,
   getListFromSubscriber,
-  sendNewSubscriberNotification
+  sendNewSubscriberNotification,
+  getList,
+  addBulkSubscribers
 } from './actions'
 import { config } from '/config/environment'
 
@@ -100,6 +102,46 @@ const listSubscribe = (event, context, callback) => {
     const response = { statusCode: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*',  'Access-Control-Allow-Credentials' : 'true' }, body: JSON.stringify({ success: false, msg: 'That email address is already subscribed.'}) }
     callback(null, response)
   })
+}
+
+// buk subscription endpoint
+const listBulkSubscribe = (event, context, callback) => {
+  // { lid: '123',
+  //   ek: '456',
+  //   emailList: [ 'a@b.c', 'nick.drewe@gmail.com' ] }
+  var params = JSON.parse(event.body)
+  getList(params.lid)
+  .then(list => {
+    // if edit keys match
+    if(list.editKey === params.ek ){
+      var newSubscribers = params.emailList
+      addBulkSubscribers(list, newSubscribers)
+      .then(result => {
+        // subscribers added
+        const response = { statusCode: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*' }, body: JSON.stringify({ success: true }) }
+        callback(null, response)
+      })
+      .catch(e => {
+        // bulk add failed
+        const response = { statusCode: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*' }, body: JSON.stringify({ success: false }) }
+        callback(null, response)
+      })
+
+    }else{
+      // keys don't match
+      const response = { statusCode: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*' }, body: JSON.stringify({ success: false }) }
+      callback(null, response)
+    }
+  })
+  .catch(e => {
+    // no list
+    const response = { statusCode: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*' }, body: JSON.stringify({ success: false }) }
+    callback(null, response)
+  })
+
+
+
+
 }
 
 // subscription endpoint called directly from submission form returns { success: true/false, msg: 'error message' }
@@ -185,6 +227,7 @@ const listDeliver = (event, context, callback) => {
 export {
   receive,
   listSubscribe,
+  listBulkSubscribe,
   verifySubscriber,
   listUnsubscribe,
   listReceive,

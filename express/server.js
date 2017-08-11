@@ -64,6 +64,20 @@ app.get('/page-sent', function (req, res) {
   res.render('page-sent')
 })
 
+// bulk importer
+// Unsubscribe endpoint
+app.get('/bulk-import', function (req, res) {
+  var lid = req.query.lid || ''
+  var ek = req.query.ek || ''
+
+  var context = {
+    API_URL: config.API_URL,
+    lid: lid,
+    ek: ek
+  }
+  res.render('bulk-import', context)
+})
+
 // Verify endpoint for double opt-in, passes subscriberId to Lambda endpoint and returns success page or 404
 app.get('/verify', function (req, res) {
   if(req.query.sid){

@@ -49,10 +49,16 @@ const updateResource = params => {
   return docClient.update(params).promise()
 }
 
+// batch write item
+const batchWriteItem = params => {
+  return docClient.batchWrite(params).promise()
+}
+
 export default {
   getResource,
   putResource,
   deleteResource,
   updateResource,
-  query
+  query,
+  batchWriteItem
 }
