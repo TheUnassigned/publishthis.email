@@ -139,7 +139,7 @@ function importEmails(){
       .done(function(response) {
         console.log('success');
         console.log(response);
-        if(respionse.success){
+        if(response.success){
           displayMsg('Email addresses (' + emailList.length + ') imported successfully.');
         }else{
           displayMsg('Something has gone wrong! Ask Nick for help.');
