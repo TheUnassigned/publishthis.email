@@ -8,19 +8,32 @@ aws.config.update({
 
 var handler = require('./handler.source')
 
-handler.receive({
-  Records: [
-    {
-      s3: {
-        object: {
-          key: 't60sp5qof2v9dlahcg7p7e7rjpvhskae46jja2o1'
-        }
-      }
-    }
-  ]
-}, {}, function(result){
-  console.log(result)
+handler.listBulkSubscribe({
+  body: JSON.stringify({
+    lid: 'ByMEz-G_w-',
+    ek: 'B1mNzZMuw-HJVEG-G_Db',
+    emailList: [
+      'a@b.c',
+      'nick.drewe@gmail.com'
+    ]
+  })
+}, {}, function(something, result){
+  console.log(something, result)
 })
+
+// handler.receive({
+//   Records: [
+//     {
+//       s3: {
+//         object: {
+//           key: 't60sp5qof2v9dlahcg7p7e7rjpvhskae46jja2o1'
+//         }
+//       }
+//     }
+//   ]
+// }, {}, function(result){
+//   console.log(result)
+// })
 
 // listId: B1GvXjzyDb
 

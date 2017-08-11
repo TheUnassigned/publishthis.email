@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bulk import - publishthis.email</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="/css/view.css">
+  <link href="https://fonts.googleapis.com/css?family=Martel:300,400|Open+Sans:300,400,600|Roboto+Slab:300,400" rel="stylesheet">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+
+</head>
+<body>
+<style scoped>
+.form-item{
+  margin-bottom: 20px;
+}
+.label-sub{
+  font-size: 14px;
+  font-weight: 600;
+}
+.form-item input{
+  font-size: 18px;
+  width: 300px;
+  font-family: 'Open Sans', sans-serif;
+  padding: 4px;
+  border-radius: 3px;
+  border: 1px solid #e2e2e2;
+}
+.form-item textarea{
+  font-size: 18px;
+  width: 300px;
+  font-family: 'Open Sans', sans-serif;
+  padding: 4px;
+  border-radius: 3px;
+  border: 1px solid #e2e2e2;
+}
+.form-submit{
+  font-size: 20px;
+  padding: 5px 20px;
+  font-family: 'Open Sans', sans-serif;
+  background-color: #FF5468;
+  color: #FFF;
+  /*border: 1px solid #FF5468;*/
+  border: none;
+  cursor: pointer;
+}
+.form-error{
+  color: red;
+  font-weight: 600;
+  margin-top: 10px;
+}
+.import-form-disabled{
+  opacity: 0.5;
+}
+</style>
+<div class="page-margin page">
+  <div class="import-form">
+    <h1>Bulk list importer</h1>
+    <div class="form-item">
+      Your List ID:
+      <div class="label-sub">Ask Nick for this.</div>
+      <div>
+        <input id="listId" placeholder="list ID" value="[[=model.lid]]"></input>
+      </div>
+    </div>
+    <div class="form-item">
+      Your edit key:
+      <div class="label-sub">Ask Nick for this</div>
+      <div>
+        <input id="editKey" placeholder="edit key" value="[[=model.ek]]"></input>
+      </div>
+    </div>
+    <div class="form-item">
+      Emails to import:
+      <div class="label-sub">One email address per line, email addresses only, no commas, etc.</div>
+      <div>
+        <textarea id="importList" cols="40" rows="5"></textarea>
+      </div>
+    </div>
+    <div>
+      <button id="submit" class="form-submit" onclick="importEmails()">Import</button>
+    </div>
+  </div>
+
+  <div class="form-error" id="display-error"></div>
+</div>
+[[= partial('partials/analytics.dot') ]]
+
+<script>
+function importEmails(){
+  var url = '[[=model.API_URL]]' + 'list/bulk-subscribe';
+  var lid = document.getElementById('listId').value;
+  var ek = document.getElementById('editKey').value;
+  var emailList = document.getElementById('importList').value.split('\n');
+
+  // remove blank lines
+  for(var e = emailList.length - 1; e > 0; e--){
+    if(emailList[e] == ''){
+      emailList.splice(e,1)
+    }
+  }
+
+  // if emailList has items
+  if(emailList != ''){
+    // emailList has items
+    var invalidEmails = validateEmails(emailList)
+    if(invalidEmails.length){
+      // invalid emails
+      var msg = 'Invalid emails to import (' + invalidEmails.length + '): ' + invalidEmails.join(', ');
+      displayMsg(msg)
+    }else{
+      // no invalid emails
+      var msg = 'Importing ' + emailList.length + ' emails. Please wait...'
+      displayMsg(msg)
+
+      var data = {
+        lid: lid,
+        ek: ek,
+        emailList: emailList
+      }
+
+      // disable form
+      $('#listId').prop("disabled", true);
+      $('#editKey').prop("disabled", true);
+      $('#importList').prop("disabled", true);
+      $('#submit').prop("disabled", true);
+      $('.import-form').addClass('import-form-disabled');
+
+      $.ajax({
+        url: url,
+        method: 'post',
+        crossDomain: true,
+        data: JSON.stringify(data),
+        beforeSend: function( xhr ) {
+          xhr.overrideMimeType( "application/json" );
+        }
+      })
+      .done(function(response) {
+        console.log('success');
+        console.log(response);
+        displayMsg('Email addresses (' + emailList.length + ') imported successfully.');
+      })
+      .fail(function(response) {
+        displayMsg('Something has gone wrong! Ask Nick for help.');
+      })
+    }
+  }else{
+    // emailList is empty
+    displayMsg('Enter at least one email address.')
+  }
+}
+
+function displayMsg(msg){
+  document.getElementById('display-error').innerHTML = msg;
+}
+
+function validEmail(email){
+  return /[^\s@]+@[^\s@]+\.[^\s@]+/.test(email);
+}
+
+function validateEmails(emails){
+  var invalidEmails = []
+  for(var i = 0; i < emails.length; i++){
+    if(!validEmail(emails[i])){
+      invalidEmails.push(emails[i])
+    }
+    // then
+    if(i == emails.length - 1){
+      return invalidEmails
+    }
+  }
+}
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+</body>
+</html>

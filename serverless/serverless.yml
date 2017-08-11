@@ -87,6 +87,13 @@ functions:
           path: list/subscribe
           method: get
           cors: true
+  list-bulk-subscribe:
+    handler: handler.listBulkSubscribe
+    events:
+      - http:
+          path: list/bulk-subscribe
+          method: post
+          cors: true
   list-unsubscribe:
     handler: handler.listUnsubscribe
     events:
