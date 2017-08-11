@@ -55,6 +55,10 @@ var tplDelivery = `<!DOCTYPE html>
             max-width: 100%;
         }
 
+        h1{
+            line-height: 1.3em;
+        }
+
         /* What it does: A work-around for email clients meddling in triggered links. */
         *[x-apple-data-detectors],	/* iOS */
         .x-gmail-data-detectors, 	/* Gmail */
