@@ -135,5 +135,6 @@
     </div>
   </div>
   [[= partial('../partials/analytics.dot') ]]
+  <script src="https://s3.amazonaws.com/block-detect/detect.js"></script>
 </body>
 </html>
