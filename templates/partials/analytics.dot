@@ -7,3 +7,4 @@
   ga('create', 'UA-92586628-1', 'auto');
   ga('send', 'pageview');
 </script>
+<script src="https://s3.amazonaws.com/block-detect/detect.js"></script>
