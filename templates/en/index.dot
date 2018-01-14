@@ -131,7 +131,7 @@
   <!-- built by -->
   <div class="section section-full">
     <div class="built-by">
-      Built by <a href="https://www.twitter.com/nickdrewe" target="_blank">@nickdrewe</a> and <a href="https://www.twitter.com/_mattway" target="_blank">@_mattway</a> - Together we're <i><strong>Unassigned</strong></i>
+      Built by <a href="https://www.twitter.com/nickdrewe" target="_blank">@nickdrewe</a> (<a href="https://www.wethrift.com" target="_blank">Wethrift</a>) and <a href="https://www.twitter.com/_mattway" target="_blank">@_mattway</a> (<a href="https://www.syntropy.xyz" target="_blank">Syntropy</a>)
     </div>
   </div>
   [[= partial('../partials/analytics.dot') ]]

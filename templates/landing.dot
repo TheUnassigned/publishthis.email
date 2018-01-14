@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <title>publishthis.email - Create a Web Page in Seconds</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="/css/landing.css">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-site-verification" content="GMQm9kj6leA_LTzBdFmSyQxCDLNC_yNQERZNhEL7Sjo" />
+  <meta property="og:url" content="https://www.publishthis.email" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="publishthis.email - Create a web page in seconds, by sending an email." />
+  <meta property="og:description" content="The quickest way to create a web page. No account or sign up needed. Send us an email with your content to publish online, and we'll reply instantly with a link to your new web page." />
+  <meta property="og:image" content="https://www.publishthis.email/fb-og.png" />
+
+  <meta name="google-site-verification" content="GDsaXFAOnbkhJfKsv9R1evoeyJ9Kr-Bvmrd5e8vBWAU" />
+
+  <link rel="canonical" href="https://www.publishthis.email/landing" />
+
+</head>
+<body ng-app="landing">
+  <div class="hero-panel">
+    <div class="side left-side" ng-controller="formCtrl">
+      <img class="hero-img" src="./img/marketing.svg" />
+      <div class="hero-heading">
+        Damn simple email lists.
+      </div>
+      <div class="hero-subheading">
+        Create a list and start collecting subscribers in seconds.
+      </div>
+      <div class="create">
+        <!-- name -->
+        <div ng-show="state.step == 0">
+          <div class="create-label">
+            Give your list a name:
+          </div>
+          <input placeholder="Nick's Fishing Tips" ng-model="state.listName" ng-keyup="$event.keyCode == 13 && next()" focus-on="name"></input>
+          <img src="/img/002-right-arrow.svg" class="create-button"/ ng-show="!state.loading" ng-click="next()"/>
+
+        </div>
+
+        <!-- email address -->
+        <div ng-show="state.step == 1">
+          <div class="create-label">
+            Associate your email with your list:
+          </div>
+          <input placeholder="Your email address" ng-model="state.ownerEmail" ng-keyup="$event.keyCode == 13 && next()" focus-on="email"></input>
+          <div class="create-loader-container">
+            <img src="/img/002-right-arrow.svg" class="create-button"/ ng-show="!state.loading" ng-click="next()"/>
+            <img src="/img/002-loading.svg" class="create-button create-button-loader" ng-show="state.loading" />
+          </div>
+
+        </div>
+
+        <!-- tag -->
+        <div ng-show="state.step == 2">
+          <div class="create-label">
+            Give your list a one word label:
+          </div>
+          <input placeholder="fishing" ng-model="state.listLabel" ng-keyup="$event.keyCode == 13 && next()" focus-on="label"></input>
+          <div class="create-loader-container">
+            <img src="/img/002-right-arrow.svg" class="create-button"/ ng-show="!state.loading" ng-click="next()"/>
+            <img src="/img/002-loading.svg" class="create-button create-button-loader" ng-show="state.loading" />
+          </div>
+        </div>
+
+        <!-- info box -->
+        <div class="create-info" ng-bind-html="state.infoBoxText" ng-show="state.showInfoBox && state.step != 3">
+          <!-- {{state.infoBoxText}} -->
+        </div>
+
+      </div>
+    </div>
+    <div class="side right-side">
+      <div class="logo-float">
+        <span class="logo-list">list</span><span class="logo-army">army</span><span class="logo-com">.com</span>
+      </div>
+    </div>
+  </div>
+  <!-- <div>
+    Something else
+  </div> -->
+  [[= partial('/partials/analytics.dot') ]]
+  <script>var API_URL = '[[=model.API_URL]]'</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js"></script>
+  <script src="./js/landing.js"></script>
+</body>
+</html>

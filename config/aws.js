@@ -1,6 +1,7 @@
 import aws from 'aws-sdk'
 import { config } from './environment'
 
+// update config for heroku
 const updateConfig = () => {
   aws.config.update({
     accessKeyId: config.AWS_ID,
